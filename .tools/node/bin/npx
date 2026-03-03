@@ -1,4 +1,0 @@
-#!/bin/bash
-export NODE_HOME="/Users/frank/Desktop/tiaohai-global/.tools/node"
-export PATH="$NODE_HOME/bin:$PATH"
-"$NODE_HOME/bin/node" "$NODE_HOME/lib/node_modules/npm/bin/npx-cli.js" "$@"
