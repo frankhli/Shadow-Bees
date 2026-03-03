@@ -1,0 +1,1065 @@
+{
+  "metadata": {
+    "title": "Tiaohai Global - AI-Powered Inbound Travel",
+    "description": "Discover authentic China with AI concierge. Boutique hotels, local guides, and cultural experiences with 24/7 support."
+  },
+  "nav": {
+    "hotels": "Hotels",
+    "stays": "Stays",
+    "guides": "Guides",
+    "experiences": "Experiences",
+    "listProperty": "List Your Property",
+    "dashboard": "Dashboard",
+    "login": "Log in",
+    "signup": "Sign up",
+    "profile": "Profile",
+    "orders": "My Orders",
+    "logout": "Log out",
+    "saved": "Saved"
+  },
+  "hero": {
+    "title": "Discover Authentic China with",
+    "titleHighlight": "AI Concierge",
+    "description": "Boutique hotels, local guides, and cultural experiences. All with 24/7 AI support in your language.",
+    "search": {
+      "where": "Where",
+      "checkIn": "Check in",
+      "checkOut": "Check out",
+      "who": "Who",
+      "placeholder": "Search destinations",
+      "addDates": "Add dates",
+      "addGuests": "Add guests",
+      "adults": "Adults",
+      "adultsDesc": "Ages 13+",
+      "button": "Search"
+    }
+  },
+  "home": {
+    "featuredStays": "Featured Stays",
+    "showAll": "Show all",
+    "night": "night",
+    "popularDestinations": "Popular Destinations",
+    "stays": "stays",
+    "trust": {
+      "verified": "Verified Hotels",
+      "verifiedDesc": "All properties inspected",
+      "support": "24/7 AI Support",
+      "supportDesc": "Instant help in your language",
+      "reviews": "Honest Reviews",
+      "reviewsDesc": "Only from real guests",
+      "booking": "Flexible Booking",
+      "bookingDesc": "Free cancellation available"
+    },
+    "whyChoose": {
+      "title": "Travel China with Confidence",
+      "aiConcierge": {
+        "title": "AI Concierge Available 24/7",
+        "desc": "Get instant answers about your hotel, local customs, and travel tips in your language."
+      },
+      "verified": {
+        "title": "Verified & Inspected",
+        "desc": "Every property is personally verified. We check for Western amenities so there are no surprises."
+      },
+      "englishSupport": {
+        "title": "English-Speaking Support",
+        "desc": "Real humans available via WhatsApp, WeChat, or email whenever you need help."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to access your bookings and saved hotels",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "button": "Sign In",
+      "loading": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "demoTitle": "Demo accounts (click to auto-fill)",
+      "demoUser": "Demo User",
+      "errors": {
+        "requiredFields": "Please enter email and password"
+      }
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Join tiaohai to start booking your China adventure",
+      "firstName": "First name",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Smith",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "passwordStrength": {
+        "weak": "Weak",
+        "medium": "Medium",
+        "strong": "Strong"
+      },
+      "agreeTerms": "I agree to the",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "button": "Create Account",
+      "loading": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "errors": {
+        "fullName": "Please enter your full name",
+        "email": "Please enter your email",
+        "passwordLength": "Password must be at least 8 characters",
+        "passwordMatch": "Passwords do not match",
+        "terms": "Please agree to the Terms of Service"
+      }
+    }
+  },
+  "hotel": {
+    "facilities": {
+      "elevator": "Elevator",
+      "noElevator": "No Elevator",
+      "westernToilet": "Western Toilet",
+      "wifi": "WiFi",
+      "englishStaff": "English-speaking Staff",
+      "airCon": "Air Conditioning"
+    },
+    "honestTags": {
+      "title": "What You Should Know",
+      "elevator": "No elevator, but free luggage carry service",
+      "toilet": "Western-style bathroom",
+      "location": "{minutes}min walk to subway",
+      "english": "English-speaking staff available"
+    },
+    "price": {
+      "perNight": "per night",
+      "bookingLink": "Check on Booking.com",
+      "airbnbLink": "Check on Airbnb"
+    },
+    "aiConcierge": {
+      "online": "AI Concierge Online",
+      "chat": "Chat with AI",
+      "placeholder": "Ask about this hotel..."
+    },
+    "detail": {
+      "backToSearch": "Back to search",
+      "back": "Back",
+      "reviews": "reviews",
+      "superhost": "Superhost",
+      "superhostDesc": "Superhosts are experienced, highly rated hosts committed to providing great stays.",
+      "share": "Share",
+      "save": "Save",
+      "hostedBy": "hosted by",
+      "guests": "guests",
+      "bedroom": "bedroom",
+      "bedrooms": "bedrooms",
+      "bed": "bed",
+      "beds": "beds",
+      "bath": "bath",
+      "about": "About this place",
+      "amenities": "What this place offers",
+      "showAll": "Show all",
+      "where": "Where you'll be",
+      "greatLocation": "Great location",
+      "locationDesc": "95% of recent guests gave the location a 5-star rating.",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "addDate": "Add date",
+      "reserve": "Reserve",
+      "reserveBtn": "Check availability",
+      "applyDates": "Apply dates",
+      "notAvailable": "Not available",
+      "charged": "You won't be charged yet",
+      "price": "Price",
+      "total": "Total",
+      "beforeTaxes": "before taxes",
+      "bookOnTiaohai": "Book on Tiaohai",
+      "compareSites": "Compare sites",
+      "processing": "Processing...",
+      "selectDates": "Select dates",
+      "invalidDates": "Invalid dates",
+      "tooManyGuests": "Too many guests",
+      "cleaningFee": "Cleaning fee",
+      "serviceFee": "Service fee",
+      "savings": "Price match savings",
+      "selectDatesError": "Please select check-in and check-out dates to continue.",
+      "checkOutAfterCheckIn": "Check-out must be after check-in.",
+      "datesNotAvailable": "Selected dates are not available. Please choose different dates.",
+      "maxGuests": "Maximum {max} guests allowed."
+    },
+    "roomTypes": "Room Types",
+    "availableBeds": "Available",
+    "houseRules": "House Rules"
+  },
+  "checkout": {
+    "title": "Complete your booking",
+    "back": "Back",
+    "step1": "Guest info",
+    "step2": "Payment",
+    "step3": "Confirm",
+    "guestInfo": {
+      "title": "Guest information",
+      "subtitle": "Required for hotel registration in China. Your information is securely encrypted.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "passportNumber": "Passport number",
+      "nationality": "Nationality",
+      "dateOfBirth": "Date of birth",
+      "selectCountry": "Select country",
+      "required": "Required",
+      "errors": {
+        "firstName": "First name is required",
+        "lastName": "Last name is required",
+        "email": "Email is required",
+        "emailInvalid": "Invalid email",
+        "phone": "Phone number is required",
+        "passportNumber": "Passport number is required",
+        "nationality": "Nationality is required",
+        "dateOfBirth": "Date of birth is required"
+      }
+    },
+    "payment": {
+      "title": "Payment",
+      "cardNumber": "Card number",
+      "cardHolder": "Card holder name",
+      "expiry": "Expiry date",
+      "month": "Month",
+      "year": "Year",
+      "monthPlaceholder": "MM",
+      "yearPlaceholder": "YYYY",
+      "cvv": "CVV",
+      "billingAddress": "Billing address",
+      "secure": "Your payment is secure and encrypted",
+      "securePayment": "Secure payment",
+      "secureDesc": "Your payment information is encrypted and secure",
+      "errors": {
+        "cardNumber": "Card number must be 16 digits",
+        "cardHolder": "Card holder name is required",
+        "expiry": "Expiry date is required",
+        "cvv": "CVV must be 3 digits",
+        "billingAddress": "Billing address is required"
+      }
+    },
+    "bookingSummary": "Booking Summary",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "guests",
+    "priceDetails": "Price details",
+    "nights": "nights",
+    "cleaningFee": "Cleaning fee",
+    "serviceFee": "Service fee",
+    "total": "Total",
+    "totalPaid": "Total paid",
+    "continue": "Continue",
+    "confirm": "Confirm Booking",
+    "processing": "Processing...",
+    "success": {
+      "title": "Booking Confirmed!",
+      "message": "Your reservation at {hotelName} is confirmed.",
+      "orderId": "Order ID",
+      "dates": "Dates",
+      "guest": "Guest",
+      "whatsNext": "What's next?",
+      "checkEmail": "Check your email for booking confirmation",
+      "contactHost": "Contact host",
+      "downloadVoucher": "Download your booking voucher",
+      "addToCalendar": "Add to your calendar",
+      "viewOrders": "View My Orders",
+      "continueBrowsing": "Continue browsing"
+    }
+  },
+  "orders": {
+    "title": "My Orders",
+    "backToOrders": "Back to orders",
+    "backToProfile": "Back to profile",
+    "tabs": {
+      "all": "All",
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "pending": "Pending"
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "pending": "Pending"
+    },
+    "noOrders": "No orders found",
+    "startBooking": "Start exploring stays",
+    "viewDetails": "View Details",
+    "download": "Download Receipt",
+    "review": "Write a Review",
+    "reviewed": "Reviewed",
+    "cancel": "Cancel Booking",
+    "orderDetails": "Order Details",
+    "contactHost": "Contact Host",
+    "getDirections": "Get Directions",
+    "reviewNow": "Review now",
+    "order": "Order",
+    "nights": "nights",
+    "guests": "guests",
+    "total": "Total",
+    "bookedOn": "Booked on",
+    "rateYourStay": "Rate your stay",
+    "shareExperience": "Share your experience...",
+    "submitReview": "Submit Review",
+    "yourHost": "Your Host",
+    "callHost": "Call Host",
+    "priceDetails": "Price Details",
+    "downloadVoucher": "Download Voucher",
+    "needHelp": "Need help with your booking?",
+    "supportAvailable": "Our AI concierge and support team are available 24/7",
+    "contactSupport": "Contact Support",
+    "details": {
+      "dates": "Dates",
+      "guests": "Guests"
+    },
+    "actions": {
+      "writeReview": "Write Review",
+      "reviewed": "Reviewed"
+    },
+    "empty": {
+      "noOrders": "No orders found",
+      "exploreHotels": "Explore Hotels"
+    },
+    "beds": "beds"
+  },
+  "profile": {
+    "title": "Profile",
+    "edit": "Edit Profile",
+    "memberSince": "Member since",
+    "trips": "Trips",
+    "saved": "Saved",
+    "reviews": "Reviews",
+    "member": "Member",
+    "overview": "Overview",
+    "orders": "My Orders",
+    "savedHotels": "Saved Hotels",
+    "myReviews": "My Reviews",
+    "settings": "Settings",
+    "personalInfo": "Personal Information",
+    "email": "Email",
+    "phone": "Phone",
+    "nationality": "Nationality",
+    "recentActivity": "Recent Activity",
+    "findHotels": "Find Hotels",
+    "exploreDestinations": "Explore new destinations",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "labels": {
+      "email": "Email",
+      "phone": "Phone",
+      "nationality": "Nationality",
+      "memberSince": "Member Since"
+    },
+    "quickLinks": {
+      "myOrders": "My Orders",
+      "viewHistory": "View your booking history"
+    },
+    "profile": {
+      "labels": {
+        "email": "Email",
+        "phone": "Phone",
+        "nationality": "Nationality",
+        "memberSince": "Member since"
+      },
+      "quickLinks": {
+        "myOrders": "My Orders",
+        "viewHistory": "View History"
+      }
+    }
+  },
+  "features": {
+    "title": "Your 24/7 AI Travel Assistant",
+    "description": "Get instant answers about your hotel, local customs, and travel tips in your language.",
+    "askAnything": {
+      "title": "Ask Anything",
+      "description": "No elevator? No problem. We'll find you alternatives."
+    },
+    "culturalBridge": {
+      "title": "Cultural Bridge",
+      "description": "Learn Chinese customs before you arrive."
+    },
+    "emergencyHelp": {
+      "title": "Emergency Help",
+      "description": "Immediate assistance when you need it most."
+    }
+  },
+  "static": {
+    "help": {
+      "title": "How can we help?",
+      "bookingGuide": "Booking Guide",
+      "safetyInfo": "Safety Info",
+      "payments": "Payments",
+      "contactUs": "Contact Us",
+      "faqTitle": "Frequently Asked Questions",
+      "questions": {
+        "reservation": "How do I make a reservation?",
+        "reservationAnswer": "Browse our hotels, select your dates, and click \"Reserve\". You'll need to create an account and provide guest information including passport details for hotel registration in China.",
+        "cancellation": "What is the cancellation policy?",
+        "cancellationAnswer": "Free cancellation is available up to 24 hours before check-in for most bookings. Some special rates may have different policies.",
+        "passport": "Why do I need to provide passport information?",
+        "passportAnswer": "Chinese law requires all hotels to register foreign guests with their passport information. This is mandatory for all international travelers.",
+        "payment": "Can I pay with international credit cards?",
+        "paymentAnswer": "Yes, we accept all major international credit cards. Your payment is processed securely with SSL encryption."
+      },
+      "stillNeedHelp": "Still need help?",
+      "emailUs": "Email Us"
+    },
+    "safety": {
+      "title": "Your safety is our priority",
+      "subtitle": "We work hard to make sure every booking is safe and secure",
+      "verifiedProperties": "Verified Properties",
+      "verifiedPropertiesDesc": "Every hotel and property on our platform is vetted for quality and safety standards.",
+      "guestProtection": "Guest Protection",
+      "guestProtectionDesc": "24/7 support and secure payment processing to protect your bookings.",
+      "communityStandards": "Community Standards",
+      "communityStandardsDesc": "We enforce strict policies to ensure respectful interactions between hosts and guests.",
+      "cleanSafe": "Clean & Safe",
+      "cleanSafeDesc": "Enhanced cleaning protocols and safety guidelines for all listed properties.",
+      "haveConcerns": "Have safety concerns?",
+      "teamAvailable": "Our safety team is available 24/7 to address any concerns",
+      "contactTeam": "Contact Safety Team"
+    },
+    "cancellation": {
+      "title": "Cancellation Policies",
+      "subtitle": "Each property has its own cancellation policy. Please review before booking.",
+      "flexible": "Flexible",
+      "flexibleDesc": "Free cancellation until 24 hours before check-in",
+      "flexibleFeatures": [
+        "Full refund up to 24 hours before check-in",
+        "No questions asked",
+        "Instant refund processing"
+      ],
+      "moderate": "Moderate",
+      "moderateDesc": "Free cancellation until 5 days before check-in",
+      "moderateFeatures": [
+        "Full refund up to 5 days before check-in",
+        "50% refund up to 24 hours before",
+        "Standard refund processing"
+      ],
+      "strict": "Strict",
+      "strictDesc": "Free cancellation within 48 hours of booking",
+      "strictFeatures": [
+        "Full refund within 48 hours of booking",
+        "50% refund up to 7 days before check-in",
+        "Processing may take 5-10 business days"
+      ],
+      "howToCancel": "How to cancel your booking",
+      "steps": {
+        "step1": "Log in to your account and go to \"My Orders\"",
+        "step2": "Find the booking you want to cancel",
+        "step3": "Click \"Cancel Reservation\" button",
+        "step4": "Confirm cancellation to receive refund according to policy"
+      }
+    },
+    "guides": {
+      "title": "Travel Guides",
+      "subtitle": "Everything you need to know for an amazing trip to China",
+      "gettingAround": "Getting Around",
+      "gettingAroundDesc": "Tips for navigating Chinese cities: metro systems, ride-hailing apps, and high-speed trains.",
+      "foodGuide": "Food Guide",
+      "foodGuideDesc": "From street food to fine dining - what to eat and how to order in China.",
+      "attractions": "Must-See Attractions",
+      "attractionsDesc": "Top tourist destinations and hidden gems across major Chinese cities.",
+      "internet": "Internet & Connectivity",
+      "internetDesc": "How to stay connected: VPNs, local SIM cards, and WiFi options.",
+      "popularDestinations": "Popular Destinations",
+      "beijingHighlights": "Great Wall, Forbidden City, Hutongs",
+      "shanghaiHighlights": "The Bund, Yu Garden, French Concession",
+      "xianHighlights": "Terracotta Warriors, City Wall, Muslim Quarter",
+      "chengduHighlights": "Giant Pandas, Hot Pot, Tea Houses",
+      "guilinHighlights": "Li River, Karst Mountains, Yangshuo",
+      "hangzhouHighlights": "West Lake, Longjing Tea, Lingyin Temple"
+    }
+  },
+  "footer": {
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "safety": "Safety Information",
+    "cancellation": "Cancellation Options",
+    "community": "Community",
+    "referFriend": "Refer a Friend",
+    "travelGuide": "Travel Guide",
+    "hosting": "Hosting",
+    "listProperty": "List Your Property",
+    "hostResources": "Host Resources",
+    "about": "About",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "press": "Press",
+    "comingSoon": "Coming soon",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "sitemap": "Sitemap",
+    "copyright": "© 2024 Tiaohai, Inc. All rights reserved."
+  },
+  "dashboard": {
+    "title": "Hotel Dashboard",
+    "hotel": {
+      "status": {
+        "active": "Active"
+      },
+      "nav": {
+        "aiContent": "AI Content",
+        "analytics": " Analytics",
+        "viewPublicPage": "View Public Page"
+      },
+      "stats": {
+        "totalRooms": "Total Rooms",
+        "todayBookings": "Today Bookings",
+        "todayRevenue": "Today Revenue",
+        "changeFromYesterday": "+1 from yesterday",
+        "occupancyRate": "Occupancy Rate",
+        "thisMonth": "This month"
+      },
+      "tabs": {
+        "calendar": "Calendar",
+        "orders": "Orders",
+        "aiConversations": "AI Conversations",
+        "finance": "Finance"
+      },
+      "calendar": {
+        "title": "Availability Calendar",
+        "legend": {
+          "available": "Available",
+          "limited": "Limited",
+          "full": "Full"
+        },
+        "roomsLeft": "left",
+        "full": "Full"
+      },
+      "orders": {
+        "title": "Recent Orders",
+        "table": {
+          "orderId": "Order ID",
+          "guest": "Guest",
+          "checkIn": "Check-in",
+          "nights": "Nights",
+          "amount": "Amount",
+          "status": "Status"
+        }
+      },
+      "aiConversations": {
+        "needAttention": "need attention",
+        "needsHuman": "Needs Human",
+        "handledBy": "Handled by:",
+        "handler": {
+          "ai": "AI",
+          "human": "Human"
+        },
+        "takeOver": "Take Over"
+      },
+      "finance": {
+        "revenueTitle": "Revenue This Month",
+        "afterFee": "After 15% platform fee",
+        "payoutSchedule": "Payout Schedule",
+        "nextPayout": "Next payout: $425 (T+7)",
+        "transactionHistory": "Transaction History"
+      }
+    },
+    "orders": {
+      "status": {
+        "confirmed": "Confirmed",
+        "completed": "Completed"
+      }
+    },
+    "conversations": {
+      "title": "Guest Conversations",
+      "status": {
+        "active": "Active",
+        "resolved": "Resolved",
+        "escalated": "Escalated",
+        "pending": "Pending"
+      }
+    },
+    "content": {
+      "title": "AI Content Generator",
+      "subtitle": "Generate marketing content powered by GPT-4",
+      "platform": "Platform",
+      "contentStyle": "Content Style",
+      "hotelInfo": "Hotel Information",
+      "generateButton": "Generate {platform} Content",
+      "generatedContent": "Generated Content",
+      "fallbackMode": "Using fallback mode",
+      "labels": {
+        "hook": "Hook",
+        "script": "Script",
+        "voiceover": "Voiceover",
+        "captions": "Captions",
+        "hashtags": "Hashtags",
+        "shootingTips": "Shooting Tips",
+        "music": "Music",
+        "title": "Title",
+        "content": "Content",
+        "highlights": "Highlights",
+        "photoTips": "Photo Tips",
+        "titleMaxChars": "Title (max 40 chars)",
+        "description": "Description",
+        "keySellingPoints": "Key Selling Points",
+        "roomHighlights": "Room Highlights",
+        "location": "Location",
+        "policiesNotes": "Policies & Notes",
+        "caption": "Caption",
+        "storyIdeas": "Story Ideas"
+      },
+      "styles": {
+        "lifestyle": "Lifestyle",
+        "urgent": "Urgent/FOMO",
+        "professional": "Professional",
+        "funny": "Funny"
+      },
+      "styleDescriptions": {
+        "lifestyle": "Aspirational, experience-focused",
+        "urgent": "Create urgency and scarcity",
+        "professional": "Informative, credible",
+        "funny": "Humorous, relatable"
+      },
+      "platformDescriptions": {
+        "tiktok": "Short video scripts",
+        "xiaohongshu": "Chinese lifestyle platform",
+        "instagram": "Photo captions",
+        "booking": "Listing optimization"
+      },
+      "facilities": {
+        "elevator": "Elevator",
+        "wifi": "WiFi",
+        "western_toilet": "Western Toilet",
+        "english_staff": "English Staff",
+        "air_con": "Air Con"
+      }
+    },
+    "analytics": {
+      "title": "Referral Analytics",
+      "subtitle": "Track clicks and conversions from your Tiaohai listing",
+      "stats": {
+        "totalClicks": "Total Clicks",
+        "weeklyGrowth": "+12% this week",
+        "ofTotal": "of total",
+        "estimatedRevenue": "Est. Revenue",
+        "estimatedBookings": "est. bookings @ 3.5%"
+      },
+      "sections": {
+        "platformBreakdown": "Clicks by Platform",
+        "dailyTrend": "Daily Trend (Last 7 Days)",
+        "recentClicks": "Recent Clicks"
+      },
+      "recent": {
+        "via": "Via",
+        "clicked": "Clicked"
+      },
+      "tip": {
+        "title": "Tip",
+        "content": "Your Booking.com referral rate is above average! Consider adding more photos to your Tiaohai listing to increase conversion further."
+      }
+    }
+  },
+  "aiChat": {
+    "title": "AI Concierge",
+    "subtitle": "24/7 instant answers in your language",
+    "welcome": {
+      "withHotel": "Hi! I'm your AI assistant for {hotelName}. I can answer questions about the hotel, local area, or travel tips. What would you like to know?",
+      "default": "Hi! I'm Tiaohai Concierge. I can help with your China travel questions. What would you like to know?"
+    },
+    "errorMessage": "I'm having trouble connecting. A human agent will assist you shortly.",
+    "humanAgentNotified": "Human agent notified",
+    "humanReplyTime": "⏱️ A human will reply within 4 hours",
+    "placeholder": "Type your question...",
+    "thinking": "Thinking...",
+    "quickQuestions": {
+      "elevator": "Is there an elevator?",
+      "forbiddenCity": "How far to Forbidden City?",
+      "airportPickup": "Do you provide airport pickup?",
+      "breakfast": "Is breakfast included?",
+      "checkIn": "What time is check-in?"
+    },
+    "travelTips": {
+      "title": " China Travel Tips:",
+      "tapWater": "• Tap water is not drinkable",
+      "toiletPaper": "• Bring toilet paper for public restrooms",
+      "wechat": "• Download WeChat for payments"
+    }
+  },
+  "aiChatWidget": {
+    "badge": "AI",
+    "thinking": "Thinking...",
+    "welcomeMessage": "Hi! I'm the AI concierge for {hotelName}. How can I help you today?",
+    "responses": {
+      "elevator": "No, our hotel doesn't have an elevator, but our staff can help carry your luggage up the stairs.",
+      "toilet": "Yes! All our rooms have Western-style toilets with bidet functionality.",
+      "wifi": "Yes, we have free high-speed WiFi throughout the property.",
+      "checkin": "Check-in is from 2:00 PM and check-out is until 12:00 PM.",
+      "location": "We're located in the heart of the hutong, about 5 minutes walk from the nearest subway station.",
+      "default": "That's a great question! Let me check that for you. In the meantime, feel free to ask about our amenities or nearby attractions."
+    }
+  },
+  "guide": {
+    "reviews": "reviews",
+    "yearsExperience": "Years Experience",
+    "toursCompleted": "Tours Completed",
+    "languages": "Languages",
+    "about": "About",
+    "license": "License",
+    "licenseLabel": "Official Tour Guide License:",
+    "reviewsTitle": "Reviews",
+    "bookTitle": "Book This Guide",
+    "perHour": "/hour",
+    "minimumHours": "Minimum 2 hours",
+    "selectDate": "Select Date",
+    "duration": "Duration",
+    "hours": "hours",
+    "hoursShort": "{h}h",
+    "serviceFee": "Service fee",
+    "total": "Total",
+    "requestToBook": "Request to Book",
+    "selectDateButton": "Select a Date",
+    "bookingNote": "You won't be charged yet. We'll confirm availability first.",
+    "freeCancellation": "Free cancellation (24h)",
+    "verifiedGuide": "Verified licensed guide",
+    "securePayment": "Secure payment"
+  },
+  "booking": {
+    "opening": "Opening..."
+  },
+  "experiences": {
+    "title": "Cultural Experiences",
+    "subtitle": "Authentic workshops, food tours, and cultural activities curated for international travelers.",
+    "bookNow": "Book Now",
+    "duration": {
+      "2hours": "2 hours",
+      "3hours": "3 hours",
+      "4hours": "4 hours"
+    },
+    "category": {
+      "food": "Food",
+      "art": "Art",
+      "history": "History",
+      "culture": "Culture",
+      "sports": "Sports"
+    },
+    "items": {
+      "pekingDuck": {
+        "title": "Peking Duck Cooking Class"
+      },
+      "calligraphy": {
+        "title": "Calligraphy Workshop"
+      },
+      "terracotta": {
+        "title": "Terracotta Warrior Tour"
+      },
+      "tea": {
+        "title": "Tea Ceremony Experience"
+      },
+      "kungfu": {
+        "title": "Kung Fu Lesson"
+      },
+      "dimsum": {
+        "title": "Dim Sum Making"
+      }
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "readMore": "Read more",
+    "night": "night",
+    "bookingSuccess": "Booking Request Sent!",
+    "bookingSuccessMessage": "Your reservation at {hotelName} has been requested.",
+    "hostConfirmTime": "The host will confirm within 24 hours.",
+    "yes": "Yes",
+    "no": "No",
+    "continue": "Continue",
+    "generating": "Generating...",
+    "settings": "Settings",
+    "included": "Included",
+    "apply": "Apply",
+    "brand": {
+      "partner": "Tiaohai Partner"
+    },
+    "currency": {
+      "usd": "USD"
+    },
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "validation": {
+      "required": "Required"
+    },
+    "actions": {
+      "selectFile": "Select File",
+      "backToHome": "Back to Home"
+    },
+    "backToDashboard": "Back to Dashboard",
+    "metrics": {
+      "clicks": "clicks"
+    },
+    "amenities": {
+      "wifi": "WiFi",
+      "parking": "Parking",
+      "kitchen": "Kitchen",
+      "pool": "Pool",
+      "gym": "Gym"
+    },
+    "placeholders": {
+      "email": "your@email.com",
+      "firstName": "John",
+      "lastName": "Smith",
+      "phone": "+1 555-0123",
+      "passport": "P12345678",
+      "cardNumber": "1234 5678 9012 3456",
+      "cardHolder": "John Smith",
+      "cvv": "123",
+      "address": "Street address",
+      "city": "City",
+      "zip": "ZIP / Postal code"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "cities": {
+      "beijing": "Beijing",
+      "shanghai": "Shanghai",
+      "xian": "Xi'an",
+      "chengdu": "Chengdu",
+      "guangzhou": "Guangzhou",
+      "shenzhen": "Shenzhen",
+      "hangzhou": "Hangzhou",
+      "guilin": "Guilin"
+    },
+    "allCities": "All Cities"
+  },
+  "partner": {
+    "register": {
+      "title": "List Your Property",
+      "subtitle": "Join our platform and reach international travelers",
+      "steps": {
+        "basicInfo": {
+          "title": "Basic Information",
+          "description": "Tell us about your property"
+        },
+        "license": {
+          "title": "License & Facilities",
+          "description": "Required for foreign guest accommodation"
+        }
+      },
+      "form": {
+        "hotelNameZh": "Hotel Name (Chinese)",
+        "hotelNameZhPlaceholder": "e.g., 胡同里精品酒店",
+        "hotelNameEn": "Hotel Name (English)",
+        "hotelNameEnPlaceholder": "e.g., Hutong Boutique Hotel",
+        "contactEmail": "Contact Email",
+        "emailPlaceholder": "manager@hotel.com",
+        "city": "City",
+        "basePrice": "Base Price (CNY)",
+        "pricePlaceholder": "450",
+        "fullAddress": "Full Address",
+        "licenseNo": "Special Industry License No.",
+        "licenseNoPlaceholder": "京特旅字第20240001号",
+        "licenseNoHelper": "特种行业许可证号 - Required for hosting foreign guests",
+        "uploadLicense": "Upload License Photo",
+        "uploadHelp": "JPG, PNG or PDF. Max 10MB.",
+        "facilities": {
+          "title": "Facilities",
+          "elevator": "Elevator",
+          "elevatorDesc": "Essential for elderly guests",
+          "wifi": "Free WiFi",
+          "wifiDesc": "Standard for international travelers",
+          "westernToilet": "Western Toilet",
+          "toiletDesc": "Highly preferred by foreign guests"
+        }
+      },
+      "actions": {
+        "submit": "Submit Application"
+      },
+      "success": {
+        "title": "Application Submitted!",
+        "message": "We'll review your license and property details within 2 business days. You'll receive an email notification once approved."
+      }
+    }
+  },
+  "guideDashboard": {
+    "profile": "Profile",
+    "schedule": "Schedule",
+    "orders": "Orders",
+    "messages": "Messages",
+    "settings": "Settings",
+    "logout": "Logout",
+    "profileTitle": "My Profile",
+    "profileSubtitle": "Manage your guide profile and settings",
+    "profileNotFound": "Profile not found",
+    "saving": "Saving...",
+    "save": "Save",
+    "edit": "Edit",
+    "rating": "Rating",
+    "languages": "Languages",
+    "specialties": "Specialties",
+    "city": "City",
+    "basicInfo": "Basic Information",
+    "name": "Name",
+    "nameEn": "English Name",
+    "hourlyRate": "Hourly Rate",
+    "hour": "hour",
+    "license": "License",
+    "verified": "Verified",
+    "about": "About Me",
+    "bioEn": "Bio (English)",
+    "noBio": "No bio provided yet",
+    "photos": "Photos",
+    "addPhoto": "Add Photo",
+    "scheduleTitle": "Availability Schedule",
+    "scheduleSubtitle": "Manage your available dates and time slots",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "hasBooking": "Has Booking",
+    "bookings": "bookings",
+    "timeSlots": "Time Slots",
+    "booked": "Booked",
+    "markAvailable": "Mark Available",
+    "markUnavailable": "Mark Unavailable",
+    "quickActions": "Quick Actions",
+    "blockDates": "Block Dates",
+    "setRecurring": "Set Recurring",
+    "importCalendar": "Import Calendar",
+    "ordersTitle": "My Orders",
+    "ordersSubtitle": "View and manage your tour bookings",
+    "totalOrders": "Total Orders",
+    "upcoming": "Upcoming",
+    "completed": "Completed",
+    "totalEarnings": "Total Earnings",
+    "yourEarnings": "Your Earnings",
+    "hours": "hours",
+    "contact": "Contact",
+    "markComplete": "Mark Complete",
+    "cancel": "Cancel",
+    "noOrders": "No orders found",
+    "filter": {
+      "all": "All",
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "payment": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "refunded": "Refunded"
+    }
+  },
+  "chat": {
+    "title": "Messages",
+    "search": "Search conversations...",
+    "newChat": "New Chat",
+    "online": "Online",
+    "members": "members",
+    "typeMessage": "Type a message...",
+    "selectConversation": "Select a conversation to start chatting"
+  },
+  "guides": {
+    "title": "Local Guides",
+    "subtitle": "Find the perfect guide for your China adventure"
+  },
+  "experienceTypes": {
+    "workshop": "Workshop",
+    "dining": "Food & Dining",
+    "shopping": "Shopping",
+    "tour": "Tour"
+  },
+  "social": {
+    "title": "Travel Community",
+    "subtitle": "Connect with fellow travelers and locals",
+    "nav": {
+      "social": "Community"
+    },
+    "tab": {
+      "events": "Events",
+      "roommates": "Roommates"
+    },
+    "eventTypes": {
+      "pubCrawl": "Pub Crawl",
+      "cityWalk": "City Walk",
+      "foodTour": "Food Tour",
+      "workshop": "Workshop",
+      "other": "Other",
+      "social": "Social"
+    },
+    "cities": {
+      "beijing": "Beijing",
+      "shanghai": "Shanghai",
+      "xian": "Xi'an",
+      "chengdu": "Chengdu",
+      "hangzhou": "Hangzhou",
+      "guilin": "Guilin"
+    },
+    "roomTypes": {
+      "single": "Single Room",
+      "twin": "Twin Room",
+      "double": "Double Room",
+      "4bed": "4-bed Dorm",
+      "6bed": "6-bed Dorm",
+      "8bed": "8-bed Dorm"
+    },
+    "tags": {
+      "femaleOnly": "Female Only",
+      "maleOnly": "Male Only",
+      "quiet": "Quiet",
+      "social": "Social",
+      "budget": "Budget",
+      "central": "Central Location",
+      "soloTraveler": "Solo Traveler Friendly"
+    },
+    "titlePlaceholder": "e.g., Friday Night Pub Crawl",
+    "duration": {
+      "1hour": "1 hour",
+      "1_5hours": "1.5 hours",
+      "2hours": "2 hours",
+      "3hours": "3 hours",
+      "4hours": "4 hours",
+      "5hours": "5 hours"
+    }
+  }
+}

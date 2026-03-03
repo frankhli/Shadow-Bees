@@ -1,0 +1,29 @@
+{
+  "name": "tiaohai-global",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo '请分别启动各个服务' && echo '终端1: cd apps/web && npm run dev' && echo '终端2: cd apps/api && npm run dev' && echo '终端3: cd apps/ai && npm run dev'",
+    "# postinstall disabled for compatibility": "echo skipped"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "turbo": "^1.12.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "@types/bcryptjs": "^3.0.0",
+    "bcryptjs": "^3.0.3",
+    "pg": "^8.19.0",
+    "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

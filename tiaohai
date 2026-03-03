@@ -1,0 +1,107 @@
+#!/bin/bash
+# Tiaohai Global - 完整启动脚本
+
+set -e
+
+# 获取项目目录
+PROJECT_DIR="/Users/frank/Desktop/tiaohai-global"
+
+# 设置 Node.js 路径
+export NODE_HOME="$PROJECT_DIR/.tools/node"
+export PATH="$NODE_HOME/bin:$PATH"
+
+# 加载环境变量
+if [ -f "$PROJECT_DIR/.env.local" ]; then
+  set -a
+  source "$PROJECT_DIR/.env.local"
+  set +a
+fi
+
+cd "$PROJECT_DIR"
+
+# 颜色定义
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+show_help() {
+  echo -e "${BLUE}Tiaohai Global 开发工具${NC}"
+  echo ""
+  echo "用法: ./tiaohai [命令]"
+  echo ""
+  echo "命令:"
+  echo "  setup       初始化环境（首次运行）"
+  echo "  web         启动前端服务 (port 3000)"
+  echo "  api         启动 API 服务 (port 3001)"
+  echo "  ai          启动 AI 服务 (port 3002)"
+  echo "  env         显示环境信息"
+  echo ""
+  echo "示例:"
+  echo "  首次使用: ./tiaohai setup"
+  echo "  启动前端: ./tiaohai web"
+}
+
+cmd_setup() {
+  echo -e "${GREEN}🔧 初始化 Tiaohai Global 开发环境...${NC}"
+  echo ""
+  
+  echo "Node.js 版本: $(node --version)"
+  echo "项目路径: $PROJECT_DIR"
+  echo ""
+  
+  # 安装依赖
+  echo -e "${YELLOW}📦 检查依赖...${NC}"
+  if [ ! -d "$PROJECT_DIR/node_modules" ]; then
+    echo "安装根项目依赖..."
+    node "$NODE_HOME/lib/node_modules/npm/bin/npm-cli.js" install --legacy-peer-deps --ignore-scripts
+  fi
+  
+  echo ""
+  echo -e "${GREEN}✅ 环境初始化完成！${NC}"
+  echo ""
+  echo "现在可以启动服务了:"
+  echo "  终端1: ./tiaohai web"
+  echo "  终端2: ./tiaohai api"
+  echo "  终端3: ./tiaohai ai"
+}
+
+cmd_web() {
+  echo -e "${GREEN}🚀 启动 Web 前端 (http://localhost:3000)${NC}"
+  cd "$PROJECT_DIR/apps/web"
+  exec node ../../node_modules/next/dist/bin/next dev -p 3000
+}
+
+cmd_api() {
+  echo -e "${GREEN}🚀 启动 API 服务 (http://localhost:3001/api/v1)${NC}"
+  cd "$PROJECT_DIR/apps/api"
+  exec node -r ts-node/register -r tsconfig-paths/register src/main.ts
+}
+
+cmd_ai() {
+  echo -e "${GREEN}🚀 启动 AI 服务 (http://localhost:3002)${NC}"
+  cd "$PROJECT_DIR/apps/ai"
+  exec node ../../node_modules/tsx/dist/cli.mjs src/main.ts
+}
+
+cmd_env() {
+  echo -e "${BLUE}环境信息:${NC}"
+  echo "Node.js: $(node --version)"
+  echo "路径: $NODE_HOME"
+  echo "项目: $PROJECT_DIR"
+  echo ""
+  echo -e "${BLUE}服务地址:${NC}"
+  echo "Web:    http://localhost:3000"
+  echo "API:    http://localhost:3001/api/v1"
+  echo "AI:     http://localhost:3002"
+}
+
+# 主命令处理
+case "$1" in
+  setup) cmd_setup ;;
+  web) cmd_web ;;
+  api) cmd_api ;;
+  ai) cmd_ai ;;
+  env) cmd_env ;;
+  *) show_help ;;
+esac

@@ -1,0 +1,1033 @@
+{
+  "metadata": {
+    "title": "Tiaohai Global - AIコンシェルジュ旅行",
+    "description": "AIコンシェルジュと共に本物の中国を発見。ブティックホテル、ローカルガイド、文化体験を24時間サポート。"
+  },
+  "nav": {
+    "hotels": "ホテル",
+    "stays": "宿泊",
+    "guides": "ガイド",
+    "experiences": "体験",
+    "listProperty": "物件を掲載",
+    "dashboard": "ダッシュボード",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "profile": "プロフィール",
+    "orders": "予約履歴",
+    "logout": "ログアウト",
+    "saved": "保存済み"
+  },
+  "hero": {
+    "title": "AIコンシェルジュと共に",
+    "titleHighlight": "本物の中国を発見",
+    "description": "ブティックホテル、ローカルガイド、文化体験。あなたの言語で24時間AIサポート。",
+    "search": {
+      "where": "場所",
+      "checkIn": "チェックイン",
+      "checkOut": "チェックアウト",
+      "who": "人数",
+      "placeholder": "目的地を検索",
+      "addDates": "日付を追加",
+      "addGuests": "ゲストを追加",
+      "adults": "大人",
+      "adultsDesc": "13歳以上",
+      "button": "検索"
+    }
+  },
+  "home": {
+    "featuredStays": "おすすめの宿泊先",
+    "showAll": "すべて表示",
+    "night": "泊",
+    "popularDestinations": "人気の目的地",
+    "stays": "件の宿泊先",
+    "trust": {
+      "verified": "認定ホテル",
+      "verifiedDesc": "すべての物件を検査済み",
+      "support": "24時間AIサポート",
+      "supportDesc": "あなたの言語で即時サポート",
+      "reviews": "正直なレビュー",
+      "reviewsDesc": "実際の宿泊者からのみ",
+      "booking": "柔軟な予約",
+      "bookingDesc": "無料キャンセル可能"
+    },
+    "whyChoose": {
+      "title": "安心して中国旅行",
+      "aiConcierge": {
+        "title": "24時間AIコンシェルジュ",
+        "desc": "ホテル、現地の風習、旅行のヒントについて、あなたの言語ですぐに回答。"
+      },
+      "verified": {
+        "title": "認定・検査済み",
+        "desc": "すべての物件を個別に検査。西洋の設備を確認し、 surprisesをなくします。"
+      },
+      "englishSupport": {
+        "title": "英語サポート",
+        "desc": "WhatsApp、WeChat、メールで、必要な時にいつでも人間のスタッフが対応。"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "予約と保存したホテルにアクセスするにはサインインしてください",
+      "email": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "password": "パスワード",
+      "rememberMe": "ログイン状態を保持",
+      "forgotPassword": "パスワードを忘れた？",
+      "button": "サインイン",
+      "loading": "サインイン中...",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signupLink": "新規登録",
+      "demoTitle": "デモアカウント（クリックで自動入力）",
+      "demoUser": "デモユーザー",
+      "errors": {
+        "requiredFields": "メールアドレスとパスワードを入力してください"
+      }
+    },
+    "register": {
+      "title": "アカウント作成",
+      "subtitle": "中国旅行の予約を始めるにはTiaohaiに登録してください",
+      "firstName": "名",
+      "firstNamePlaceholder": "太郎",
+      "lastName": "姓",
+      "lastNamePlaceholder": "山田",
+      "email": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "password": "パスワード",
+      "confirmPassword": "パスワード（確認）",
+      "passwordStrength": {
+        "weak": "弱い",
+        "medium": "普通",
+        "strong": "強い"
+      },
+      "agreeTerms": "同意します",
+      "termsLink": "利用規約",
+      "and": "および",
+      "privacyLink": "プライバシーポリシー",
+      "button": "アカウント作成",
+      "loading": "アカウント作成中...",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "loginLink": "サインイン",
+      "errors": {
+        "fullName": "フルネームを入力してください",
+        "email": "メールアドレスを入力してください",
+        "passwordLength": "パスワードは8文字以上必要です",
+        "passwordMatch": "パスワードが一致しません",
+        "terms": "利用規約に同意してください"
+      }
+    }
+  },
+  "hotel": {
+    "facilities": {
+      "elevator": "エレベーター",
+      "noElevator": "エレベーターなし",
+      "westernToilet": "洋式トイレ",
+      "wifi": "WiFi",
+      "englishStaff": "英語スタッフ",
+      "airCon": "エアコン"
+    },
+    "honestTags": {
+      "title": "知っておくべきこと",
+      "elevator": "エレベーターなし、無料荷物運びサービスあり",
+      "toilet": "洋式バスルーム",
+      "location": "駅まで徒歩{minutes}分",
+      "english": "英語スタッフ対応可能"
+    },
+    "price": {
+      "perNight": "1泊",
+      "bookingLink": "Booking.comで見る",
+      "airbnbLink": "Airbnbで見る"
+    },
+    "aiConcierge": {
+      "online": "AIコンシェルジュオンライン",
+      "chat": "AIとチャット",
+      "placeholder": "このホテルについて質問..."
+    },
+    "detail": {
+      "backToSearch": "検索に戻る",
+      "back": "戻る",
+      "reviews": "件のレビュー",
+      "superhost": "スーパーホスト",
+      "superhostDesc": "スーパーホストは経験豊富で高評価のホストで、素晴らしい滞在を提供することを約束しています。",
+      "share": "共有",
+      "save": "保存",
+      "hostedBy": "ホスト",
+      "guests": "ゲスト",
+      "bedroom": "寝室",
+      "bedrooms": "寝室",
+      "bed": "ベッド",
+      "beds": "ベッド",
+      "bath": "バス",
+      "about": "この宿泊先について",
+      "amenities": "設備・サービス",
+      "showAll": "すべて表示",
+      "where": "ロケーション",
+      "greatLocation": "最高のロケーション",
+      "locationDesc": "最近のゲストの95%がロケーションに5つ星を付けました。",
+      "checkIn": "チェックイン",
+      "checkOut": "チェックアウト",
+      "addDate": "日付を追加",
+      "reserve": "予約する",
+      "reserveBtn": "空室状況を確認",
+      "applyDates": "日付を適用",
+      "notAvailable": "空室なし",
+      "charged": "まだ請求されません",
+      "price": "価格",
+      "total": "合計",
+      "beforeTaxes": "税抜",
+      "bookOnTiaohai": "Tiaohaiで予約",
+      "compareSites": "サイトを比較",
+      "processing": "処理中...",
+      "selectDates": "日付を選択",
+      "invalidDates": "無効な日付",
+      "tooManyGuests": "ゲスト数が多すぎます",
+      "cleaningFee": "清掃料金",
+      "serviceFee": "サービス料金",
+      "savings": "プライスマッチ割引",
+      "selectDatesError": "チェックインとチェックアウトの日付を選択してください。",
+      "checkOutAfterCheckIn": "チェックアウトはチェックインより後である必要があります。",
+      "datesNotAvailable": "選択した日付は空室がありません。別の日付を選択してください。",
+      "maxGuests": "最大{max}名のゲストが可能です。"
+    },
+    "roomTypes": "部屋タイプ",
+    "availableBeds": "利用可能",
+    "houseRules": "ハウスルール"
+  },
+  "checkout": {
+    "title": "予約を完了",
+    "back": "戻る",
+    "step1": "ゲスト情報",
+    "step2": "支払い",
+    "step3": "確認",
+    "guestInfo": {
+      "title": "ゲスト情報",
+      "subtitle": "中国のホテル登録に必要です。情報は安全に暗号化されます。",
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "メール",
+      "phone": "電話",
+      "passportNumber": "パスポート番号",
+      "nationality": "国籍",
+      "dateOfBirth": "生年月日",
+      "required": "必須",
+      "selectCountry": "国を選択",
+      "errors": {
+        "firstName": "名を入力してください",
+        "lastName": "姓を入力してください",
+        "email": "メールを入力してください",
+        "emailInvalid": "無効なメールアドレス",
+        "phone": "電話番号を入力してください",
+        "passportNumber": "パスポート番号を入力してください",
+        "nationality": "国籍を入力してください",
+        "dateOfBirth": "生年月日を入力してください"
+      }
+    },
+    "payment": {
+      "title": "支払い",
+      "cardNumber": "カード番号",
+      "cardHolder": "カード名義人",
+      "expiry": "有効期限",
+      "cvv": "CVV",
+      "billingAddress": "請求先住所",
+      "secure": "支払いは安全に暗号化されています",
+      "securePayment": "安全な支払い",
+      "secureDesc": "お支払い情報は暗号化されて安全です",
+      "month": "月",
+      "year": "年",
+      "monthPlaceholder": "MM",
+      "yearPlaceholder": "YYYY",
+      "errors": {
+        "cardNumber": "カード番号は16桁必要です",
+        "cardHolder": "カード名義人を入力してください",
+        "expiry": "有効期限を入力してください",
+        "cvv": "CVVは3桁必要です",
+        "billingAddress": "請求先住所を入力してください"
+      }
+    },
+    "bookingSummary": "予約概要",
+    "checkIn": "チェックイン",
+    "checkOut": "チェックアウト",
+    "guests": "ゲスト",
+    "priceDetails": "価格詳細",
+    "nights": "泊",
+    "cleaningFee": "清掃料金",
+    "serviceFee": "サービス料金",
+    "total": "合計",
+    "totalPaid": "支払い合計",
+    "continue": "続行",
+    "confirm": "予約を確定",
+    "processing": "処理中...",
+    "success": {
+      "title": "予約完了！",
+      "message": "{hotelName}の予約が確認されました。",
+      "orderId": "予約番号",
+      "dates": "日付",
+      "guest": "ゲスト",
+      "whatsNext": "次は？",
+      "checkEmail": "予約確認メールをご確認ください",
+      "contactHost": "ホストに連絡",
+      "downloadVoucher": "予約券をダウンロード",
+      "addToCalendar": "カレンダーに追加",
+      "viewOrders": "予約履歴を見る",
+      "continueBrowsing": "閲覧を続ける"
+    }
+  },
+  "orders": {
+    "title": "予約履歴",
+    "backToOrders": "予約履歴に戻る",
+    "backToProfile": "プロフィールに戻る",
+    "tabs": {
+      "all": "すべて",
+      "upcoming": "予定",
+      "completed": "完了",
+      "cancelled": "キャンセル",
+      "pending": "保留中"
+    },
+    "status": {
+      "confirmed": "確定",
+      "completed": "完了",
+      "cancelled": "キャンセル済み",
+      "pending": "保留中"
+    },
+    "noOrders": "予約が見つかりません",
+    "startBooking": "宿泊先を探す",
+    "viewDetails": "詳細を見る",
+    "download": "領収書をダウンロード",
+    "review": "レビューを書く",
+    "reviewed": "レビュー済み",
+    "cancel": "予約をキャンセル",
+    "orderDetails": "予約詳細",
+    "contactHost": "ホストに連絡",
+    "getDirections": "道順を取得",
+    "reviewNow": "レビューを書く",
+    "order": "予約",
+    "nights": "泊",
+    "guests": "ゲスト",
+    "total": "合計",
+    "bookedOn": "予約日",
+    "rateYourStay": "滞在を評価",
+    "shareExperience": "体験を共有...",
+    "submitReview": "レビューを送信",
+    "yourHost": "あなたのホスト",
+    "callHost": "ホストに電話",
+    "priceDetails": "料金詳細",
+    "downloadVoucher": "バウチャーをダウンロード",
+    "needHelp": "予約についてヘルプが必要ですか？",
+    "supportAvailable": "AIコンシェルジュとサポートチームが24時間365日対応",
+    "contactSupport": "サポートに連絡",
+    "details": {
+      "dates": "日付",
+      "guests": "ゲスト"
+    },
+    "actions": {
+      "writeReview": "レビューを書く",
+      "reviewed": "レビュー済み"
+    },
+    "empty": {
+      "noOrders": "オーダーがありません",
+      "exploreHotels": "ホテルを探す"
+    },
+    "beds": "ベッド"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "edit": "プロフィール編集",
+    "memberSince": "メンバー since",
+    "trips": "旅行",
+    "saved": "保存済み",
+    "reviews": "レビュー",
+    "member": "メンバー",
+    "overview": "概要",
+    "orders": "予約履歴",
+    "savedHotels": "保存したホテル",
+    "myReviews": "マイレビュー",
+    "settings": "設定",
+    "personalInfo": "個人情報",
+    "email": "メール",
+    "phone": "電話",
+    "nationality": "国籍",
+    "recentActivity": "最近のアクティビティ",
+    "findHotels": "ホテルを探す",
+    "exploreDestinations": "新しい目的地を探る",
+    "form": {
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "メール",
+      "phone": "電話"
+    },
+    "labels": {
+      "email": "メール",
+      "phone": "電話",
+      "nationality": "国籍",
+      "memberSince": "会員登録日"
+    },
+    "quickLinks": {
+      "myOrders": "マイオーダー",
+      "viewHistory": "予約履歴を見る"
+    },
+    "profile": {
+      "labels": {
+        "email": "メール",
+        "phone": "電話",
+        "nationality": "国籍",
+        "memberSince": "入会日"
+      },
+      "quickLinks": {
+        "myOrders": "マイ予約",
+        "viewHistory": "履歴を見る"
+      }
+    }
+  },
+  "features": {
+    "title": "24時間AI旅行アシスタント",
+    "description": "ホテル、現地の風習、旅行のヒントについて、あなたの言語ですぐに回答。",
+    "askAnything": {
+      "title": "何でも質問",
+      "description": "エレベーターがない？問題ありません。代替案を見つけます。"
+    },
+    "culturalBridge": {
+      "title": "文化の架け橋",
+      "description": "到着前に中国の風習を学びましょう。"
+    },
+    "emergencyHelp": {
+      "title": "緊急時のサポート",
+      "description": "必要な時にすぐにサポート。"
+    }
+  },
+  "footer": {
+    "support": "サポート",
+    "helpCenter": "ヘルプセンター",
+    "safety": "安全情報",
+    "cancellation": "キャンセルオプション",
+    "community": "コミュニティ",
+    "referFriend": "友達を紹介",
+    "travelGuide": "旅行ガイド",
+    "hosting": "ホスティング",
+    "listProperty": "物件を掲載",
+    "hostResources": "ホストリソース",
+    "about": "について",
+    "aboutUs": "会社概要",
+    "careers": "採用情報",
+    "press": "プレス",
+    "comingSoon": "準備中",
+    "privacy": "プライバシー",
+    "terms": "利用規約",
+    "sitemap": "サイトマップ",
+    "copyright": "© 2024 Tiaohai, Inc. All rights reserved."
+  },
+  "dashboard": {
+    "title": "ホテルダッシュボード",
+    "hotel": {
+      "status": {
+        "active": "営業中"
+      },
+      "nav": {
+        "aiContent": "AIコンテンツ",
+        "analytics": " 分析",
+        "viewPublicPage": "公開ページを見る"
+      },
+      "stats": {
+        "totalRooms": "総部屋数",
+        "todayBookings": "本日の予約",
+        "todayRevenue": "本日の収益",
+        "changeFromYesterday": "昨日から+1",
+        "occupancyRate": "稼働率",
+        "thisMonth": "今月"
+      },
+      "tabs": {
+        "calendar": "カレンダー",
+        "orders": "予約",
+        "aiConversations": "AI会話",
+        "finance": "財務"
+      },
+      "calendar": {
+        "title": "空室カレンダー",
+        "legend": {
+          "available": "空室あり",
+          "limited": "残りわずか",
+          "full": "満室"
+        },
+        "roomsLeft": "部屋残り",
+        "full": "満室"
+      },
+      "orders": {
+        "title": "最近の予約",
+        "table": {
+          "orderId": "予約ID",
+          "guest": "ゲスト",
+          "checkIn": "チェックイン",
+          "nights": "泊数",
+          "amount": "金額",
+          "status": "ステータス"
+        }
+      },
+      "aiConversations": {
+        "needAttention": "要注意",
+        "needsHuman": "人間の対応が必要",
+        "handledBy": "対応者:",
+        "handler": {
+          "ai": "AI",
+          "human": "人間"
+        },
+        "takeOver": "引き継ぐ"
+      },
+      "finance": {
+        "revenueTitle": "今月の収益",
+        "afterFee": "プラットフォーム手数料15%差し引き後",
+        "payoutSchedule": "支払いスケジュール",
+        "nextPayout": "次回支払い: $425 (T+7)",
+        "transactionHistory": "取引履歴"
+      }
+    },
+    "orders": {
+      "status": {
+        "confirmed": "確認済み",
+        "completed": "完了"
+      }
+    },
+    "conversations": {
+      "title": "ゲスト会話",
+      "status": {
+        "active": "進行中",
+        "resolved": "解決済み",
+        "escalated": "エスカレーション",
+        "pending": "保留中"
+      }
+    },
+    "content": {
+      "title": "AIコンテンツジェネレーター",
+      "subtitle": "GPT-4でマーケティングコンテンツを生成",
+      "platform": "プラットフォーム",
+      "contentStyle": "コンテンツスタイル",
+      "hotelInfo": "ホテル情報",
+      "generateButton": "{platform}コンテンツを生成",
+      "generatedContent": "生成されたコンテンツ",
+      "fallbackMode": "フォールバックモードを使用中",
+      "labels": {
+        "hook": "フック",
+        "script": "スクリプト",
+        "voiceover": "ナレーション",
+        "captions": "キャプション",
+        "hashtags": "ハッシュタグ",
+        "shootingTips": "撮影のヒント",
+        "music": "音楽",
+        "title": "タイトル",
+        "content": "コンテンツ",
+        "highlights": "ハイライト",
+        "photoTips": "写真のヒント",
+        "titleMaxChars": "タイトル（最大40文字）",
+        "description": "説明",
+        "keySellingPoints": "主な販売ポイント",
+        "roomHighlights": "部屋のハイライト",
+        "location": "ロケーション",
+        "policiesNotes": "ポリシーと注意事項",
+        "caption": "キャプション",
+        "storyIdeas": "ストーリーアイデア"
+      },
+      "styles": {
+        "lifestyle": "ライフスタイル",
+        "urgent": "緊急/FOMO",
+        "professional": "プロフェッショナル",
+        "funny": "おもしろ"
+      },
+      "styleDescriptions": {
+        "lifestyle": "憧れの、体験重視",
+        "urgent": "緊急性と希少性を演出",
+        "professional": "情報的、信頼性",
+        "funny": "ユーモラス、共感"
+      },
+      "platformDescriptions": {
+        "tiktok": "ショート動画スクリプト",
+        "xiaohongshu": "中国のライフスタイルプラットフォーム",
+        "instagram": "写真キャプション",
+        "booking": "リスト最適化"
+      },
+      "facilities": {
+        "elevator": "エレベーター",
+        "wifi": "WiFi",
+        "western_toilet": "洋式トイレ",
+        "english_staff": "英語スタッフ",
+        "air_con": "エアコン"
+      }
+    },
+    "analytics": {
+      "title": "紹介分析",
+      "subtitle": "Tiaohaiリストからのクリックとコンバージョンを追跡",
+      "stats": {
+        "totalClicks": "総クリック数",
+        "weeklyGrowth": "今週+12%",
+        "ofTotal": "総計の",
+        "estimatedRevenue": "推定収益",
+        "estimatedBookings": "推定予約数 @ 3.5%"
+      },
+      "sections": {
+        "platformBreakdown": "プラットフォーム別クリック",
+        "dailyTrend": "日次トレンド（過去7日間）",
+        "recentClicks": "最近のクリック"
+      },
+      "recent": {
+        "via": "経由",
+        "clicked": "クリック済み"
+      },
+      "tip": {
+        "title": "ヒント",
+        "content": "Booking.comの紹介率は平均以上です！Tiaohaiリストに写真を追加して、さらにコンバージョンを向上させることを検討してください。"
+      }
+    }
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "問題が発生しました",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "submit": "送信",
+    "search": "検索",
+    "filter": "フィルター",
+    "sort": "並び替え",
+    "showMore": "もっと見る",
+    "showLess": "少なく見る",
+    "readMore": "続きを読む",
+    "night": "泊",
+    "bookingSuccess": "予約リクエストを送信しました！",
+    "bookingSuccessMessage": "{hotelName}の予約をリクエストしました。",
+    "hostConfirmTime": "ホストが24時間以内に確認します。",
+    "yes": "はい",
+    "no": "いいえ",
+    "continue": "続ける",
+    "generating": "生成中...",
+    "apply": "適用",
+    "settings": "設定",
+    "included": "含む",
+    "brand": {
+      "partner": "Tiaohaiパートナー"
+    },
+    "currency": {
+      "usd": "USD"
+    },
+    "cities": {
+      "beijing": "北京",
+      "shanghai": "上海",
+      "xian": "西安",
+      "chengdu": "成都",
+      "guilin": "桂林",
+      "hangzhou": "杭州",
+      "suzhou": "蘇州",
+      "guangzhou": "広州",
+      "shenzhen": "深セン"
+    },
+    "countries": {
+      "US": "アメリカ",
+      "UK": "イギリス",
+      "CA": "カナダ",
+      "AU": "オーストラリア",
+      "DE": "ドイツ",
+      "FR": "フランス",
+      "JP": "日本",
+      "KR": "韓国",
+      "SG": "シンガポール",
+      "OTHER": "その他"
+    },
+    "days": {
+      "sun": "日",
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土"
+    },
+    "validation": {
+      "required": "必須"
+    },
+    "actions": {
+      "selectFile": "ファイルを選択",
+      "backToHome": "ホームに戻る"
+    },
+    "backToDashboard": "ダッシュボードに戻る",
+    "metrics": {
+      "clicks": "クリック"
+    },
+    "amenities": {
+      "wifi": "WiFi",
+      "parking": "駐車場",
+      "kitchen": "キッチン",
+      "pool": "プール",
+      "gym": "ジム"
+    },
+    "placeholders": {
+      "email": "your@email.com",
+      "firstName": "太郎",
+      "lastName": "山田",
+      "phone": "+81 90-1234-5678",
+      "passport": "P12345678",
+      "cardNumber": "1234 5678 9012 3456",
+      "cardHolder": "TARO YAMADA",
+      "cvv": "123",
+      "address": "住所",
+      "city": "市",
+      "zip": "郵便番号"
+    },
+    "allCities": "すべての都市"
+  },
+  "static": {
+    "help": {
+      "title": "何かお困りですか？",
+      "bookingGuide": "予約ガイド",
+      "safetyInfo": "安全情報",
+      "payments": "お支払い",
+      "contactUs": "お問い合わせ",
+      "faqTitle": "よくある質問",
+      "questions": {
+        "reservation": "予約方法を教えてください",
+        "reservationAnswer": "ホテルを閲覧し、日付を選択して「予約」をクリックしてください。アカウントを作成し、中国のホテル登録のためのパスポート情報を含む宿泊者情報を入力する必要があります。",
+        "cancellation": "キャンセルポリシーは何ですか？",
+        "cancellationAnswer": "ほとんどの予約で、チェックインの24時間前まで無料キャンセルが可能です。特別なレートには異なるポリシーが適用される場合があります。",
+        "passport": "なぜパスポート情報が必要ですか？",
+        "passportAnswer": "中国の法律では、すべてのホテルが外国人宿泊者をパスポート情報で登録する必要があります。これはすべての国際旅行者に義務付けられています。",
+        "payment": "国際クレジットカードで支払えますか？",
+        "paymentAnswer": "はい、主要な国際クレジットカードをご利用いただけます。お支払いはSSL暗号化で安全に処理されます。"
+      },
+      "stillNeedHelp": "まだお困りですか？",
+      "emailUs": "メールでお問い合わせ"
+    },
+    "safety": {
+      "title": "お客様の安全が最優先です",
+      "subtitle": "すべての予約が安全であることを確保するために尽力しています",
+      "verifiedProperties": "認証済み施設",
+      "verifiedPropertiesDesc": "当プラットフォームのすべてのホテルと施設は、品質と安全基準に基づいて審査されています。",
+      "guestProtection": "ゲスト保護",
+      "guestProtectionDesc": "24時間365日のサポートと安全な支払い処理で予約を保護します。",
+      "communityStandards": "コミュニティ基準",
+      "communityStandardsDesc": "ホストとゲストの間の敬意ある交流を確保するために厳格なポリシーを実施しています。",
+      "cleanSafe": "清潔で安全",
+      "cleanSafeDesc": "掲載されているすべての施設に対する強化された清掃プロトコルと安全ガイドライン。",
+      "haveConcerns": "安全上の懸念がありますか？",
+      "teamAvailable": "当社の安全チームは24時間365日、いかなる懸念にも対応可能です",
+      "contactTeam": "安全チームに連絡"
+    },
+    "cancellation": {
+      "title": "キャンセルポリシー",
+      "subtitle": "各施設には独自のキャンセルポリシーがあります。予約前にご確認ください。",
+      "flexible": "フレキシブル",
+      "flexibleDesc": "チェックイン24時間前まで無料キャンセル",
+      "flexibleFeatures": [
+        "チェックイン24時間前まで全額返金",
+        "質問なし",
+        "即時返金処理"
+      ],
+      "moderate": "モデレート",
+      "moderateDesc": "チェックイン5日前まで無料キャンセル",
+      "moderateFeatures": [
+        "チェックイン5日前まで全額返金",
+        "24時間前まで50%返金",
+        "標準的な返金処理"
+      ],
+      "strict": "ストリクト",
+      "strictDesc": "予約後48時間以内に無料キャンセル",
+      "strictFeatures": [
+        "予約後48時間以内に全額返金",
+        "チェックイン7日前まで50%返金",
+        "処理には5〜10営業日かかる場合があります"
+      ],
+      "howToCancel": "予約のキャンセル方法",
+      "steps": {
+        "step1": "アカウントにログインし「マイオーダー」に移動",
+        "step2": "キャンセルしたい予約を見つける",
+        "step3": "「予約をキャンセル」ボタンをクリック",
+        "step4": "ポリシーに従って返金を受けるためにキャンセルを確認"
+      }
+    },
+    "guides": {
+      "title": "旅行ガイド",
+      "subtitle": "中国での素晴らしい旅行に必要なすべて",
+      "gettingAround": "移動手段",
+      "gettingAroundDesc": "中国の都市を移動するためのヒント：地下鉄、配車アプリ、高速鉄道。",
+      "foodGuide": "フードガイド",
+      "foodGuideDesc": "屋台料理から高級料理まで - 中国で食べるものと注文の仕方。",
+      "attractions": "必見の観光地",
+      "attractionsDesc": "主要中国都市のトップ観光スポットと隠れた名所。",
+      "internet": "インターネットと接続",
+      "internetDesc": "接続を維持する方法：VPN、現地SIMカード、WiFiオプション。",
+      "popularDestinations": "人気の目的地",
+      "beijingHighlights": "万里の長城、紫禁城、胡同",
+      "shanghaiHighlights": "外灘、豫園、フランス租界",
+      "xianHighlights": "兵馬俑、城壁、回民街",
+      "chengduHighlights": "ジャイアントパンダ、火鍋、茶館",
+      "guilinHighlights": "漓江、カルスト山脈、陽朔",
+      "hangzhouHighlights": "西湖、龍井茶、霊隠寺"
+    }
+  },
+  "aiChat": {
+    "title": "AIコンシェルジュ",
+    "subtitle": "あなたの言語で24時間即時回答",
+    "welcome": {
+      "withHotel": "こんにちは！{hotelName}のAIアシスタントです。ホテル、周辺地域、旅行のヒントについて質問にお答えします。何か知りたいことはありますか？",
+      "default": "こんにちは！Tiaohaiコンシェルジュです。中国旅行に関する質問にお手伝いできます。何か知りたいことはありますか？"
+    },
+    "errorMessage": "接続に問題が発生しています。人間のエージェントがまもなく対応します。",
+    "humanAgentNotified": "人間のエージェントに通知済み",
+    "humanReplyTime": "⏱️ 人間のエージェントが4時間以内に返信します",
+    "placeholder": "質問を入力...",
+    "thinking": "考え中...",
+    "quickQuestions": {
+      "elevator": "エレベーターはありますか？",
+      "forbiddenCity": "紫禁城までどのくらいですか？",
+      "airportPickup": "空港送迎はありますか？",
+      "breakfast": "朝食は含まれていますか？",
+      "checkIn": "チェックインは何時ですか？"
+    },
+    "travelTips": {
+      "title": " 中国旅行のヒント:",
+      "tapWater": "• 水道水は飲めません",
+      "toiletPaper": "• 公衆トイレ用にトイレットペーパーを持参してください",
+      "wechat": "• 支払い用にWeChatをダウンロードしてください"
+    }
+  },
+  "aiChatWidget": {
+    "badge": "AI",
+    "thinking": "考え中...",
+    "welcomeMessage": "こんにちは！{hotelName}のAIコンシェルジュです。今日はどのようにお手伝いできますか？",
+    "responses": {
+      "elevator": "エレベーターはありませんが、スタッフがお荷物をお部屋まで運ぶのをお手伝いします。",
+      "toilet": "はい！すべてのお部屋に温水洗浄便座付きの洋式トイレがあります。",
+      "wifi": "はい、施設全体で無料の高速WiFiを提供しています。",
+      "checkin": "チェックインは14:00から、チェックアウトは12:00までです。",
+      "location": "私たちは胡同の中心部に位置し、最寄りの地下鉄駅から徒歩約5分です。",
+      "default": "素晴らしい質問です！お手伝いさせていただきます。より正確な情報をお伝えするため、詳細を教えていただけますか？"
+    }
+  },
+  "guide": {
+    "reviews": "件のレビュー",
+    "yearsExperience": "年の経験",
+    "toursCompleted": "完了したツアー",
+    "languages": "言語",
+    "about": "概要",
+    "license": "ライセンス",
+    "licenseLabel": "公式ツアーガイドライセンス:",
+    "reviewsTitle": "レビュー",
+    "bookTitle": "このガイドを予約",
+    "perHour": "/時間",
+    "minimumHours": "最低2時間",
+    "selectDate": "日付を選択",
+    "duration": "時間",
+    "hours": "時間",
+    "hoursShort": "{h}時間",
+    "serviceFee": "サービス料",
+    "total": "合計",
+    "requestToBook": "予約をリクエスト",
+    "selectDateButton": "日付を選択",
+    "bookingNote": "まだ請求されません。まず空室状況を確認します。",
+    "freeCancellation": "無料キャンセル（24時間）",
+    "verifiedGuide": "認定ライセンスガイド",
+    "securePayment": "安全な支払い"
+  },
+  "booking": {
+    "opening": "開いています..."
+  },
+  "partner": {
+    "register": {
+      "title": "物件を掲載",
+      "subtitle": "当プラットフォームに参加して、国際旅行者にリーチ",
+      "steps": {
+        "basicInfo": {
+          "title": "基本情報",
+          "description": "物件について教えてください"
+        },
+        "license": {
+          "title": "ライセンスと設備",
+          "description": "外国人宿泊者の宿泊に必要"
+        }
+      },
+      "form": {
+        "hotelNameZh": "ホテル名（中国語）",
+        "hotelNameZhPlaceholder": "例: 胡同里精品酒店",
+        "hotelNameEn": "ホテル名（英語）",
+        "hotelNameEnPlaceholder": "例: Hutong Boutique Hotel",
+        "contactEmail": "連絡先メール",
+        "emailPlaceholder": "manager@hotel.com",
+        "city": "都市",
+        "basePrice": "基本価格（元）",
+        "pricePlaceholder": "450",
+        "fullAddress": "完全な住所",
+        "licenseNo": "特種行业許可証番号",
+        "licenseNoPlaceholder": "京特旅字第20240001号",
+        "licenseNoHelper": "外国人宿泊者の宿泊に必要",
+        "uploadLicense": "許可証の写真をアップロード",
+        "uploadHelp": "JPG、PNGまたはPDF。最大10MB。",
+        "facilities": {
+          "title": "設備",
+          "elevator": "エレベーター",
+          "elevatorDesc": "高齢者に必須",
+          "wifi": "無料WiFi",
+          "wifiDesc": "国際旅行者の標準",
+          "westernToilet": "洋式トイレ",
+          "toiletDesc": "外国人ゲストに好まれています"
+        }
+      },
+      "actions": {
+        "submit": "申請を送信"
+      },
+      "success": {
+        "title": "申請送信完了！",
+        "message": "許可証と物件の詳細を2営業日以内に審査します。承認されたらメールで通知します。"
+      }
+    }
+  },
+  "experiences": {
+    "title": "文化体験",
+    "subtitle": "国際旅行者のために厳選された本物のワークショップ、フードツアー、文化活動。",
+    "bookNow": "今すぐ予約",
+    "duration": {
+      "2hours": "2時間",
+      "3hours": "3時間",
+      "4hours": "4時間"
+    },
+    "category": {
+      "food": "フード",
+      "art": "アート",
+      "history": "歴史",
+      "culture": "文化",
+      "sports": "スポーツ"
+    },
+    "items": {
+      "pekingDuck": {
+        "title": "北京ダック料理教室"
+      },
+      "calligraphy": {
+        "title": "書道ワークショップ"
+      },
+      "terracotta": {
+        "title": "兵馬俑ツアー"
+      },
+      "tea": {
+        "title": "茶道体験"
+      },
+      "kungfu": {
+        "title": "カンフーレッスン"
+      },
+      "dimsum": {
+        "title": "飲茶作り体験"
+      }
+    }
+  },
+  "guideDashboard": {
+    "profile": "プロフィール",
+    "schedule": "スケジュール",
+    "orders": "予約",
+    "messages": "メッセージ",
+    "settings": "設定",
+    "logout": "ログアウト",
+    "profileTitle": "マイプロフィール",
+    "profileSubtitle": "ガイドプロフィールと設定を管理",
+    "profileNotFound": "プロフィールが見つかりません",
+    "saving": "保存中...",
+    "save": "保存",
+    "edit": "編集",
+    "rating": "評価",
+    "languages": "言語",
+    "specialties": "専門分野",
+    "city": "都市",
+    "basicInfo": "基本情報",
+    "name": "名前",
+    "nameEn": "名前（英語）",
+    "hourlyRate": "時給",
+    "hour": "時間",
+    "license": "ライセンス",
+    "verified": "認証済み",
+    "about": "自己紹介",
+    "bioEn": "自己紹介（英語）",
+    "noBio": "自己紹介がありません",
+    "photos": "写真",
+    "addPhoto": "写真を追加",
+    "scheduleTitle": "予約可能スケジュール",
+    "scheduleSubtitle": "予約可能な日付と時間帯を管理",
+    "available": "予約可能",
+    "unavailable": "予約不可",
+    "hasBooking": "予約あり",
+    "bookings": "予約",
+    "timeSlots": "時間帯",
+    "booked": "予約済み",
+    "markAvailable": "予約可能に設定",
+    "markUnavailable": "予約不可に設定",
+    "quickActions": "クイックアクション",
+    "blockDates": "日付をブロック",
+    "setRecurring": "繰り返しを設定",
+    "importCalendar": "カレンダーをインポート",
+    "ordersTitle": "マイ予約",
+    "ordersSubtitle": "ツアー予約の確認と管理",
+    "totalOrders": "予約総数",
+    "upcoming": "予定",
+    "completed": "完了",
+    "totalEarnings": "総収入"
+  },
+  "guides": {
+    "title": "ローカルガイド",
+    "subtitle": "中国の冒険に最適なガイドを見つけよう"
+  },
+  "experienceTypes": {
+    "workshop": "ワークショップ",
+    "dining": "食事＆ダイニング",
+    "shopping": "ショッピング",
+    "tour": "ツアー"
+  },
+  "social": {
+    "title": "旅行コミュニティ",
+    "subtitle": "仲間の旅行者や現地の人と繋がろう",
+    "nav": {
+      "social": "コミュニティ"
+    },
+    "tab": {
+      "events": "イベント",
+      "roommates": "ルームメイト"
+    },
+    "eventTypes": {
+      "pubCrawl": "パブクロール",
+      "cityWalk": "シティウォーク",
+      "foodTour": "フードツアー",
+      "workshop": "ワークショップ",
+      "other": "その他",
+      "social": "ソーシャル"
+    },
+    "cities": {
+      "beijing": "Beijing",
+      "shanghai": "Shanghai",
+      "xian": "Xi'an",
+      "chengdu": "Chengdu",
+      "hangzhou": "Hangzhou",
+      "guilin": "Guilin"
+    },
+    "roomTypes": {
+      "single": "シングルルーム",
+      "twin": "ツインルーム",
+      "double": "ダブルルーム",
+      "4bed": "4人部屋",
+      "6bed": "6人部屋",
+      "8bed": "8人部屋"
+    },
+    "tags": {
+      "femaleOnly": "女性専用",
+      "maleOnly": "男性専用",
+      "quiet": "静か",
+      "social": "社交的",
+      "budget": "安価",
+      "central": "中心地",
+      "soloTraveler": "一人旅歓迎"
+    },
+    "titlePlaceholder": "例: 金曜夜のパブクロール",
+    "duration": {
+      "1hour": "1時間",
+      "1_5hours": "1.5時間",
+      "2hours": "2時間",
+      "3hours": "3時間",
+      "4hours": "4時間",
+      "5hours": "5時間"
+    }
+  }
+}

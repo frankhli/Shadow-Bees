@@ -1,0 +1,8 @@
+{
+  "name": "@tiaohai/database",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "dependencies": {
+    "@prisma/client": "^5.22.0"
+  }
+}

@@ -1,0 +1,770 @@
+// Tiaohai Global - Prisma Schema
+// Database: PostgreSQL 15 with PostGIS extension
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============== User & Auth ==============
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // hashed
+  role      UserRole @default(GUEST)
+  status    UserStatus @default(ACTIVE)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  guest   Guest?
+  hotel   Hotel?
+  guide   Guide?
+  
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  GUEST
+  HOTEL_OWNER
+  GUIDE
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  INACTIVE
+}
+
+// ============== Guest (Foreign Tourist) ==============
+
+model Guest {
+  id          String @id @default(uuid())
+  userId      String @unique @map("user_id")
+  name        String
+  nationality String
+  phone       String? // WhatsApp number
+  passportNo  String? @map("passport_no") // AES encrypted
+  
+  // Relations
+  user    User    @relation(fields: [userId], references: [id])
+  orders  Order[]
+  aiSessions AIConversation[]
+  
+  @@map("guests")
+}
+
+// ============== Hotel ==============
+
+model Hotel {
+  id                      String   @id @default(uuid())
+  userId                  String   @unique @map("user_id")
+  name                    String
+  nameEn                  String?  @map("name_en")
+  licenseNo               String?  @unique @map("license_no") // 特种行业许可证
+  hasForeignGuestLicense  Boolean  @default(false) @map("has_foreign_guest_license")
+  
+  // Location
+  city      String
+  address   String
+  lat       Decimal? @db.Decimal(10, 8)
+  lng       Decimal? @db.Decimal(11, 8)
+  
+  // Facilities & Configuration
+  facilities Json?   // {elevator: true, wifi: true, westernToilet: true, ...}
+  photos     Json?   // Array of image URLs
+  
+  // Pricing
+  basePrice Decimal? @map("base_price") @db.Decimal(10, 2)
+  currency  String   @default("CNY")
+  
+  // PMS Integration
+  pmsType   String?  @map("pms_type") // cloudbeds, siteminder, manual
+  pmsConfig Json?    @map("pms_config") // API credentials (encrypted)
+  
+  // Status
+  status      HotelStatus @default(PENDING)
+  verifiedAt  DateTime?   @map("verified_at")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  
+  // Relations
+  user       User       @relation(fields: [userId], references: [id])
+  roomTypes  RoomType[]
+  orders     Order[]
+  
+  @@index([city])
+  @@index([status])
+  @@index([hasForeignGuestLicense])
+  @@map("hotels")
+}
+
+enum HotelStatus {
+  PENDING     // 待审核
+  ACTIVE      // 已上架
+  SUSPENDED   // 已暂停
+  REJECTED    // 已拒绝
+}
+
+// ============== Room Type ==============
+
+model RoomType {
+  id          String @id @default(uuid())
+  hotelId     String @map("hotel_id")
+  name        String
+  nameEn      String? @map("name_en")
+  
+  // Inventory
+  roomCount       Int  @map("room_count")
+  inventoryPool   Json @default("{\"ota\": 0, \"direct\": 0}") @map("inventory_pool")
+  
+  // Details
+  amenities Json? // {toiletType: "western", airCon: true, ...}
+  photos    Json? // Array of image URLs
+  pmsConfig Json?  @map("pms_config") // PMS mapping config
+  
+  isActive  Boolean @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  hotel  Hotel   @relation(fields: [hotelId], references: [id])
+  orders Order[]
+  
+  @@index([hotelId])
+  @@map("room_types")
+}
+
+// ============== Guide (Local Expert) ==============
+
+model Guide {
+  id          String @id @default(uuid())
+  userId      String @unique @map("user_id")
+  name        String
+  nameEn      String? @map("name_en")
+  
+  // Languages & Skills
+  languages    String[] // ["en", "es", "fr"]
+  specialties  String[] // ["food", "history", "art"]
+  
+  // License
+  licenseNo       String? @unique @map("license_no")
+  licenseVerified Boolean @default(false) @map("license_verified")
+  
+  // Profile
+  city        String
+  bio         String?
+  bioEn       String? @map("bio_en")
+  rating      Decimal @default(5.0) @db.Decimal(2, 1)
+  hourlyRate  Decimal? @map("hourly_rate") @db.Decimal(10, 2)
+  
+  // Availability Calendar
+  availability Json? // { "2024-03-01": { "available": true, "booked": [] } }
+  
+  status      GuideStatus @default(ACTIVE)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  
+  // Relations
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[]
+  reviews GuideReview[]
+  
+  @@index([city])
+  @@index([status])
+  @@map("guides")
+}
+
+enum GuideStatus {
+  ACTIVE
+  BUSY
+  SUSPENDED
+  INACTIVE
+}
+
+// ============== Experience Store ==============
+
+model Experience {
+  id          String @id @default(uuid())
+  name        String
+  nameEn      String? @map("name_en")
+  type        ExperienceType
+  
+  // Location
+  city    String
+  address String?
+  lat     Decimal? @db.Decimal(10, 8)
+  lng     Decimal? @db.Decimal(11, 8)
+  
+  // Details
+  description     String?
+  descriptionEn   String? @map("description_en")
+  pricePerPerson  Decimal @map("price_per_person") @db.Decimal(10, 2)
+  durationMinutes Int     @map("duration_minutes")
+  maxCapacity     Int     @map("max_capacity")
+  photos          Json?
+  
+  // Partner Agreement
+  partnerContract Json? @map("partner_contract") // {commissionRate: 0.15}
+  
+  isActive  Boolean @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  orders Order[]
+  
+  @@index([city])
+  @@index([type])
+  @@map("experiences")
+}
+
+enum ExperienceType {
+  WORKSHOP  // 手工艺体验
+  DINING    // 特色餐饮
+  SHOPPING  // 文创购物
+  TOUR      // 导览活动
+}
+
+// ============== Order ==============
+
+model Order {
+  id        String   @id @default(uuid())
+  orderNo   String   @unique @map("order_no") // TH202402250001
+  
+  // Guest Info
+  guestId         String @map("guest_id")
+  guestNationality String? @map("guest_nationality")
+  
+  // Order Type
+  orderType OrderType @map("order_type")
+  
+  // Accommodation (optional)
+  hotelId      String? @map("hotel_id")
+  roomTypeId   String? @map("room_type_id")
+  checkIn      DateTime? @map("check_in")
+  checkOut     DateTime? @map("check_out")
+  nights       Int?
+  roomPriceTotal Decimal? @map("room_price_total") @db.Decimal(10, 2)
+  
+  // Guide Service (optional)
+  guideId      String? @map("guide_id")
+  serviceDate  DateTime? @map("service_date")
+  serviceHours Int?      @map("service_hours")
+  guideFee     Decimal?  @map("guide_fee") @db.Decimal(10, 2)
+  
+  // Experience (optional)
+  experienceId   String? @map("experience_id")
+  experienceFee  Decimal? @map("experience_fee") @db.Decimal(10, 2)
+  
+  // Financials (in USD)
+  totalAmount   Decimal @map("total_amount") @db.Decimal(10, 2)
+  currency      String  @default("USD")
+  exchangeRate  Decimal? @map("exchange_rate") @db.Decimal(10, 4)
+  platformFee   Decimal @map("platform_fee") @db.Decimal(10, 2)
+  
+  // Payment
+  paymentStatus PaymentStatus @default(PENDING) @map("payment_status")
+  stripePaymentIntentId String? @map("stripe_payment_intent_id")
+  paidAt        DateTime? @map("paid_at")
+  
+  // Status
+  status      OrderStatus @default(CONFIRMED)
+  cancelledAt DateTime?   @map("cancelled_at")
+  cancelledReason String? @map("cancelled_reason")
+  completedAt DateTime?   @map("completed_at")
+  
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  
+  // Relations
+  guest       Guest       @relation(fields: [guestId], references: [id])
+  hotel       Hotel?      @relation(fields: [hotelId], references: [id])
+  roomType    RoomType?   @relation(fields: [roomTypeId], references: [id])
+  guide       Guide?      @relation(fields: [guideId], references: [id])
+  experience  Experience? @relation(fields: [experienceId], references: [id])
+  guideReview GuideReview?
+  
+  @@index([guestId])
+  @@index([hotelId])
+  @@index([orderNo])
+  @@index([status])
+  @@index([paymentStatus])
+  @@map("orders")
+}
+
+enum OrderType {
+  ACCOMMODATION_ONLY
+  GUIDE_ONLY
+  EXPERIENCE_ONLY
+  BUNDLE // 打包产品
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum OrderStatus {
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+// ============== AI Conversation ==============
+
+model AIConversation {
+  id        String   @id @default(uuid())
+  sessionId String   @map("session_id")
+  
+  // Who
+  guestId   String?  @map("guest_id")
+  channel   AIChannel // whatsapp, web, booking_msg
+  
+  // What
+  message   String
+  response  String?
+  
+  // Intent Analysis
+  intent           String?
+  confidenceScore  Decimal? @map("confidence_score") @db.Decimal(3, 2)
+  
+  // Human Handover
+  escalatedToHuman Boolean @default(false) @map("escalated_to_human")
+  humanHandledBy   String? @map("human_handled_by")
+  escalatedAt      DateTime? @map("escalated_at")
+  resolvedAt       DateTime? @map("resolved_at")
+  
+  // Context
+  hotelId   String? @map("hotel_id") // Current hotel context
+  context   Json?   // Additional context
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  guest Guest? @relation(fields: [guestId], references: [id])
+  
+  @@index([sessionId])
+  @@index([guestId])
+  @@index([escalatedToHuman])
+  @@index([createdAt])
+  @@map("ai_conversations")
+}
+
+enum AIChannel {
+  WHATSAPP
+  WEB
+  BOOKING_MSG
+  WECHAT
+}
+
+// ============== Inventory Sync Log ==============
+
+model InventorySyncLog {
+  id        String   @id @default(uuid())
+  hotelId   String   @map("hotel_id")
+  roomTypeId String  @map("room_type_id")
+  
+  source    String   // cloudbeds, manual, api
+  availabilityDate DateTime @map("availability_date")
+  roomsAvailable   Int      @map("rooms_available")
+  
+  syncStatus SyncStatus @map("sync_status")
+  errorMsg   String?    @map("error_msg")
+  
+  syncedAt   DateTime @default(now()) @map("synced_at")
+  
+  @@index([hotelId])
+  @@index([roomTypeId])
+  @@index([availabilityDate])
+  @@map("inventory_sync_logs")
+}
+
+enum SyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+// ============== Knowledge Base for RAG ==============
+
+model KnowledgeDocument {
+  id        String   @id @default(uuid())
+  
+  // Classification
+  type      KnowledgeType
+  category  String?
+  hotelId   String?  @map("hotel_id") // Optional: hotel-specific
+  
+  // Content
+  title     String
+  content   String   @db.Text
+  contentEn String?  @map("content_en")
+  
+  // Vector embedding (for RAG)
+  embedding Json?    // Vector array [0.12, 0.33, ...]
+  
+  isActive  Boolean @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@index([type])
+  @@index([hotelId])
+  @@index([category])
+  @@map("knowledge_documents")
+}
+
+enum KnowledgeType {
+  HOTEL_FACILITY    // 酒店设施
+  VISA_POLICY       // 签证政策
+  POI_NEARBY        // 周边景点
+  CULTURAL_TIP      // 文化提示
+  EMERGENCY         // 紧急信息
+  FAQ               // 常见问题
+}
+
+// ============== Referral Tracking ==============
+
+model ReferralClick {
+  id          String   @id @default(uuid())
+  
+  // What was clicked
+  hotelId     String   @map("hotel_id")
+  platform    String   // booking, airbnb, expedia, etc.
+  
+  // UTM Parameters
+  utmSource   String   @map("utm_source") // tiaohai, hotel_website, etc.
+  utmMedium   String   @map("utm_medium") // link, button, banner
+  utmCampaign String?  @map("utm_campaign") // spring_sale, summer_2024
+  
+  // Visitor Info
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent") // Browser info
+  referrer    String?  // Previous page
+  
+  // Conversion tracking
+  converted   Boolean  @default(false) // Did they book?
+  orderId     String?  @map("order_id") // Link to order if converted
+  
+  clickedAt   DateTime @default(now()) @map("clicked_at")
+  
+  @@index([hotelId])
+  @@index([platform])
+  @@index([clickedAt])
+  @@index([converted])
+  @@map("referral_clicks")
+}
+
+model ReferralStats {
+  id              String   @id @default(uuid())
+  
+  hotelId         String   @map("hotel_id")
+  date            DateTime @db.Date
+  
+  // Aggregated stats
+  platform        String   // booking, airbnb, etc.
+  clicks          Int      @default(0)
+  uniqueVisitors  Int      @default(0) @map("unique_visitors")
+  conversions     Int      @default(0)
+  estimatedRevenue Decimal? @map("estimated_revenue") @db.Decimal(10, 2) // Based on avg booking value
+  
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  @@unique([hotelId, date, platform])
+  @@index([hotelId])
+  @@index([date])
+  @@map("referral_stats")
+}
+
+// ============== Social Features ==============
+
+model SocialEvent {
+  id          String   @id @default(uuid())
+  
+  // Organizer
+  organizerId String   @map("organizer_id") // Can be guide or guest
+  organizerType String @map("organizer_type") // 'guide' or 'guest'
+  
+  // Event Details
+  title       String
+  titleEn     String?  @map("title_en")
+  description String
+  descriptionEn String? @map("description_en")
+  type        SocialEventType
+  
+  // Location & Time
+  city        String
+  meetingPoint String  @map("meeting_point")
+  meetingPointEn String? @map("meeting_point_en")
+  eventDate   DateTime @map("event_date")
+  duration    Int      // in minutes
+  
+  // Capacity & Price
+  maxPeople   Int      @map("max_people")
+  price       Decimal  @default(0) @db.Decimal(10, 2)
+  currency    String   @default("USD")
+  
+  // Status
+  status      EventStatus @default(OPEN)
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  participants EventParticipant[]
+  
+  @@index([city])
+  @@index([type])
+  @@index([status])
+  @@index([eventDate])
+  @@map("social_events")
+}
+
+enum SocialEventType {
+  PUB_CRAWL
+  CITY_WALK
+  FOOD_TOUR
+  WORKSHOP
+  OTHER
+}
+
+enum EventStatus {
+  OPEN      // Accepting participants
+  FULL      // Max capacity reached
+  ONGOING   // Event in progress
+  COMPLETED
+  CANCELLED
+}
+
+model EventParticipant {
+  id          String   @id @default(uuid())
+  
+  eventId     String   @map("event_id")
+  userId      String   @map("user_id") // Guest ID
+  
+  // Booking Info
+  status      ParticipantStatus @default(CONFIRMED)
+  joinedAt    DateTime @default(now()) @map("joined_at")
+  notes       String?
+  
+  // Relations
+  event       SocialEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("event_participants")
+}
+
+enum ParticipantStatus {
+  CONFIRMED
+  CANCELLED
+  ATTENDED
+  NO_SHOW
+}
+
+model RoomShare {
+  id          String   @id @default(uuid())
+  
+  // Organizer
+  organizerId String   @map("organizer_id")
+  
+  // Hotel Info
+  hotelId     String?  @map("hotel_id") // Optional link to hotel
+  hotelName   String   @map("hotel_name")
+  city        String
+  
+  // Room Details
+  roomType    String   @map("room_type")
+  checkIn     DateTime @map("check_in")
+  checkOut    DateTime @map("check_out")
+  pricePerPerson Decimal @map("price_per_person") @db.Decimal(10, 2)
+  currency    String   @default("USD")
+  
+  // Capacity
+  maxPeople   Int      @map("max_people")
+  
+  // Description
+  description String
+  descriptionEn String? @map("description_en")
+  tags        String[] // e.g., ['female_only', 'quiet', 'social']
+  
+  // Status
+  status      RoomShareStatus @default(OPEN)
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  responses   RoomShareResponse[]
+  
+  @@index([city])
+  @@index([status])
+  @@index([checkIn])
+  @@map("room_shares")
+}
+
+enum RoomShareStatus {
+  OPEN
+  FILLED    // All spots taken
+  CLOSED    // Organizer closed it
+  EXPIRED   // Check-in date passed
+}
+
+model RoomShareResponse {
+  id          String   @id @default(uuid())
+  
+  roomShareId String   @map("room_share_id")
+  userId      String   @map("user_id")
+  
+  status      ResponseStatus @default(INTERESTED)
+  message     String?
+  respondedAt DateTime @default(now()) @map("responded_at")
+  
+  // Relations
+  roomShare   RoomShare @relation(fields: [roomShareId], references: [id], onDelete: Cascade)
+  
+  @@unique([roomShareId, userId])
+  @@index([roomShareId])
+  @@map("room_share_responses")
+}
+
+enum ResponseStatus {
+  INTERESTED
+  CONFIRMED
+  DECLINED
+}
+
+// ============== Chat System ==============
+
+model Conversation {
+  id          String   @id @default(uuid())
+  
+  type        ConversationType
+  title       String?  // For group chats
+  
+  // For event/room share related chats
+  relatedEventId   String? @map("related_event_id")
+  relatedRoomShareId String? @map("related_room_share_id")
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  participants ConversationParticipant[]
+  messages     ChatMessage[]
+  
+  @@index([updatedAt])
+  @@map("conversations")
+}
+
+enum ConversationType {
+  DIRECT    // One-on-one chat
+  GROUP     // Group chat
+  EVENT     // Event discussion
+  ROOM_SHARE // Room share discussion
+}
+
+model ConversationParticipant {
+  id              String   @id @default(uuid())
+  
+  conversationId  String   @map("conversation_id")
+  userId          String   @map("user_id")
+  
+  // Last read message
+  lastReadAt      DateTime? @map("last_read_at")
+  
+  // For group chats
+  role            ParticipantRole @default(MEMBER)
+  
+  joinedAt        DateTime @default(now()) @map("joined_at")
+  
+  // Relations
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@map("conversation_participants")
+}
+
+enum ParticipantRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model ChatMessage {
+  id              String   @id @default(uuid())
+  
+  conversationId  String   @map("conversation_id")
+  senderId        String   @map("sender_id")
+  
+  content         String
+  contentType     String   @default("text") @map("content_type") // text, image, file
+  
+  // For replies
+  replyToId       String?  @map("reply_to_id")
+  
+  // Soft delete
+  isDeleted       Boolean  @default(false) @map("is_deleted")
+  deletedAt       DateTime? @map("deleted_at")
+  
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  @@index([conversationId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@map("chat_messages")
+}
+
+// ============== Guide Reviews ==============
+
+model GuideReview {
+  id          String   @id @default(uuid())
+  
+  guideId     String   @map("guide_id")
+  orderId     String   @map("order_id")
+  reviewerId  String   @map("reviewer_id") // Guest ID
+  
+  // Rating
+  rating      Int      // 1-5
+  communication Int?   // 1-5
+  knowledge   Int?     // 1-5
+  punctuality Int?     // 1-5
+  
+  // Review Content
+  title       String?
+  content     String
+  
+  // Moderation
+  isPublished Boolean  @default(true) @map("is_published")
+  isVerified  Boolean  @default(false) @map("is_verified") // Verified purchase
+  
+  // Guide Response
+  guideResponse String? @map("guide_response")
+  respondedAt DateTime? @map("responded_at")
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  guide       Guide    @relation(fields: [guideId], references: [id])
+  order       Order    @relation(fields: [orderId], references: [id])
+  
+  @@unique([orderId]) // One review per order
+  @@index([guideId])
+  @@index([rating])
+  @@map("guide_reviews")
+}
