@@ -27,6 +27,29 @@ import {
 } from 'lucide-react'
 import { format, addDays, differenceInDays } from 'date-fns'
 
+interface BookingLinks {
+  bookingCom?: string
+  airbnb?: string
+  agoda?: string
+  ctrip?: string
+}
+
+interface HonestFacility {
+  id: string
+  name: string
+  available: boolean
+  note?: string
+  icon: string
+}
+
+interface ForeignFriendly {
+  englishSpeaking: boolean
+  westernToilet: boolean
+  elevator: boolean
+  visaAssistance: boolean
+  internationalPayment: boolean
+}
+
 interface Hostel {
   id: string
   name: string
@@ -60,10 +83,14 @@ interface Hostel {
   }
   reviews?: { id: string; userName: string; country: string; rating: number; date: string; text: string }[]
   roomTypes?: { id: string; name: string; bedCount: number; pricePerBed: number; gender: string; amenities: string[]; availableBeds: number }[]
-  // Honesty facility checklist - key differentiator for foreign travelers
+  // Core differentiation fields
   hasWesternToilet?: boolean
   hasElevator?: boolean
   hasEnglishSpeakingStaff?: boolean
+  honestFacilities?: HonestFacility[]
+  foreignFriendly?: ForeignFriendly
+  bookingLinks?: BookingLinks
+  culturalTips?: string[]
 }
 
 // Map facility icon names to components
@@ -123,16 +150,27 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
   const urlCheckOut = searchParams.get('checkOut')
   const urlGuests = searchParams.get('guests')
   
-  const [checkIn, setCheckIn] = useState<Date | null>(
-    urlCheckIn ? new Date(urlCheckIn) : addDays(new Date(), 7)
-  )
-  const [checkOut, setCheckOut] = useState<Date | null>(
-    urlCheckOut ? new Date(urlCheckOut) : addDays(new Date(), 12)
-  )
+  // Use null as initial state to avoid hydration mismatch
+  const [checkIn, setCheckIn] = useState<Date | null>(null)
+  const [checkOut, setCheckOut] = useState<Date | null>(null)
   const [guests, setGuests] = useState(parseInt(urlGuests || '2'))
   const [isBooking, setIsBooking] = useState(false)
   const [bookingSuccess, setBookingSuccess] = useState(false)
   const [showDatePicker, setShowDatePicker] = useState(false)
+  
+  // Set dates on client side only to avoid hydration mismatch
+  useEffect(() => {
+    if (urlCheckIn) {
+      setCheckIn(new Date(urlCheckIn))
+    } else {
+      setCheckIn(addDays(new Date(), 7))
+    }
+    if (urlCheckOut) {
+      setCheckOut(new Date(urlCheckOut))
+    } else {
+      setCheckOut(addDays(new Date(), 12))
+    }
+  }, [urlCheckIn, urlCheckOut])
   
   if (loading) {
     return (
@@ -425,6 +463,26 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
               </div>
             </div>
 
+            {/* Cultural Tips for Foreign Travelers */}
+            {hostel.culturalTips && hostel.culturalTips.length > 0 && (
+              <div className="pb-6 border-b">
+                <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                  <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                    <span className="text-xl">🎎</span>
+                    Cultural Tips for Foreign Guests
+                  </h2>
+                  <ul className="space-y-2">
+                    {hostel.culturalTips.map((tip, index) => (
+                      <li key={index} className="flex items-start gap-2 text-gray-700 text-sm">
+                        <span className="text-amber-500 mt-0.5">•</span>
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
             {/* Description */}
             <div className="pb-6 border-b">
               <p className="text-gray-700 leading-relaxed">{hostel.description}</p>
@@ -612,19 +670,32 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
                 </div>
               )}
 
-              <Button 
-                onClick={handleBook}
-                disabled={!isValid || isBooking}
-                className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-6 rounded-lg disabled:opacity-50"
-              >
-                {isBooking ? t('processing') : 
-                 !checkIn || !checkOut ? t('selectDates') :
-                 nights <= 0 ? t('invalidDates') :
-                 !isAvailable ? t('notAvailable') :
-                 guests > maxGuests ? t('tooManyGuests') :
-                 t('reserve')}
-              </Button>
-              <p className="text-center text-gray-500 text-sm mt-3">{t('charged')}</p>
+              {/* Booking Redirect Buttons - Clear OTA导流 */}
+              <div className="space-y-3">
+                {hostel.bookingLinks?.bookingCom && (
+                  <Button 
+                    onClick={() => window.open(hostel.bookingLinks?.bookingCom, '_blank')}
+                    className="w-full bg-[#003580] hover:bg-[#002a66] text-white font-semibold py-6 rounded-lg"
+                  >
+                    Check Availability on Booking.com
+                  </Button>
+                )}
+                
+                {hostel.bookingLinks?.airbnb && (
+                  <Button 
+                    variant="outline"
+                    onClick={() => window.open(hostel.bookingLinks?.airbnb, '_blank')}
+                    className="w-full border-rose-500 text-rose-500 hover:bg-rose-50 font-semibold py-6 rounded-lg"
+                  >
+                    View on Airbnb
+                  </Button>
+                )}
+              </div>
+              
+              <p className="text-center text-gray-500 text-sm mt-3">
+                We partner with trusted platforms to ensure secure booking. 
+                Tiaohai helps you find the perfect stay with honest information.
+              </p>
 
               {/* Price Breakdown */}
               {nights > 0 && (
@@ -668,7 +739,6 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
                 <input
                   type="date"
                   value={checkIn ? format(checkIn, 'yyyy-MM-dd') : ''}
-                  min={format(new Date(), 'yyyy-MM-dd')}
                   onChange={(e) => setCheckIn(e.target.value ? new Date(e.target.value) : null)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
@@ -678,7 +748,7 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
                 <input
                   type="date"
                   value={checkOut ? format(checkOut, 'yyyy-MM-dd') : ''}
-                  min={checkIn ? format(addDays(checkIn, 1), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd')}
+                  min={checkIn ? format(addDays(checkIn, 1), 'yyyy-MM-dd') : undefined}
                   onChange={(e) => setCheckOut(e.target.value ? new Date(e.target.value) : null)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />

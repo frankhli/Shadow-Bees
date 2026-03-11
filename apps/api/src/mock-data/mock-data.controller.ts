@@ -5,17 +5,28 @@ import { MockDataService } from './mock-data.service'
 export class MockDataController {
   constructor(private readonly mockDataService: MockDataService) {}
 
-  // ========== Hostels ==========
+  // ========== Hostels (v2.0 - 增强搜索) ==========
   @Get('hostels')
   async getHostels(
     @Query('city') city?: string,
     @Query('q') query?: string,
+    @Query('experienceType') experienceType?: string,
+    @Query('facility') facility?: string,  // comma-separated: western_toilet,elevator,english_staff
+    @Query('minPrice') minPrice?: string,
+    @Query('maxPrice') maxPrice?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
   ) {
+    // 解析设施筛选参数
+    const facilities = facility ? facility.split(',').filter(Boolean) : undefined
+    
     return this.mockDataService.getHostels({
       city,
       query,
+      experienceType,
+      facilities,
+      minPrice: minPrice ? parseInt(minPrice) : undefined,
+      maxPrice: maxPrice ? parseInt(maxPrice) : undefined,
       page: page ? parseInt(page) : 1,
       limit: limit ? parseInt(limit) : 20,
     })
@@ -29,6 +40,12 @@ export class MockDataController {
   @Get('hostels/:id')
   async getHostelById(@Param('id') id: string) {
     return this.mockDataService.getHostelById(id)
+  }
+  
+  // 获取筛选选项（体验类型、设施、城市等）
+  @Get('hostels/filters')
+  async getFilterOptions() {
+    return this.mockDataService.getFilterOptions()
   }
 
   // ========== Orders ==========

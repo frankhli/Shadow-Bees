@@ -3,8 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mockHostels = exports.hostelsData = void 0;
 exports.getHostelById = getHostelById;
 exports.getHostelsByCity = getHostelsByCity;
+exports.getHostelsByExperienceType = getHostelsByExperienceType;
 exports.getFeaturedHostels = getFeaturedHostels;
+exports.searchHostelsAdvanced = searchHostelsAdvanced;
 exports.searchHostels = searchHostels;
+exports.getAllExperienceTypes = getAllExperienceTypes;
+exports.getFacilityFilters = getFacilityFilters;
 const allImages = [
     'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&fit=crop&sig=0-0',
     'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&fit=crop&sig=0-1',
@@ -118,16 +122,126 @@ function getImagesForHostel(index) {
     ];
 }
 function createHostel(id, name, nameCn, city, district, address, description, imageIndex, options = {}) {
-    const basePrice = options.pricePerNight || Math.floor(Math.random() * 10) + 10;
+    const basePrice = options.pricePerNight || Math.floor(Math.random() * 40) + 60;
+    const isHutong = name.toLowerCase().includes('hutong') || description.toLowerCase().includes('hutong');
+    const isHistoric = options.propertyType === 'guesthouse' || name.toLowerCase().includes('heritage');
+    const isModern = name.toLowerCase().includes('modern') || name.toLowerCase().includes('city');
+    const hasElevator = isModern || (!isHutong && Math.random() > 0.4);
+    const hasWesternToilet = isHutong || isHistoric || Math.random() > 0.2;
+    const hasEnglishStaff = Math.random() > 0.1;
+    const hasVisaAssistance = city === 'Beijing' || city === 'Shanghai' || Math.random() > 0.3;
+    const hasInternationalPayment = true;
+    const honestFacilities = [
+        {
+            id: 'western_toilet',
+            name: 'Western Toilet',
+            nameCn: '西式马桶',
+            category: 'bathroom',
+            available: hasWesternToilet,
+            note: hasWesternToilet ? 'Sit-down toilet in every room' : 'Squat toilet only',
+            icon: 'Bath'
+        },
+        {
+            id: 'elevator',
+            name: 'Elevator',
+            nameCn: '电梯',
+            category: 'accessibility',
+            available: hasElevator,
+            note: hasElevator ? 'Easy access to all floors' : 'Stairs only - free luggage help provided',
+            icon: 'ArrowUpDown'
+        },
+        {
+            id: 'english_staff',
+            name: 'English-Speaking Staff',
+            nameCn: '英语前台',
+            category: 'service',
+            available: hasEnglishStaff,
+            note: hasEnglishStaff ? 'Front desk speaks fluent English' : 'Limited English - use AI Concierge',
+            icon: 'Languages'
+        },
+        {
+            id: 'subway_access',
+            name: 'Subway Access',
+            nameCn: '地铁距离',
+            category: 'location',
+            available: true,
+            note: `${Math.floor(Math.random() * 10) + 3}min walk to nearest subway station`,
+            icon: 'Train'
+        },
+        {
+            id: 'visa_assistance',
+            name: 'Visa Assistance',
+            nameCn: '签证协助',
+            category: 'service',
+            available: hasVisaAssistance,
+            note: hasVisaAssistance ? 'Can help with 144-hour visa-free forms' : undefined,
+            icon: 'FileCheck'
+        },
+        {
+            id: 'international_payment',
+            name: 'International Cards Accepted',
+            nameCn: '国际支付',
+            category: 'payment',
+            available: hasInternationalPayment,
+            note: 'Visa, Mastercard, PayPal accepted',
+            icon: 'CreditCard'
+        }
+    ];
+    const foreignFriendly = {
+        englishSpeaking: hasEnglishStaff,
+        westernToilet: hasWesternToilet,
+        elevator: hasElevator,
+        visaAssistance: hasVisaAssistance,
+        internationalPayment: hasInternationalPayment
+    };
+    const bookingLinks = {
+        bookingCom: `https://booking.com/hotel/cn/${id}.html`,
+        airbnb: Math.random() > 0.3 ? `https://airbnb.com/rooms/${id}` : undefined
+    };
+    const aiSummaryI18n = {
+        en: `A ${isHutong ? 'charming traditional hutong' : 'lovely'} stay in ${city}. ${hasWesternToilet ? 'Western toilet available' : 'Note: squat toilet'}. ${hasElevator ? 'Has elevator' : 'No elevator but stairs manageable'}.`,
+        es: `Una estancia encantadora en ${city}. ${hasWesternToilet ? 'Baño occidental disponible' : 'Nota: baño squat'}.`,
+        fr: `Un séjour charmant à ${city}. ${hasWesternToilet ? 'Toilette occidentale disponible' : 'Note: toilette squat'}.`,
+        de: `Ein charmanten Aufenthalt in ${city}. ${hasWesternToilet ? 'Westliche Toilette verfügbar' : 'Hinweis: Hocktoilette'}.`,
+        ja: `${city}の素敵な滞在先。${hasWesternToilet ? '西洋式トイレ完備' : '注意：和式トイレ'}。`
+    };
+    const culturalTips = [];
+    if (isHutong) {
+        culturalTips.push('Hutong (胡同) = Traditional Beijing alley with courtyard houses', 'This is a Siheyuan (四合院) - historic courtyard house with 100+ years history', 'Rooms may be smaller than Western hotel standards but full of character');
+    }
+    if (city === 'Chengdu') {
+        culturalTips.push('Sichuan food is spicy! Ask for "bu la" (不辣) if you prefer mild', 'Teahouses are social hubs - try visiting one nearby');
+    }
+    if (city === 'Xi\'an') {
+        culturalTips.push('Muslim Quarter food is famous but can be crowded', 'The city wall is great for biking - rent a bike nearby');
+    }
+    culturalTips.push('Tap water is not drinkable in China - bottled water provided daily', 'Bring toilet paper when going out - public restrooms often don\'t provide it');
+    const experienceType = [];
+    if (isHutong)
+        experienceType.push('hutong');
+    if (isHistoric)
+        experienceType.push('historical');
+    if (name.toLowerCase().includes('food') || city === 'Chengdu' || city === 'Guangzhou')
+        experienceType.push('food');
+    if (name.toLowerCase().includes('lake') || name.toLowerCase().includes('park'))
+        experienceType.push('nature');
+    if (name.toLowerCase().includes('art') || name.toLowerCase().includes('design'))
+        experienceType.push('art');
+    if (name.toLowerCase().includes('bund') || name.toLowerCase().includes('river'))
+        experienceType.push('riverside');
+    if (isModern)
+        experienceType.push('modern');
+    if (experienceType.length === 0)
+        experienceType.push('city');
     return {
         id, name, nameCn, city, district, address, description,
         pricePerNight: basePrice,
-        originalPrice: basePrice + Math.floor(Math.random() * 5) + 2,
-        cleaningFee: 5,
-        serviceFee: Math.floor(basePrice * 0.1),
+        originalPrice: Math.floor(basePrice * 1.15),
+        cleaningFee: 8,
+        serviceFee: Math.floor(basePrice * 0.12),
         currency: 'USD',
-        rating: Number((Math.random() * 1.0 + 4.0).toFixed(1)),
-        reviewCount: Math.floor(Math.random() * 200) + 50,
+        rating: Number((Math.random() * 0.8 + 4.1).toFixed(1)),
+        reviewCount: Math.floor(Math.random() * 300) + 50,
         images: getImagesForHostel(imageIndex),
         badges: options.badges || ['Good Location'],
         propertyType: options.propertyType || 'hostel',
@@ -136,9 +250,9 @@ function createHostel(id, name, nameCn, city, district, address, description, im
         distanceToAttraction: '10 min walk',
         distanceToDivingPirate: `${Math.floor(Math.random() * 15) + 3} min`,
         roomTypes: [
-            { id: `${id}-4bed`, name: '4-Bed Mixed Dorm', bedCount: 4, pricePerBed: basePrice, gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 3) + 4 },
-            { id: `${id}-6bed`, name: '6-Bed Mixed Dorm', bedCount: 6, pricePerBed: Math.max(8, basePrice - 3), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 4) + 4 },
-            { id: `${id}-female`, name: '4-Bed Female Dorm', bedCount: 4, pricePerBed: basePrice + 1, gender: 'female', amenities: ['AC', 'Locker', 'Ensuite'], availableBeds: Math.floor(Math.random() * 3) + 2 },
+            { id: `${id}-4bed`, name: '4-Bed Mixed Dorm', bedCount: 4, pricePerBed: Math.floor(basePrice * 0.3), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 3) + 4 },
+            { id: `${id}-6bed`, name: '6-Bed Mixed Dorm', bedCount: 6, pricePerBed: Math.floor(basePrice * 0.25), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 4) + 4 },
+            { id: `${id}-private`, name: 'Private Room', bedCount: 2, pricePerBed: basePrice, gender: 'mixed', amenities: ['AC', 'Ensuite', 'TV'], availableBeds: Math.floor(Math.random() * 2) + 1 },
         ],
         amenities: ['Free WiFi', 'Kitchen', 'Laundry', 'AC', '24h Reception', 'Lockers'],
         facilities: [
@@ -146,6 +260,8 @@ function createHostel(id, name, nameCn, city, district, address, description, im
             { icon: 'UtensilsCrossed', label: '共享厨房', labelEn: 'Shared Kitchen' },
             { icon: 'Waves', label: '洗衣房', labelEn: 'Laundry' },
             { icon: 'Lock', label: '储物柜', labelEn: 'Lockers' },
+            ...(hasWesternToilet ? [{ icon: 'Bath', label: '西式马桶', labelEn: 'Western Toilet' }] : []),
+            ...(hasElevator ? [{ icon: 'ArrowUpDown', label: '电梯', labelEn: 'Elevator' }] : []),
         ],
         commonAreas: ['Common Room', 'Kitchen', 'Rooftop'],
         weeklyEvents: [
@@ -154,13 +270,13 @@ function createHostel(id, name, nameCn, city, district, address, description, im
             { day: 'Friday', event: 'Pub Crawl', time: '21:00' },
         ],
         host: {
-            name: `Host ${city}`,
+            name: `${city} Host`,
             nameCn: `${city}主人`,
             since: 2018 + Math.floor(Math.random() * 5),
-            languages: ['English', 'Chinese'],
+            languages: hasEnglishStaff ? ['English', 'Chinese'] : ['Chinese'],
             responseRate: `${90 + Math.floor(Math.random() * 9)}%`,
             responseTime: 'within 1 hour',
-            bio: `Welcome to our hostel in ${city}!`,
+            bio: `Welcome to our ${isHutong ? 'traditional hutong' : 'cozy'} stay in ${city}! ${hasEnglishStaff ? 'I speak English and' : 'My staff and I'} are here to help you explore this amazing city.`,
         },
         reviews: [],
         availableDates: [{ start: '2026-03-01', end: '2026-12-31' }],
@@ -168,6 +284,12 @@ function createHostel(id, name, nameCn, city, district, address, description, im
         checkOutTime: '11:00',
         cancellationPolicy: 'Free cancellation up to 24 hours before check-in',
         houseRules: ['No smoking in rooms', 'Quiet hours 23:00-07:00'],
+        honestFacilities,
+        foreignFriendly,
+        bookingLinks,
+        aiSummaryI18n,
+        culturalTips,
+        experienceType,
     };
 }
 const hostelsData = [
@@ -200,11 +322,72 @@ function getHostelById(id) {
 function getHostelsByCity(city) {
     return hostelsData.filter(h => h.city.toLowerCase() === city.toLowerCase());
 }
-function getFeaturedHostels(limit = 6) {
+function getHostelsByExperienceType(type) {
+    return hostelsData.filter(h => h.experienceType?.includes(type));
+}
+function getFeaturedHostels(limit = 8) {
     return [...hostelsData].sort((a, b) => b.rating - a.rating).slice(0, limit);
 }
+function searchHostelsAdvanced(filters) {
+    let results = hostelsData;
+    if (filters.query) {
+        const q = filters.query.toLowerCase();
+        results = results.filter(h => h.name.toLowerCase().includes(q) ||
+            h.city.toLowerCase().includes(q) ||
+            h.district.toLowerCase().includes(q) ||
+            h.description.toLowerCase().includes(q) ||
+            h.nameCn.includes(q));
+    }
+    if (filters.city && filters.city !== 'all') {
+        results = results.filter(h => h.city.toLowerCase() === filters.city.toLowerCase());
+    }
+    if (filters.experienceType && filters.experienceType !== 'all') {
+        results = results.filter(h => h.experienceType?.includes(filters.experienceType));
+    }
+    if (filters.facilities && filters.facilities.length > 0) {
+        results = results.filter(h => {
+            return filters.facilities.every(facility => {
+                switch (facility) {
+                    case 'western_toilet': return h.foreignFriendly.westernToilet;
+                    case 'elevator': return h.foreignFriendly.elevator;
+                    case 'english_staff': return h.foreignFriendly.englishSpeaking;
+                    case 'visa_assistance': return h.foreignFriendly.visaAssistance;
+                    case 'international_payment': return h.foreignFriendly.internationalPayment;
+                    default: return false;
+                }
+            });
+        });
+    }
+    if (filters.minPrice !== undefined) {
+        results = results.filter(h => h.pricePerNight >= filters.minPrice);
+    }
+    if (filters.maxPrice !== undefined) {
+        results = results.filter(h => h.pricePerNight <= filters.maxPrice);
+    }
+    return results;
+}
 function searchHostels(query) {
-    const q = query.toLowerCase();
-    return hostelsData.filter(h => h.name.toLowerCase().includes(q) || h.city.toLowerCase().includes(q));
+    return searchHostelsAdvanced({ query });
+}
+function getAllExperienceTypes() {
+    return [
+        { id: 'hutong', label: 'Hutong Culture', icon: '🏮', description: 'Traditional courtyard houses in historic alleys' },
+        { id: 'historical', label: 'Historical Sites', icon: '⛩️', description: 'Near Forbidden City, Great Wall, etc.' },
+        { id: 'food', label: 'Food & Dining', icon: '🥟', description: 'Stay in culinary hotspots' },
+        { id: 'nature', label: 'Nature & Parks', icon: '🌿', description: 'Near lakes, mountains, and gardens' },
+        { id: 'art', label: 'Art & Design', icon: '🎨', description: 'Boutique stays in art districts' },
+        { id: 'riverside', label: 'Riverside', icon: '🌊', description: 'Views of the Bund, West Lake, etc.' },
+        { id: 'modern', label: 'Modern City', icon: '🏙️', description: 'High-rise luxury in city centers' },
+        { id: 'city', label: 'City Center', icon: '🏢', description: 'Convenient urban locations' },
+    ];
+}
+function getFacilityFilters() {
+    return [
+        { id: 'western_toilet', label: '🚽 Western Toilet', icon: '🚽', color: 'emerald' },
+        { id: 'elevator', label: '🛗 Elevator', icon: '🛗', color: 'blue' },
+        { id: 'english_staff', label: '🇬🇧 English Staff', icon: '🇬🇧', color: 'purple' },
+        { id: 'visa_assistance', label: '🛂 Visa Help', icon: '🛂', color: 'amber' },
+        { id: 'international_payment', label: '💳 Card Payment', icon: '💳', color: 'green' },
+    ];
 }
 //# sourceMappingURL=hostels.mock.js.map

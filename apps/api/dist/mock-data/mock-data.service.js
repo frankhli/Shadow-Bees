@@ -16,13 +16,15 @@ const social_mock_1 = require("./social.mock");
 const chat_mock_1 = require("./chat.mock");
 let MockDataService = class MockDataService {
     async getHostels(filters) {
-        let data = hostels_mock_1.hostelsData;
-        if (filters.city && filters.city !== 'all') {
-            data = (0, hostels_mock_1.getHostelsByCity)(filters.city);
-        }
-        if (filters.query) {
-            data = (0, hostels_mock_1.searchHostels)(filters.query);
-        }
+        const searchFilters = {
+            query: filters.query,
+            city: filters.city,
+            experienceType: filters.experienceType,
+            facilities: filters.facilities,
+            minPrice: filters.minPrice,
+            maxPrice: filters.maxPrice,
+        };
+        let data = (0, hostels_mock_1.searchHostelsAdvanced)(searchFilters);
         const page = filters.page || 1;
         const limit = filters.limit || 20;
         const start = (page - 1) * limit;
@@ -42,6 +44,20 @@ let MockDataService = class MockDataService {
     }
     async getFeaturedHostels(limit = 8) {
         return (0, hostels_mock_1.getFeaturedHostels)(limit);
+    }
+    async getHostelsByExperienceType(type) {
+        return (0, hostels_mock_1.getHostelsByExperienceType)(type);
+    }
+    async getFilterOptions() {
+        return {
+            experienceTypes: (0, hostels_mock_1.getAllExperienceTypes)(),
+            facilityFilters: (0, hostels_mock_1.getFacilityFilters)(),
+            cities: [...new Set(hostels_mock_1.hostelsData.map(h => h.city))],
+            priceRange: {
+                min: Math.min(...hostels_mock_1.hostelsData.map(h => h.pricePerNight)),
+                max: Math.max(...hostels_mock_1.hostelsData.map(h => h.pricePerNight)),
+            }
+        };
     }
     async getOrders(filters) {
         let data = orders_mock_1.mockOrders;

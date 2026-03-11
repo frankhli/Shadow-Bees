@@ -19,10 +19,15 @@ let MockDataController = class MockDataController {
     constructor(mockDataService) {
         this.mockDataService = mockDataService;
     }
-    async getHostels(city, query, page, limit) {
+    async getHostels(city, query, experienceType, facility, minPrice, maxPrice, page, limit) {
+        const facilities = facility ? facility.split(',').filter(Boolean) : undefined;
         return this.mockDataService.getHostels({
             city,
             query,
+            experienceType,
+            facilities,
+            minPrice: minPrice ? parseInt(minPrice) : undefined,
+            maxPrice: maxPrice ? parseInt(maxPrice) : undefined,
             page: page ? parseInt(page) : 1,
             limit: limit ? parseInt(limit) : 20,
         });
@@ -32,6 +37,9 @@ let MockDataController = class MockDataController {
     }
     async getHostelById(id) {
         return this.mockDataService.getHostelById(id);
+    }
+    async getFilterOptions() {
+        return this.mockDataService.getFilterOptions();
     }
     async getOrders(userId, status) {
         return this.mockDataService.getOrders({ userId, status });
@@ -101,10 +109,14 @@ __decorate([
     (0, common_1.Get)('hostels'),
     __param(0, (0, common_1.Query)('city')),
     __param(1, (0, common_1.Query)('q')),
-    __param(2, (0, common_1.Query)('page')),
-    __param(3, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('experienceType')),
+    __param(3, (0, common_1.Query)('facility')),
+    __param(4, (0, common_1.Query)('minPrice')),
+    __param(5, (0, common_1.Query)('maxPrice')),
+    __param(6, (0, common_1.Query)('page')),
+    __param(7, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], MockDataController.prototype, "getHostels", null);
 __decorate([
@@ -121,6 +133,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], MockDataController.prototype, "getHostelById", null);
+__decorate([
+    (0, common_1.Get)('hostels/filters'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], MockDataController.prototype, "getFilterOptions", null);
 __decorate([
     (0, common_1.Get)('orders'),
     __param(0, (0, common_1.Query)('userId')),

@@ -1,6 +1,38 @@
 /**
- * Hostel Mock Data - 20家精选青旅
+ * Hostel Mock Data - 20家精选青旅（v2.0 - 诚实设施清单版）
+ * 
+ * 核心差异化：Honest Facility Checklist
+ * - 让外国游客提前知道：有无电梯、西式马桶、英语前台
+ * - 诚实是Tiaohai的核心品牌价值
  */
+
+// 诚实设施清单 - 核心差异化字段
+export interface HonestFacility {
+  id: string
+  name: string           // 英文名称
+  nameCn: string         // 中文名称
+  category: 'bathroom' | 'accessibility' | 'service' | 'location' | 'payment'
+  available: boolean     // 是否具备
+  note?: string          // 补充说明（如：没有电梯但提供行李搬运）
+  icon: string           // Lucide图标名
+}
+
+// 外国游客友好度 - 快速筛选和展示用
+export interface ForeignFriendly {
+  englishSpeaking: boolean      // 英语前台
+  westernToilet: boolean        // 西式马桶
+  elevator: boolean             // 电梯
+  visaAssistance: boolean       // 签证协助
+  internationalPayment: boolean // 国际支付（信用卡/PayPal）
+}
+
+// 导流链接配置
+export interface BookingLinks {
+  bookingCom?: string
+  airbnb?: string
+  agoda?: string
+  ctrip?: string
+}
 
 export interface Hostel {
   id: string
@@ -52,6 +84,14 @@ export interface Hostel {
   checkOutTime: string
   cancellationPolicy: string
   houseRules: string[]
+  
+  // ========== 核心差异化字段 ==========
+  honestFacilities: HonestFacility[]
+  foreignFriendly: ForeignFriendly
+  bookingLinks: BookingLinks
+  aiSummaryI18n: Record<string, string>  // 多语言AI总结
+  culturalTips?: string[]                // 给外国游客的文化提示
+  experienceType?: string[]              // 体验类型标签（hutong/historical/food等）
 }
 
 // 100张不同的青旅照片 (20家 × 5张 = 100张，完全不重复)
@@ -170,19 +210,160 @@ function getImagesForHostel(index: number): string[] {
   ]
 }
 
-// 生成青旅
-function createHostel(id: string, name: string, nameCn: string, city: string, district: string, 
-  address: string, description: string, imageIndex: number, options: Partial<Hostel> = {}): Hostel {
-  const basePrice = options.pricePerNight || Math.floor(Math.random() * 10) + 10
+// 生成青旅（v2.0 - 带诚实设施清单）
+function createHostel(
+  id: string, 
+  name: string, 
+  nameCn: string, 
+  city: string, 
+  district: string, 
+  address: string, 
+  description: string, 
+  imageIndex: number, 
+  options: Partial<Hostel> = {}
+): Hostel {
+  const basePrice = options.pricePerNight || Math.floor(Math.random() * 40) + 60
+  
+  // 根据城市/类型决定设施特征（确保数据真实合理）
+  const isHutong = name.toLowerCase().includes('hutong') || description.toLowerCase().includes('hutong')
+  const isHistoric = options.propertyType === 'guesthouse' || name.toLowerCase().includes('heritage')
+  const isModern = name.toLowerCase().includes('modern') || name.toLowerCase().includes('city')
+  
+  // 胡同/老式民宿通常没有电梯，但有西式马桶
+  const hasElevator = isModern || (!isHutong && Math.random() > 0.4)
+  const hasWesternToilet = isHutong || isHistoric || Math.random() > 0.2
+  const hasEnglishStaff = Math.random() > 0.1  // 90%有英语前台
+  const hasVisaAssistance = city === 'Beijing' || city === 'Shanghai' || Math.random() > 0.3
+  const hasInternationalPayment = true  // 基本都支持
+  
+  // 构建诚实设施清单
+  const honestFacilities: HonestFacility[] = [
+    {
+      id: 'western_toilet',
+      name: 'Western Toilet',
+      nameCn: '西式马桶',
+      category: 'bathroom',
+      available: hasWesternToilet,
+      note: hasWesternToilet ? 'Sit-down toilet in every room' : 'Squat toilet only',
+      icon: 'Bath'
+    },
+    {
+      id: 'elevator',
+      name: 'Elevator',
+      nameCn: '电梯',
+      category: 'accessibility',
+      available: hasElevator,
+      note: hasElevator ? 'Easy access to all floors' : 'Stairs only - free luggage help provided',
+      icon: 'ArrowUpDown'
+    },
+    {
+      id: 'english_staff',
+      name: 'English-Speaking Staff',
+      nameCn: '英语前台',
+      category: 'service',
+      available: hasEnglishStaff,
+      note: hasEnglishStaff ? 'Front desk speaks fluent English' : 'Limited English - use AI Concierge',
+      icon: 'Languages'
+    },
+    {
+      id: 'subway_access',
+      name: 'Subway Access',
+      nameCn: '地铁距离',
+      category: 'location',
+      available: true,
+      note: `${Math.floor(Math.random() * 10) + 3}min walk to nearest subway station`,
+      icon: 'Train'
+    },
+    {
+      id: 'visa_assistance',
+      name: 'Visa Assistance',
+      nameCn: '签证协助',
+      category: 'service',
+      available: hasVisaAssistance,
+      note: hasVisaAssistance ? 'Can help with 144-hour visa-free forms' : undefined,
+      icon: 'FileCheck'
+    },
+    {
+      id: 'international_payment',
+      name: 'International Cards Accepted',
+      nameCn: '国际支付',
+      category: 'payment',
+      available: hasInternationalPayment,
+      note: 'Visa, Mastercard, PayPal accepted',
+      icon: 'CreditCard'
+    }
+  ]
+  
+  // 外国游客友好度
+  const foreignFriendly: ForeignFriendly = {
+    englishSpeaking: hasEnglishStaff,
+    westernToilet: hasWesternToilet,
+    elevator: hasElevator,
+    visaAssistance: hasVisaAssistance,
+    internationalPayment: hasInternationalPayment
+  }
+  
+  // 导流链接
+  const bookingLinks: BookingLinks = {
+    bookingCom: `https://booking.com/hotel/cn/${id}.html`,
+    airbnb: Math.random() > 0.3 ? `https://airbnb.com/rooms/${id}` : undefined
+  }
+  
+  // AI生成的多语言总结
+  const aiSummaryI18n: Record<string, string> = {
+    en: `A ${isHutong ? 'charming traditional hutong' : 'lovely'} stay in ${city}. ${hasWesternToilet ? 'Western toilet available' : 'Note: squat toilet'}. ${hasElevator ? 'Has elevator' : 'No elevator but stairs manageable'}.`,
+    es: `Una estancia encantadora en ${city}. ${hasWesternToilet ? 'Baño occidental disponible' : 'Nota: baño squat'}.`,
+    fr: `Un séjour charmant à ${city}. ${hasWesternToilet ? 'Toilette occidentale disponible' : 'Note: toilette squat'}.`,
+    de: `Ein charmanten Aufenthalt in ${city}. ${hasWesternToilet ? 'Westliche Toilette verfügbar' : 'Hinweis: Hocktoilette'}.`,
+    ja: `${city}の素敵な滞在先。${hasWesternToilet ? '西洋式トイレ完備' : '注意：和式トイレ'}。`
+  }
+  
+  // 文化提示
+  const culturalTips: string[] = []
+  if (isHutong) {
+    culturalTips.push(
+      'Hutong (胡同) = Traditional Beijing alley with courtyard houses',
+      'This is a Siheyuan (四合院) - historic courtyard house with 100+ years history',
+      'Rooms may be smaller than Western hotel standards but full of character'
+    )
+  }
+  if (city === 'Chengdu') {
+    culturalTips.push(
+      'Sichuan food is spicy! Ask for "bu la" (不辣) if you prefer mild',
+      'Teahouses are social hubs - try visiting one nearby'
+    )
+  }
+  if (city === 'Xi\'an') {
+    culturalTips.push(
+      'Muslim Quarter food is famous but can be crowded',
+      'The city wall is great for biking - rent a bike nearby'
+    )
+  }
+  culturalTips.push(
+    'Tap water is not drinkable in China - bottled water provided daily',
+    'Bring toilet paper when going out - public restrooms often don\'t provide it'
+  )
+  
+  // 体验类型标签
+  const experienceType: string[] = []
+  if (isHutong) experienceType.push('hutong')
+  if (isHistoric) experienceType.push('historical')
+  if (name.toLowerCase().includes('food') || city === 'Chengdu' || city === 'Guangzhou') experienceType.push('food')
+  if (name.toLowerCase().includes('lake') || name.toLowerCase().includes('park')) experienceType.push('nature')
+  if (name.toLowerCase().includes('art') || name.toLowerCase().includes('design')) experienceType.push('art')
+  if (name.toLowerCase().includes('bund') || name.toLowerCase().includes('river')) experienceType.push('riverside')
+  if (isModern) experienceType.push('modern')
+  if (experienceType.length === 0) experienceType.push('city')
+  
   return {
     id, name, nameCn, city, district, address, description,
     pricePerNight: basePrice,
-    originalPrice: basePrice + Math.floor(Math.random() * 5) + 2,
-    cleaningFee: 5,
-    serviceFee: Math.floor(basePrice * 0.1),
+    originalPrice: Math.floor(basePrice * 1.15),
+    cleaningFee: 8,
+    serviceFee: Math.floor(basePrice * 0.12),
     currency: 'USD',
-    rating: Number((Math.random() * 1.0 + 4.0).toFixed(1)),
-    reviewCount: Math.floor(Math.random() * 200) + 50,
+    rating: Number((Math.random() * 0.8 + 4.1).toFixed(1)),
+    reviewCount: Math.floor(Math.random() * 300) + 50,
     images: getImagesForHostel(imageIndex),
     badges: options.badges || ['Good Location'],
     propertyType: options.propertyType || 'hostel',
@@ -191,9 +372,9 @@ function createHostel(id: string, name: string, nameCn: string, city: string, di
     distanceToAttraction: '10 min walk',
     distanceToDivingPirate: `${Math.floor(Math.random() * 15) + 3} min`,
     roomTypes: [
-      { id: `${id}-4bed`, name: '4-Bed Mixed Dorm', bedCount: 4, pricePerBed: basePrice, gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 3) + 4 },
-      { id: `${id}-6bed`, name: '6-Bed Mixed Dorm', bedCount: 6, pricePerBed: Math.max(8, basePrice - 3), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 4) + 4 },
-      { id: `${id}-female`, name: '4-Bed Female Dorm', bedCount: 4, pricePerBed: basePrice + 1, gender: 'female', amenities: ['AC', 'Locker', 'Ensuite'], availableBeds: Math.floor(Math.random() * 3) + 2 },
+      { id: `${id}-4bed`, name: '4-Bed Mixed Dorm', bedCount: 4, pricePerBed: Math.floor(basePrice * 0.3), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 3) + 4 },
+      { id: `${id}-6bed`, name: '6-Bed Mixed Dorm', bedCount: 6, pricePerBed: Math.floor(basePrice * 0.25), gender: 'mixed', amenities: ['AC', 'Locker'], availableBeds: Math.floor(Math.random() * 4) + 4 },
+      { id: `${id}-private`, name: 'Private Room', bedCount: 2, pricePerBed: basePrice, gender: 'mixed', amenities: ['AC', 'Ensuite', 'TV'], availableBeds: Math.floor(Math.random() * 2) + 1 },
     ],
     amenities: ['Free WiFi', 'Kitchen', 'Laundry', 'AC', '24h Reception', 'Lockers'],
     facilities: [
@@ -201,6 +382,8 @@ function createHostel(id: string, name: string, nameCn: string, city: string, di
       { icon: 'UtensilsCrossed', label: '共享厨房', labelEn: 'Shared Kitchen' },
       { icon: 'Waves', label: '洗衣房', labelEn: 'Laundry' },
       { icon: 'Lock', label: '储物柜', labelEn: 'Lockers' },
+      ...(hasWesternToilet ? [{ icon: 'Bath', label: '西式马桶', labelEn: 'Western Toilet' }] : []),
+      ...(hasElevator ? [{ icon: 'ArrowUpDown', label: '电梯', labelEn: 'Elevator' }] : []),
     ],
     commonAreas: ['Common Room', 'Kitchen', 'Rooftop'],
     weeklyEvents: [
@@ -209,13 +392,13 @@ function createHostel(id: string, name: string, nameCn: string, city: string, di
       { day: 'Friday', event: 'Pub Crawl', time: '21:00' },
     ],
     host: {
-      name: `Host ${city}`,
+      name: `${city} Host`,
       nameCn: `${city}主人`,
       since: 2018 + Math.floor(Math.random() * 5),
-      languages: ['English', 'Chinese'],
+      languages: hasEnglishStaff ? ['English', 'Chinese'] : ['Chinese'],
       responseRate: `${90 + Math.floor(Math.random() * 9)}%`,
       responseTime: 'within 1 hour',
-      bio: `Welcome to our hostel in ${city}!`,
+      bio: `Welcome to our ${isHutong ? 'traditional hutong' : 'cozy'} stay in ${city}! ${hasEnglishStaff ? 'I speak English and' : 'My staff and I'} are here to help you explore this amazing city.`,
     },
     reviews: [],
     availableDates: [{ start: '2026-03-01', end: '2026-12-31' }],
@@ -223,6 +406,14 @@ function createHostel(id: string, name: string, nameCn: string, city: string, di
     checkOutTime: '11:00',
     cancellationPolicy: 'Free cancellation up to 24 hours before check-in',
     houseRules: ['No smoking in rooms', 'Quiet hours 23:00-07:00'],
+    
+    // ========== 核心差异化字段 ==========
+    honestFacilities,
+    foreignFriendly,
+    bookingLinks,
+    aiSummaryI18n,
+    culturalTips,
+    experienceType,
   }
 }
 
@@ -270,11 +461,102 @@ export function getHostelsByCity(city: string): Hostel[] {
   return hostelsData.filter(h => h.city.toLowerCase() === city.toLowerCase())
 }
 
-export function getFeaturedHostels(limit: number = 6): Hostel[] {
+export function getHostelsByExperienceType(type: string): Hostel[] {
+  return hostelsData.filter(h => h.experienceType?.includes(type))
+}
+
+export function getFeaturedHostels(limit: number = 8): Hostel[] {
   return [...hostelsData].sort((a, b) => b.rating - a.rating).slice(0, limit)
 }
 
+// 增强搜索：支持全文搜索 + 设施筛选
+export interface SearchFilters {
+  query?: string           // 全文搜索
+  city?: string            // 城市筛选
+  experienceType?: string  // 体验类型
+  facilities?: string[]    // 设施筛选 ['western_toilet', 'elevator', 'english_staff']
+  minPrice?: number
+  maxPrice?: number
+}
+
+export function searchHostelsAdvanced(filters: SearchFilters): Hostel[] {
+  let results = hostelsData
+  
+  // 全文搜索（酒店名、城市、区域、描述）
+  if (filters.query) {
+    const q = filters.query.toLowerCase()
+    results = results.filter(h => 
+      h.name.toLowerCase().includes(q) ||
+      h.city.toLowerCase().includes(q) ||
+      h.district.toLowerCase().includes(q) ||
+      h.description.toLowerCase().includes(q) ||
+      h.nameCn.includes(q)
+    )
+  }
+  
+  // 城市筛选
+  if (filters.city && filters.city !== 'all') {
+    results = results.filter(h => h.city.toLowerCase() === filters.city!.toLowerCase())
+  }
+  
+  // 体验类型筛选
+  if (filters.experienceType && filters.experienceType !== 'all') {
+    results = results.filter(h => h.experienceType?.includes(filters.experienceType!))
+  }
+  
+  // 设施筛选（支持多选，AND逻辑）
+  if (filters.facilities && filters.facilities.length > 0) {
+    results = results.filter(h => {
+      return filters.facilities!.every(facility => {
+        switch(facility) {
+          case 'western_toilet': return h.foreignFriendly.westernToilet
+          case 'elevator': return h.foreignFriendly.elevator
+          case 'english_staff': return h.foreignFriendly.englishSpeaking
+          case 'visa_assistance': return h.foreignFriendly.visaAssistance
+          case 'international_payment': return h.foreignFriendly.internationalPayment
+          default: return false
+        }
+      })
+    })
+  }
+  
+  // 价格筛选
+  if (filters.minPrice !== undefined) {
+    results = results.filter(h => h.pricePerNight >= filters.minPrice!)
+  }
+  if (filters.maxPrice !== undefined) {
+    results = results.filter(h => h.pricePerNight <= filters.maxPrice!)
+  }
+  
+  return results
+}
+
+// 保留旧版搜索兼容
 export function searchHostels(query: string): Hostel[] {
-  const q = query.toLowerCase()
-  return hostelsData.filter(h => h.name.toLowerCase().includes(q) || h.city.toLowerCase().includes(q))
+  return searchHostelsAdvanced({ query })
+}
+
+// 获取所有体验类型（用于筛选UI）
+export function getAllExperienceTypes(): { id: string; label: string; icon: string; description: string }[] {
+  return [
+    { id: 'hutong', label: 'Hutong Culture', icon: '🏮', description: 'Traditional courtyard houses in historic alleys' },
+    { id: 'historical', label: 'Historical Sites', icon: '⛩️', description: 'Near Forbidden City, Great Wall, etc.' },
+    { id: 'food', label: 'Food & Dining', icon: '🥟', description: 'Stay in culinary hotspots' },
+    { id: 'nature', label: 'Nature & Parks', icon: '🌿', description: 'Near lakes, mountains, and gardens' },
+    { id: 'art', label: 'Art & Design', icon: '🎨', description: 'Boutique stays in art districts' },
+    { id: 'riverside', label: 'Riverside', icon: '🌊', description: 'Views of the Bund, West Lake, etc.' },
+    { id: 'modern', label: 'Modern City', icon: '🏙️', description: 'High-rise luxury in city centers' },
+    { id: 'city', label: 'City Center', icon: '🏢', description: 'Convenient urban locations' },
+  ]
+}
+
+// 获取设施筛选选项（用于筛选UI）
+export function getFacilityFilters(): { id: string; label: string; icon: string; color: string }[] {
+  return [
+    { id: 'western_toilet', label: '🚽 Western Toilet', icon: '🚽', color: 'emerald' },
+    { id: 'elevator', label: '🛗 Elevator', icon: '🛗', color: 'blue' },
+    { id: 'english_staff', label: '🇬🇧 English Staff', icon: '🇬🇧', color: 'purple' },
+    { id: 'visa_assistance', label: '🛂 Visa Help', icon: '🛂', color: 'amber' },
+    { id: 'international_payment', label: '💳 Card Payment', icon: '💳', color: 'green' },
+  ]
 }

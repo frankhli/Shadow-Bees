@@ -1,5 +1,16 @@
 import { Injectable } from '@nestjs/common'
-import { hostelsData, getHostelById, getHostelsByCity, getFeaturedHostels, searchHostels } from './hostels.mock'
+import { 
+  hostelsData, 
+  getHostelById, 
+  getHostelsByCity, 
+  getFeaturedHostels, 
+  searchHostels,
+  searchHostelsAdvanced,
+  getHostelsByExperienceType,
+  getAllExperienceTypes,
+  getFacilityFilters,
+  SearchFilters
+} from './hostels.mock'
 import { mockOrders, getOrdersByUser, getOrderById, getOrdersByStatus } from './orders.mock'
 import { mockGuides, getGuidesByCity, getGuideById, getGuidesByLanguage } from './guides.mock'
 import { mockExperiences, getExperiencesByCity, getExperienceById, getExperiencesByType } from './experiences.mock'
@@ -8,17 +19,28 @@ import { mockConversations, mockMessages, currentUser, getConversationsByUser, g
 
 @Injectable()
 export class MockDataService {
-  // ========== Hostels ==========
-  async getHostels(filters: { city?: string; query?: string; page?: number; limit?: number }) {
-    let data = hostelsData
-    
-    if (filters.city && filters.city !== 'all') {
-      data = getHostelsByCity(filters.city)
+  // ========== Hostels (v2.0 - 增强搜索) ==========
+  async getHostels(filters: { 
+    city?: string
+    query?: string
+    experienceType?: string
+    facilities?: string[]
+    minPrice?: number
+    maxPrice?: number
+    page?: number
+    limit?: number 
+  }) {
+    // 使用增强搜索
+    const searchFilters: SearchFilters = {
+      query: filters.query,
+      city: filters.city,
+      experienceType: filters.experienceType,
+      facilities: filters.facilities,
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
     }
     
-    if (filters.query) {
-      data = searchHostels(filters.query)
-    }
+    let data = searchHostelsAdvanced(searchFilters)
     
     const page = filters.page || 1
     const limit = filters.limit || 20
@@ -42,6 +64,22 @@ export class MockDataService {
 
   async getFeaturedHostels(limit: number = 8) {
     return getFeaturedHostels(limit)
+  }
+  
+  async getHostelsByExperienceType(type: string) {
+    return getHostelsByExperienceType(type)
+  }
+  
+  async getFilterOptions() {
+    return {
+      experienceTypes: getAllExperienceTypes(),
+      facilityFilters: getFacilityFilters(),
+      cities: [...new Set(hostelsData.map(h => h.city))],
+      priceRange: {
+        min: Math.min(...hostelsData.map(h => h.pricePerNight)),
+        max: Math.max(...hostelsData.map(h => h.pricePerNight)),
+      }
+    }
   }
 
   // ========== Orders ==========

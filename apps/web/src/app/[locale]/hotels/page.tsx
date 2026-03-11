@@ -40,6 +40,22 @@ interface RoomType {
   availableBeds: number
 }
 
+interface HonestFacility {
+  id: string
+  name: string
+  available: boolean
+  note?: string
+  icon: string
+}
+
+interface ForeignFriendly {
+  englishSpeaking: boolean
+  westernToilet: boolean
+  elevator: boolean
+  visaAssistance: boolean
+  internationalPayment: boolean
+}
+
 interface Hostel {
   id: string
   name: string
@@ -55,6 +71,9 @@ interface Hostel {
   amenities: string[]
   distanceToDivingPirate: string
   facilities?: { icon: string; label: string; labelEn?: string }[]
+  honestFacilities?: HonestFacility[]
+  foreignFriendly?: ForeignFriendly
+  aiSummaryI18n?: Record<string, string>
 }
 
 interface ApiResponse {
@@ -405,7 +424,6 @@ function HotelsPageContent() {
                 <input
                   type="date"
                   value={checkIn ? format(checkIn, 'yyyy-MM-dd') : ''}
-                  min={format(new Date(), 'yyyy-MM-dd')}
                   onChange={(e) => setCheckIn(e.target.value ? new Date(e.target.value) : null)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
@@ -415,7 +433,7 @@ function HotelsPageContent() {
                 <input
                   type="date"
                   value={checkOut ? format(checkOut, 'yyyy-MM-dd') : ''}
-                  min={checkIn ? format(addDays(checkIn, 1), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd')}
+                  min={checkIn ? format(addDays(checkIn, 1), 'yyyy-MM-dd') : undefined}
                   onChange={(e) => setCheckOut(e.target.value ? new Date(e.target.value) : null)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
@@ -518,7 +536,7 @@ function HotelsPageContent() {
           <div className="text-center py-20">
             <p className="text-xl text-gray-500">{t('hotels.noResults')}</p>
             <button 
-              onClick={() => {setCheckIn(null); setCheckOut(null)}}
+              onClick={() => {setCheckIn(null); setCheckOut(null); setSelectedAmenities([]); setSearchQuery('')}}
               className="mt-4 text-rose-500 hover:underline"
             >
               {t('hotels.tryAdjusting')}
@@ -543,13 +561,24 @@ function HotelsPageContent() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                       
-                      {hostel.badges.length > 0 && (
-                        <div className="absolute top-3 left-3 flex flex-col gap-1">
-                          {hostel.badges.map((badge) => (
-                            <span key={badge} className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
-                              {badge}
+                      {/* Honest Facility Badges - Core Differentiation */}
+                      {hostel.foreignFriendly && (
+                        <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1">
+                          {hostel.foreignFriendly.westernToilet && (
+                            <span className="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                              🚽 Western Toilet
                             </span>
-                          ))}
+                          )}
+                          {hostel.foreignFriendly.elevator && (
+                            <span className="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                              🛗 Elevator
+                            </span>
+                          )}
+                          {hostel.foreignFriendly.englishSpeaking && (
+                            <span className="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                              🇬🇧 English
+                            </span>
+                          )}
                         </div>
                       )}
                       
@@ -565,13 +594,35 @@ function HotelsPageContent() {
                       <div className="flex items-center justify-between">
                         <h3 className="font-semibold text-gray-900 truncate">{location}</h3>
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 fill-current" />
+                          <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                           <span className="text-sm">{hostel.rating}</span>
                         </div>
                       </div>
                       
                       <p className="text-gray-500 text-sm truncate">{hostel.name}</p>
-                      <p className="text-gray-400 text-xs">{hostel.distanceToDivingPirate}</p>
+                      
+                      {/* AI Summary */}
+                      {hostel.aiSummaryI18n?.en && (
+                        <p className="text-gray-400 text-xs line-clamp-2">{hostel.aiSummaryI18n.en}</p>
+                      )}
+                      
+                      {/* Honest Facilities Preview */}
+                      {hostel.honestFacilities && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {hostel.honestFacilities.slice(0, 3).map((facility) => (
+                            <span 
+                              key={facility.id}
+                              className={`text-xs px-2 py-0.5 rounded-full ${
+                                facility.available 
+                                  ? 'bg-emerald-50 text-emerald-700' 
+                                  : 'bg-red-50 text-red-600'
+                              }`}
+                            >
+                              {facility.available ? '✓' : '✗'} {facility.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       
                       <div className="flex items-baseline gap-2 pt-1">
                         <span className="font-semibold text-gray-900">${hostel.pricePerNight}</span>
@@ -580,7 +631,7 @@ function HotelsPageContent() {
                       
                       {checkIn && checkOut && (
                         <p className="text-sm text-gray-500">
-                          ${totalPrice} {t('checkout.total')} · {nights} {t('checkout.nights')}
+                          ${totalPrice} total · {nights} nights
                         </p>
                       )}
                     </div>
