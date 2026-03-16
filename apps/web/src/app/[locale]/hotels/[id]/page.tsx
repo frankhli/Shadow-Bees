@@ -8,6 +8,7 @@ import { Link, useRouter } from '@/navigation'
 import { Button } from '@/components/ui/button'
 import { UserNav } from '@/components/user-nav'
 import { AIChatWidget } from '@/components/ai-chat-widget'
+import dynamic from 'next/dynamic'
 import { 
   MapPin, 
   Star, 
@@ -26,6 +27,19 @@ import {
   ChevronLeft
 } from 'lucide-react'
 import { format, addDays, differenceInDays } from 'date-fns'
+
+// Dynamic import for HotelDetailMap (client-side only)
+const HotelDetailMap = dynamic(
+  () => import('@/components/map/HotelDetailMap').then(mod => mod.HotelDetailMap),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="h-[400px] bg-gray-100 rounded-xl flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    )
+  }
+)
 
 interface BookingLinks {
   bookingCom?: string
@@ -91,6 +105,7 @@ interface Hostel {
   foreignFriendly?: ForeignFriendly
   bookingLinks?: BookingLinks
   culturalTips?: string[]
+  coordinates?: [number, number]  // [longitude, latitude] for map
 }
 
 // Map facility icon names to components
@@ -154,6 +169,7 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
   const [checkIn, setCheckIn] = useState<Date | null>(null)
   const [checkOut, setCheckOut] = useState<Date | null>(null)
   const [guests, setGuests] = useState(parseInt(urlGuests || '2'))
+  const [selectedRoom, setSelectedRoom] = useState<Hostel['roomTypes'][0] | null>(null)
   const [isBooking, setIsBooking] = useState(false)
   const [bookingSuccess, setBookingSuccess] = useState(false)
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -209,8 +225,8 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
   const maxGuests = hostel.roomTypes?.reduce((max, room) => Math.max(max, room.availableBeds), 4) || 4
   const isValid = nights > 0 && guests > 0 && guests <= maxGuests && isAvailable
   
-  // Price calculation - use first room type price or default to pricePerNight
-  const pricePerNight = hostel.roomTypes?.[0]?.pricePerBed || hostel.pricePerNight
+  // Price calculation - use selected room price or first room type price or default to pricePerNight
+  const pricePerNight = selectedRoom?.pricePerBed || hostel.roomTypes?.[0]?.pricePerBed || hostel.pricePerNight
   const roomTotal = pricePerNight * Math.max(nights, 1)
   const cleaningFee = hostel.cleaningFee || 0
   const serviceFee = hostel.serviceFee || 0
@@ -501,27 +517,111 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
               </div>
             </div>
 
+            {/* Location Map - NEW */}
+            <div id="map" className="pb-6 border-b">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-rose-500" />
+                {t('location')}
+              </h2>
+              
+              <div className="mb-4">
+                <p className="text-gray-700">{hostel.address}</p>
+                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                  <span>📍 {hostel.district}, {hostel.city}</span>
+                  {hostel.coordinates && (
+                    <span className="text-blue-500">
+                      📍 {hostel.coordinates[1].toFixed(4)}, {hostel.coordinates[0].toFixed(4)}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Interactive Map */}
+              {hostel.coordinates ? (
+                <HotelDetailMap
+                  hotelCoordinates={hostel.coordinates}
+                  hotelName={hostel.name}
+                  height="400px"
+                />
+              ) : (
+                <div className="h-[300px] bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="text-center">
+                    <MapPin className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                    <p className="text-gray-500">Map location coming soon</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Room Types */}
             {hostel.roomTypes && hostel.roomTypes.length > 0 && (
-              <div className="pb-6 border-b">
-                <h2 className="text-xl font-semibold mb-4">{tHotel('roomTypes', { defaultValue: 'Room Types' })}</h2>
+              <div className="pb-6 border-b" id="rooms">
+                <h2 className="text-xl font-semibold mb-4">{tHotel('roomTypes', { defaultValue: 'Select Room Type' })}</h2>
                 <div className="space-y-4">
                   {hostel.roomTypes.map((room) => (
-                    <div key={room.id} className="border border-gray-200 rounded-lg p-4">
+                    <div 
+                      key={room.id} 
+                      onClick={() => setSelectedRoom(room)}
+                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all ${
+                        selectedRoom?.id === room.id 
+                          ? 'border-rose-500 bg-rose-50/30 shadow-md' 
+                          : 'border-gray-200 hover:border-rose-300 hover:shadow-sm'
+                      }`}
+                    >
                       <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-semibold">{room.name}</h3>
-                          <p className="text-sm text-gray-500">{room.gender} · {room.bedCount} beds</p>
-                          <p className="text-sm text-gray-500">{tHotel('availableBeds', { defaultValue: 'Available' })}: {room.availableBeds}</p>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-semibold text-gray-900">{room.name}</h3>
+                            {selectedRoom?.id === room.id && (
+                              <span className="px-2 py-0.5 bg-rose-500 text-white text-xs rounded-full">
+                                Selected
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-500 mb-2">{room.gender} · {room.bedCount} beds</p>
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {room.amenities.slice(0, 4).map((amenity) => (
+                              <span key={amenity} className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
+                                {amenity}
+                              </span>
+                            ))}
+                          </div>
+                          <p className="text-sm text-gray-500">
+                            <span className={`font-medium ${room.availableBeds > 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                              {room.availableBeds > 0 ? `${room.availableBeds} beds available` : 'Sold out'}
+                            </span>
+                          </p>
                         </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-lg">${room.pricePerBed}</p>
+                        <div className="text-right ml-4">
+                          <p className="font-bold text-xl text-rose-600">${room.pricePerBed}</p>
                           <p className="text-sm text-gray-500">{tHotel('price.perNight')}</p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedRoom(room);
+                            }}
+                            disabled={room.availableBeds === 0}
+                            className={`mt-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              selectedRoom?.id === room.id
+                                ? 'bg-rose-500 text-white'
+                                : room.availableBeds > 0
+                                  ? 'bg-gray-100 text-gray-700 hover:bg-rose-100 hover:text-rose-700'
+                                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                            }`}
+                          >
+                            {selectedRoom?.id === room.id ? 'Selected' : room.availableBeds > 0 ? 'Select' : 'Unavailable'}
+                          </button>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
+                {!selectedRoom && (
+                  <p className="mt-3 text-sm text-amber-600 flex items-center gap-1">
+                    <span>⚠️</span>
+                    Please select a room type to continue
+                  </p>
+                )}
               </div>
             )}
 
@@ -648,6 +748,26 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
                 )}
               </div>
 
+              {/* Selected Room Display */}
+              {selectedRoom && (
+                <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg">
+                  <p className="text-xs text-gray-500 mb-1">Selected Room</p>
+                  <p className="font-semibold text-gray-900">{selectedRoom.name}</p>
+                  <p className="text-sm text-rose-600">${selectedRoom.pricePerBed} / night</p>
+                </div>
+              )}
+              {hostel.roomTypes && hostel.roomTypes.length > 0 && !selectedRoom && (
+                <div className="mb-4">
+                  <a 
+                    href="#rooms" 
+                    className="text-sm text-rose-600 hover:text-rose-700 underline flex items-center gap-1"
+                  >
+                    <span>👇</span>
+                    View room options
+                  </a>
+                </div>
+              )}
+
               {/* Validation Messages */}
               {(!checkIn || !checkOut) && (
                 <div className="mb-4 p-3 bg-amber-50 text-amber-700 rounded-lg text-sm">
@@ -667,6 +787,12 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
               {guests > maxGuests && (
                 <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
                   {t('maxGuests', { max: maxGuests })}
+                </div>
+              )}
+              {hostel.roomTypes && hostel.roomTypes.length > 0 && !selectedRoom && (
+                <div className="mb-4 p-3 bg-amber-50 text-amber-700 rounded-lg text-sm flex items-center gap-2">
+                  <span>🏠</span>
+                  Please select a room type below
                 </div>
               )}
 
