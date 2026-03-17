@@ -20,6 +20,9 @@ jobs:
     defaults:
       run:
         working-directory: ./apps/web
+    env:
+      # 减少Node内存使用
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
