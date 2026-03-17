@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "title": "跳海全球 - AI驱动的入境旅游",
+    "description": "通过AI管家发现真实的中国。精品酒店、当地导游和文化体验，24/7多语言支持。"
+  },
+  "nav": {
+    "hotels": "酒店",
+    "stays": "住宿",
+    "guides": "导游",
+    "experiences": "体验",
+    "listProperty": "发布房源",
+    "dashboard": "控制台",
+    "login": "登录",
+    "signup": "注册",
+    "profile": "个人资料",
+    "orders": "我的订单",
+    "logout": "退出登录",
+    "saved": "已保存"
+  },
+  "hero": {
+    "title": "用",
+    "titleHighlight": "AI管家",
+    "description": "发现真实的中国。精品酒店、当地导游和文化体验，全程多语言AI支持。",
+    "search": {
+      "where": "目的地",
+      "checkIn": "入住日期",
+      "checkOut": "退房日期",
+      "who": "人数",
+      "placeholder": "搜索目的地",
+      "addDates": "添加日期",
+      "addGuests": "添加客人",
+      "adults": "成人",
+      "adultsDesc": "13岁以上",
+      "button": "搜索"
+    }
+  },
+  "home": {
+    "featuredStays": "精选住宿",
+    "showAll": "查看全部",
+    "night": "晚",
+    "popularDestinations": "热门目的地",
+    "stays": "处住宿",
+    "trust": {
+      "verified": "认证酒店",
+      "verifiedDesc": "所有房源都经过实地考察",
+      "support": "24/7 AI支持",
+      "supportDesc": "用您的语言即时获得帮助",
+      "reviews": "真实评价",
+      "reviewsDesc": "仅来自真实住客",
+      "booking": "灵活预订",
+      "bookingDesc": "可免费取消"
+    },
+    "whyChoose": {
+      "title": "自信游中国",
+      "aiConcierge": {
+        "title": "AI管家全天候在线",
+        "desc": "用您的语言即时获得关于酒店、当地风俗和旅行建议的答案。"
+      },
+      "verified": {
+        "title": "认证与考察",
+        "desc": "每个房源都经过实地考察。我们检查西式设施，确保没有意外。"
+      },
+      "englishSupport": {
+        "title": "英语客服支持",
+        "desc": "需要时可通过WhatsApp、微信或邮件联系真人客服。"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录查看您的预订和已保存的酒店",
+      "email": "邮箱",
+      "emailPlaceholder": "your@email.com",
+      "password": "密码",
+      "rememberMe": "记住我",
+      "forgotPassword": "忘记密码？",
+      "button": "登录",
+      "loading": "正在登录...",
+      "noAccount": "还没有账号？",
+      "signupLink": "立即注册",
+      "demoTitle": "演示账号（点击自动填充）",
+      "demoUser": "演示用户",
+      "errors": {
+        "requiredFields": "请输入邮箱和密码",
+        "invalidCredentials": "邮箱或密码错误，请重试",
+        "accountLocked": "账号暂时锁定，请稍后再试",
+        "tooManyAttempts": "登录失败次数过多，请稍等片刻",
+        "generic": "无法登录，请重试"
+      }
+    },
+    "register": {
+      "title": "创建账号",
+      "subtitle": "加入跳海，开启您的中国之旅",
+      "firstName": "名字",
+      "firstNamePlaceholder": "John",
+      "lastName": "姓氏",
+      "lastNamePlaceholder": "Smith",
+      "email": "邮箱",
+      "emailPlaceholder": "your@email.com",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "passwordStrength": {
+        "weak": "弱",
+        "medium": "中",
+        "strong": "强"
+      },
+      "agreeTerms": "我同意",
+      "termsLink": "服务条款",
+      "and": "和",
+      "privacyLink": "隐私政策",
+      "button": "创建账号",
+      "loading": "正在创建账号...",
+      "hasAccount": "已有账号？",
+      "loginLink": "立即登录",
+      "errors": {
+        "fullName": "请输入您的全名",
+        "email": "请输入邮箱",
+        "passwordLength": "密码至少需要8个字符",
+        "passwordMatch": "两次输入的密码不一致",
+        "terms": "请同意服务条款"
+      }
+    }
+  },
+  "hotel": {
+    "facilities": {
+      "elevator": "电梯",
+      "noElevator": "无电梯",
+      "westernToilet": "西式马桶",
+      "wifi": "无线网络",
+      "englishStaff": "英语工作人员",
+      "airCon": "空调"
+    },
+    "honestTags": {
+      "title": "您应该知道的事",
+      "elevator": "无电梯，但提供免费行李搬运服务",
+      "toilet": "西式卫生间",
+      "location": "步行{minutes}分钟到地铁站",
+      "english": "有会英语的工作人员"
+    },
+    "price": {
+      "perNight": "每晚",
+      "bookingLink": "在Booking.com查看",
+      "airbnbLink": "在Airbnb查看"
+    },
+    "aiConcierge": {
+      "online": "AI管家在线",
+      "chat": "与AI对话",
+      "placeholder": "询问关于此酒店的问题..."
+    },
+    "detail": {
+      "backToSearch": "返回搜索",
+      "back": "返回",
+      "reviews": "条评价",
+      "superhost": "超赞房东",
+      "superhostDesc": "超赞房东是经验丰富、评价极高的房东，致力于提供优质的住宿体验。",
+      "share": "分享",
+      "save": "收藏",
+      "hostedBy": "房东",
+      "guests": "位客人",
+      "bedroom": "卧室",
+      "bedrooms": "卧室",
+      "bed": "张床",
+      "beds": "张床",
+      "bath": "间浴室",
+      "about": "关于此处",
+      "amenities": "设施与服务",
+      "showAll": "查看全部",
+      "where": "位置",
+      "greatLocation": "位置优越",
+      "locationDesc": "95%的近期住客给位置打了5星。",
+      "checkIn": "入住",
+      "checkOut": "退房",
+      "addDate": "添加日期",
+      "reserve": "预订",
+      "reserveBtn": "查看可订日期",
+      "applyDates": "应用日期",
+      "notAvailable": "不可预订",
+      "charged": "暂时不会扣款",
+      "price": "价格",
+      "total": "总价",
+      "beforeTaxes": "税前",
+      "bookOnTiaohai": "在跳海预订",
+      "compareSites": "比价",
+      "processing": "处理中...",
+      "selectDates": "选择日期",
+      "invalidDates": "日期无效",
+      "tooManyGuests": "客人过多",
+      "cleaningFee": "清洁费",
+      "serviceFee": "服务费",
+      "savings": "价格匹配优惠",
+      "selectDatesError": "请选择入住和退房日期以继续。",
+      "checkOutAfterCheckIn": "退房日期必须在入住日期之后。",
+      "datesNotAvailable": "所选日期不可用，请选择其他日期。",
+      "maxGuests": "最多允许{max}位客人。"
+    },
+    "roomTypes": "房型",
+    "availableBeds": "可订",
+    "houseRules": "入住须知"
+  },
+  "booking": {
+    "request": "发送预订请求",
+    "requestSent": "预订请求已发送",
+    "requestPending": "待确认",
+    "requestError": "发送请求失败",
+    "contactInfo": "联系信息",
+    "checkIn": "入住日期",
+    "checkOut": "退房日期",
+    "guests": "客人",
+    "guest": "位客人",
+    "total": "总计",
+    "payment": "付款",
+    "confirm": "确认预订"
+  },
+  "common": {
+    "loading": "加载中...",
+    "loadingMore": "加载更多...",
+    "saving": "保存中...",
+    "submitting": "提交中...",
+    "processing": "处理中...",
+    "pleaseWait": "请稍候...",
+    "error": "出错了",
+    "retry": "重试",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "submit": "提交",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "showMore": "显示更多",
+    "showLess": "收起",
+    "readMore": "阅读更多",
+    "night": "晚",
+    "bookingSuccess": "预订请求已发送！",
+    "bookingSuccessMessage": "您在{hotelName}的预订已提交。",
+    "hostConfirmTime": "房东将在24小时内确认。",
+    "yes": "是",
+    "no": "否",
+    "continue": "继续",
+    "generating": "生成中...",
+    "settings": "设置",
+    "included": "包含",
+    "apply": "应用",
+    "brand": {
+      "partner": "跳海合作伙伴"
+    },
+    "currency": {
+      "usd": "美元"
+    },
+    "days": {
+      "sun": "周日",
+      "mon": "周一",
+      "tue": "周二",
+      "wed": "周三",
+      "thu": "周四",
+      "fri": "周五",
+      "sat": "周六"
+    },
+    "validation": {
+      "required": "必填项",
+      "emailInvalid": "请输入有效的邮箱地址",
+      "passwordMin": "密码至少需要8个字符",
+      "passwordMatch": "两次输入的密码不一致",
+      "phoneInvalid": "请输入有效的手机号码",
+      "cardInvalid": "请输入有效的卡号"
+    },
+    "errors": {
+      "generic": "出错了，请重试",
+      "networkError": "连接失败，请检查网络后重试",
+      "timeout": "请求超时，请重试",
+      "unauthorized": "请先登录以继续",
+      "forbidden": "您没有权限执行此操作",
+      "notFound": "未找到请求的内容",
+      "serverError": "服务器出现问题，请稍后重试",
+      "validationError": "请检查输入信息后重试",
+      "paymentFailed": "支付处理失败，请尝试其他支付方式",
+      "rateLimit": "请求过于频繁，请稍后再试",
+      "tryAgain": "重试",
+      "contactSupport": "联系客服"
+    },
+    "actions": {
+      "selectFile": "选择文件",
+      "backToHome": "返回首页"
+    },
+    "backToDashboard": "返回控制台",
+    "metrics": {
+      "clicks": "点击"
+    },
+    "amenities": {
+      "wifi": "无线网络",
+      "parking": "停车场",
+      "kitchen": "厨房",
+      "pool": "泳池",
+      "gym": "健身房"
+    },
+    "placeholders": {
+      "email": "your@email.com",
+      "firstName": "名字",
+      "lastName": "姓氏",
+      "phone": "+86 138-0000-0000",
+      "passport": "护照号码",
+      "cardNumber": "1234 5678 9012 3456",
+      "cardHolder": "持卡人姓名",
+      "cvv": "123",
+      "address": "街道地址",
+      "city": "城市",
+      "zip": "邮编"
+    },
+    "months": {
+      "jan": "1月",
+      "feb": "2月",
+      "mar": "3月",
+      "apr": "4月",
+      "may": "5月",
+      "jun": "6月",
+      "jul": "7月",
+      "aug": "8月",
+      "sep": "9月",
+      "oct": "10月",
+      "nov": "11月",
+      "dec": "12月"
+    }
+  }
+}

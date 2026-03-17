@@ -40,7 +40,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages} locale={validLocale}>
           <Providers>
-            {children}
+            <GlobalErrorBoundary>
+              {children}
+            </GlobalErrorBoundary>
           </Providers>
         </NextIntlClientProvider>
       </body>

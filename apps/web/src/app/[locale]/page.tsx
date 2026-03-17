@@ -169,11 +169,39 @@ export default function HomePage() {
     fetchHostels()
   }, [])
   
-  // 根据体验类型筛选
-  const filteredHostels = activeCategory === 'all' 
-    ? featuredHostels 
-    : featuredHostels.filter(h => h.aiSummaryI18n?.en?.toLowerCase().includes(activeCategory) || 
-        (activeCategory === 'hutong' && h.name.toLowerCase().includes('hutong')))
+  // 根据体验类型和设施筛选筛选酒店
+  const filteredHostels = featuredHostels.filter((hostel) => {
+    // 体验类型筛选
+    if (activeCategory !== 'all') {
+      const matchesCategory = hostel.aiSummaryI18n?.en?.toLowerCase().includes(activeCategory) || 
+        (activeCategory === 'hutong' && hostel.name.toLowerCase().includes('hutong'));
+      if (!matchesCategory) return false;
+    }
+    
+    // 设施筛选
+    if (selectedFacilities.length > 0) {
+      const hasAllFacilities = selectedFacilities.every(facilityId => {
+        if (!hostel.foreignFriendly) return false;
+        switch (facilityId) {
+          case 'western_toilet':
+            return hostel.foreignFriendly.westernToilet;
+          case 'elevator':
+            return hostel.foreignFriendly.elevator;
+          case 'english_staff':
+            return hostel.foreignFriendly.englishSpeaking;
+          case 'visa_assistance':
+            return hostel.foreignFriendly.visaAssistance;
+          case 'international_payment':
+            return hostel.foreignFriendly.internationalPayment;
+          default:
+            return false;
+        }
+      });
+      if (!hasAllFacilities) return false;
+    }
+    
+    return true;
+  })
   
   // 切换收藏
   const toggleSaveHostel = (e: React.MouseEvent, hostelId: string) => {
@@ -301,21 +329,32 @@ export default function HomePage() {
         {/* Hero Content */}
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="text-center py-12 md:py-16">
-            {/* 144小时免签标识 - 静态Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/90 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-8">
-              <Globe className="w-4 h-4" />
-              144-hour Visa-Free Transit Available
+            {/* 144小时免签标识 - 更醒目的位置，放在标题上方 */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-400 to-orange-400 text-amber-950 rounded-full text-sm font-bold mb-6 shadow-xl animate-pulse">
+              <Globe className="w-5 h-5" />
+              <span>✨ 144-hour Visa-Free Transit Available</span>
+              <span className="bg-white/30 px-2 py-0.5 rounded text-xs">No Visa Needed!</span>
             </div>
-            
+
             {/* 主标题 - 48px */}
             <h1 className="text-[40px] md:text-[48px] font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
               {t('hero.title')} <span className="text-rose-300">{t('hero.titleHighlight')}</span>
             </h1>
             
             {/* 副标题 - 24px */}
-            <p className="text-lg md:text-[24px] text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+            <p className="text-lg md:text-[24px] text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
               Honest info about hotels in China. We tell you what others won&apos;t.
             </p>
+
+            {/* AI Concierge 主要CTA - 前置到搜索框上方 */}
+            <button 
+              onClick={() => router.push('/chat')}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 hover:from-violet-600 hover:via-purple-600 hover:to-fuchsia-600 text-white rounded-full font-semibold text-lg shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all transform hover:scale-105 mb-8"
+            >
+              <Sparkles className="w-6 h-6 animate-pulse" />
+              <span>🤖 Ask AI Concierge</span>
+              <span className="bg-white/20 px-3 py-1 rounded-full text-sm">Free</span>
+            </button>
           </div>
 
           {/* 搜索框 - 居中全宽 */}
@@ -363,7 +402,7 @@ export default function HomePage() {
                 {/* 搜索按钮 */}
                 <button 
                   onClick={handleSearch}
-                  className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 md:rounded-r-2xl transition-colors flex items-center justify-center gap-2 min-w-[120px]"
+                  className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 md:rounded-r-2xl transition-colors flex items-center justify-center gap-2 min-w-[140px]"
                 >
                   <Search className="w-5 h-5" />
                   <span className="font-medium">Search</span>
@@ -373,21 +412,28 @@ export default function HomePage() {
               {/* 设施快速筛选 */}
               <div className="px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-medium text-gray-500 mr-2">Must-have:</span>
-                  {facilityFilters.slice(0, 4).map((filter) => (
+                  <span className="text-xs font-semibold text-gray-600 mr-2">🔍 Must-have:</span>
+                  {facilityFilters.map((filter) => (
                     <button
                       key={filter.id}
                       onClick={() => toggleFacility(filter.id)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                         selectedFacilities.includes(filter.id)
-                          ? `bg-${filter.color}-100 border-${filter.color}-300 text-${filter.color}-700`
-                          : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                          ? `bg-${filter.color}-100 border-${filter.color}-400 text-${filter.color}-700 shadow-sm`
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                       }`}
+                      title={filter.description}
                     >
                       <span>{filter.label.split(' ')[0]}</span>
                       <span className="hidden sm:inline">{filter.label.split(' ').slice(1).join(' ')}</span>
                     </button>
                   ))}
+                  <button
+                    onClick={handleSearch}
+                    className="ml-auto text-xs px-4 py-1.5 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-colors"
+                  >
+                    Apply Filters →
+                  </button>
                 </div>
               </div>
             </div>
@@ -531,22 +577,63 @@ export default function HomePage() {
                     />
                   </button>
                   
-                  {/* 诚实设施标签 */}
+                  {/* 诚实设施标签 - 增强版 - 显示所有重要设施 */}
                   {hostel.foreignFriendly && (
                     <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1">
-                      {hostel.foreignFriendly.westernToilet && (
-                        <span className="bg-emerald-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
-                          <Bath className="w-3 h-3" /> Western Toilet
+                      {/* Western Toilet - 最重要的设施 */}
+                      {hostel.foreignFriendly.westernToilet ? (
+                        <span className="bg-emerald-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="✅ Western-style sit-down toilet"
+                        >
+                          🚽 Western Toilet
+                        </span>
+                      ) : (
+                        <span className="bg-amber-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="⚠️ Traditional squat toilet - common in older Chinese buildings"
+                        >
+                          🚽 Squat Toilet
                         </span>
                       )}
-                      {hostel.foreignFriendly.elevator && (
-                        <span className="bg-blue-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
-                          <ArrowUpDown className="w-3 h-3" /> Elevator
+                      
+                      {/* Elevator */}
+                      {hostel.foreignFriendly.elevator ? (
+                        <span className="bg-blue-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="✅ Elevator available"
+                        >
+                          🛗 Elevator
+                        </span>
+                      ) : (
+                        <span className="bg-orange-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="⚠️ No elevator - typical for traditional hutong courtyard houses"
+                        >
+                          🚶 Stairs Only
                         </span>
                       )}
+                      
+                      {/* English Staff */}
                       {hostel.foreignFriendly.englishSpeaking && (
-                        <span className="bg-purple-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
-                          <Languages className="w-3 h-3" /> English
+                        <span className="bg-purple-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="✅ English-speaking staff available"
+                        >
+                          🇬🇧 English
+                        </span>
+                      )}
+                      
+                      {/* Visa Assistance */}
+                      {hostel.foreignFriendly.visaAssistance && (
+                        <span className="bg-cyan-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="✅ Can help with 144-hour visa-free transit paperwork"
+                        >
+                          🛂 Visa Help
+                        </span>
+                      )}
+                      
+                      {/* Card Payment */}
+                      {hostel.foreignFriendly.internationalPayment && (
+                        <span className="bg-green-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 shadow-lg"
+                          title="✅ Accepts Visa/Mastercard/Amex"
+                        >
+                          💳 Card OK
                         </span>
                       )}
                     </div>

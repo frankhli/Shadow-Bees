@@ -88,10 +88,12 @@ interface ApiResponse {
 
 // Honest facility filters for foreign travelers
 const honestFacilityFilters = [
-  { icon: null, label: '🚽 Western Toilet', key: 'western_toilet', color: 'emerald' },
-  { icon: null, label: '🛗 Elevator', key: 'elevator', color: 'blue' },
-  { icon: null, label: '🇬🇧 English Staff', key: 'english_staff', color: 'purple' },
-  { icon: Wifi, label: '📶 WiFi', key: 'wifi', color: 'gray' },
+  { icon: null, label: '🚽 Western Toilet', key: 'western_toilet', color: 'emerald', description: 'Sit-down toilet' },
+  { icon: null, label: '🛗 Elevator', key: 'elevator', color: 'blue', description: 'Easy floor access' },
+  { icon: null, label: '🇬🇧 English Staff', key: 'english_staff', color: 'purple', description: 'Fluent English support' },
+  { icon: null, label: '🛂 Visa Help', key: 'visa_assistance', color: 'amber', description: '144-hour visa support' },
+  { icon: null, label: '💳 Card Payment', key: 'international_payment', color: 'green', description: 'Visa/Mastercard accepted' },
+  { icon: Wifi, label: '📶 WiFi', key: 'wifi', color: 'gray', description: 'Free internet' },
 ]
 
 // Map API amenities to filter keys
@@ -229,21 +231,50 @@ function HotelsPageContent() {
       
       // Check amenities/facilities (honest facility filters)
       if (selectedAmenities.length > 0) {
-        const hostelFacilities = hostel.facilities?.map((f: any) => f.label?.toLowerCase() || '') || []
-        const hasAllAmenities = selectedAmenities.every(amenity => {
-          // Map amenity keys to facility labels
-          const amenityMapping: Record<string, string[]> = {
-            'western_toilet': ['western toilet', 'toilet'],
-            'elevator': ['elevator', 'lift'],
-            'english_staff': ['english', 'staff'],
-            'wifi': ['wifi', 'internet'],
-          }
-          const searchTerms = amenityMapping[amenity] || [amenity]
-          return searchTerms.some(term => 
-            hostelFacilities.some((f: string) => f.includes(term))
-          )
-        })
-        if (!hasAllAmenities) return false
+        // First check foreignFriendly object if available
+        if (hostel.foreignFriendly) {
+          const hasAllFacilities = selectedAmenities.every(amenity => {
+            switch (amenity) {
+              case 'western_toilet':
+                return hostel.foreignFriendly?.westernToilet;
+              case 'elevator':
+                return hostel.foreignFriendly?.elevator;
+              case 'english_staff':
+                return hostel.foreignFriendly?.englishSpeaking;
+              case 'visa_assistance':
+                return hostel.foreignFriendly?.visaAssistance;
+              case 'international_payment':
+                return hostel.foreignFriendly?.internationalPayment;
+              default:
+                // Fall back to facilities array check for other amenities
+                const hostelFacilities = hostel.facilities?.map((f: any) => f.label?.toLowerCase() || '') || []
+                const amenityMapping: Record<string, string[]> = {
+                  'wifi': ['wifi', 'internet'],
+                }
+                const searchTerms = amenityMapping[amenity] || [amenity]
+                return searchTerms.some(term => 
+                  hostelFacilities.some((f: string) => f.includes(term))
+                )
+            }
+          })
+          if (!hasAllFacilities) return false
+        } else {
+          // Fallback to facilities array check
+          const hostelFacilities = hostel.facilities?.map((f: any) => f.label?.toLowerCase() || '') || []
+          const hasAllAmenities = selectedAmenities.every(amenity => {
+            const amenityMapping: Record<string, string[]> = {
+              'western_toilet': ['western toilet', 'toilet'],
+              'elevator': ['elevator', 'lift'],
+              'english_staff': ['english', 'staff'],
+              'wifi': ['wifi', 'internet'],
+            }
+            const searchTerms = amenityMapping[amenity] || [amenity]
+            return searchTerms.some(term => 
+              hostelFacilities.some((f: string) => f.includes(term))
+            )
+          })
+          if (!hasAllAmenities) return false
+        }
       }
       
       // Check price range
@@ -359,16 +390,17 @@ function HotelsPageContent() {
               </button>
               
               {/* Honest Facility Filters - for foreign travelers */}
-              <span className="text-sm text-gray-500 mr-2 hidden lg:inline">Must-have:</span>
+              <span className="text-sm font-semibold text-gray-600 mr-2 hidden lg:inline">🔍 Must-have:</span>
               {honestFacilityFilters.map((filter) => (
                 <button
                   key={filter.key}
                   onClick={() => toggleAmenity(filter.key)}
                   className={`flex items-center gap-2 px-3 py-2 border rounded-xl text-sm font-medium transition-colors whitespace-nowrap ${
                     selectedAmenities.includes(filter.key)
-                      ? `border-${filter.color}-500 bg-${filter.color}-50 text-${filter.color}-700`
-                      : 'border-gray-300 hover:border-gray-900'
+                      ? `border-${filter.color}-500 bg-${filter.color}-50 text-${filter.color}-700 shadow-sm`
+                      : 'border-gray-300 hover:border-gray-900 hover:bg-gray-50'
                   }`}
+                  title={filter.description}
                 >
                   {filter.icon && <filter.icon className="w-4 h-4" />}
                   {filter.label}
@@ -559,24 +591,67 @@ function HotelsPageContent() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        loading="lazy"
+                        quality={80}
                       />
                       
-                      {/* Honest Facility Badges - Core Differentiation */}
+                      {/* Honest Facility Badges - Enhanced for Foreign Travelers */}
                       {hostel.foreignFriendly && (
                         <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1">
-                          {hostel.foreignFriendly.westernToilet && (
-                            <span className="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                          {/* Western Toilet - Most Important */}
+                          {hostel.foreignFriendly.westernToilet ? (
+                            <span className="bg-emerald-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="✅ Western-style sit-down toilet"
+                            >
                               🚽 Western Toilet
                             </span>
-                          )}
-                          {hostel.foreignFriendly.elevator && (
-                            <span className="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">
-                              🛗 Elevator
+                          ) : (
+                            <span className="bg-amber-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="⚠️ Traditional squat toilet"
+                            >
+                              🚽 Squat Toilet
                             </span>
                           )}
+                          
+                          {/* Elevator */}
+                          {hostel.foreignFriendly.elevator ? (
+                            <span className="bg-blue-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="✅ Elevator available"
+                            >
+                              🛗 Elevator
+                            </span>
+                          ) : (
+                            <span className="bg-orange-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="⚠️ No elevator - stairs only"
+                            >
+                              🚶 Stairs
+                            </span>
+                          )}
+                          
+                          {/* English Staff */}
                           {hostel.foreignFriendly.englishSpeaking && (
-                            <span className="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                            <span className="bg-purple-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="✅ English-speaking staff"
+                            >
                               🇬🇧 English
+                            </span>
+                          )}
+                          
+                          {/* Visa Assistance */}
+                          {hostel.foreignFriendly.visaAssistance && (
+                            <span className="bg-cyan-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="✅ Can help with 144-hour visa-free transit"
+                            >
+                              🛂 Visa Help
+                            </span>
+                          )}
+                          
+                          {/* Card Payment */}
+                          {hostel.foreignFriendly.internationalPayment && (
+                            <span className="bg-green-500/95 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-semibold shadow-lg"
+                              title="✅ Accepts Visa/Mastercard"
+                            >
+                              💳 Card OK
                             </span>
                           )}
                         </div>

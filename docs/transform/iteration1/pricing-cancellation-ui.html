@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价格明细与取消政策UI设计 - Ivan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .dashed-underline {
+            border-bottom: 1px dashed #9CA3AF;
+            cursor: pointer;
+        }
+        .dashed-underline:hover {
+            border-bottom-color: #4B5563;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="mb-12">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">价格明细与取消政策UI设计</h1>
+            <p class="text-gray-500">参考Booking.com标准 · 设计: Ivan</p>
+            <div class="flex gap-4 mt-4 text-sm">
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full">迭代1-修复</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full">hospitality_expert验收</span>
+            </div>
+        </header>
+
+        <!-- Section 1: Hotel Card with Pricing -->
+        <section class="mb-16">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 bg-gray-900 text-white rounded-lg flex items-center justify-center text-sm">1</span>
+                酒店卡片 - 价格明细与取消政策
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1: Free Cancellation -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
+                    <!-- Image Area -->
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-rose-100 to-orange-100">
+                        <div class="absolute top-3 left-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Verified Foreign Guest
+                            </span>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <button class="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </button>
+                        </div>
+                        <!-- Image placeholder -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-gray-400">
+                                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                <span class="text-sm">Hotel Image</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="p-4">
+                        <!-- Location & Rating -->
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <p class="text-sm text-gray-500">Xuhui, Shanghai</p>
+                                <h3 class="font-semibold text-gray-900">Boutique Hutong Courtyard</h3>
+                            </div>
+                            <div class="flex items-center gap-1 text-right">
+                                <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-sm font-medium">4.8</span>
+                                <span class="text-sm text-gray-500">(28)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Facility Tags -->
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                Western Toilet
+                            </span>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                                Elevator
+                            </span>
+                        </div>
+                        
+                        <!-- Cancellation Badge -->
+                        <div class="mb-3">
+                            <button class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full hover:bg-emerald-100 transition-colors cursor-pointer">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Free cancellation
+                            </button>
+                        </div>
+                        
+                        <!-- Price Area -->
+                        <div class="flex items-end justify-between pt-2 border-t border-gray-100">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-900">$128</span>
+                                <span class="text-sm text-gray-500">/night</span>
+                                <p class="text-sm font-medium text-gray-600 mt-0.5 dashed-underline inline-block" onclick="toggleBreakdown('breakdown1')">
+                                    $384 total
+                                </p>
+                                <p class="text-xs text-gray-400">includes taxes & fees</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Breakdown Dropdown -->
+                        <div id="breakdown1" class="hidden mt-3 p-3 bg-gray-50 rounded-lg text-sm">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-gray-600">
+                                    <span>$128 × 3 nights</span>
+                                    <span>$384</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Cleaning fee</span>
+                                    <span>$48</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Service fee</span>
+                                    <span>$32</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Occupancy taxes</span>
+                                    <span>$56</span>
+                                </div>
+                                <div class="border-t border-gray-200 pt-2 flex justify-between font-semibold text-gray-900">
+                                    <span>Total</span>
+                                    <span>$520</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Flexible Policy -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-blue-100 to-purple-100">
+                        <div class="absolute top-3 left-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Verified Foreign Guest
+                            </span>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-gray-400">
+                                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                <span class="text-sm">Hotel Image</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <p class="text-sm text-gray-500">Jing'an, Shanghai</p>
+                                <h3 class="font-semibold text-gray-900">Modern Art Deco Suite</h3>
+                            </div>
+                            <div class="flex items-center gap-1 text-right">
+                                <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-sm font-medium">4.6</span>
+                                <span class="text-sm text-gray-500">(42)</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded-full">Western Toilet</span>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-50 text-purple-700 text-xs rounded-full">English Staff</span>
+                        </div>
+                        <div class="mb-3">
+                            <button class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full hover:bg-blue-100 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                Flexible
+                            </button>
+                        </div>
+                        <div class="flex items-end justify-between pt-2 border-t border-gray-100">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-900">$156</span>
+                                <span class="text-sm text-gray-500">/night</span>
+                                <p class="text-sm font-medium text-gray-600 mt-0.5">$468 total</p>
+                                <p class="text-xs text-gray-400">includes taxes & fees</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Non-refundable -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200">
+                        <div class="absolute top-3 left-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Verified Foreign Guest
+                            </span>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-gray-400">
+                                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                <span class="text-sm">Hotel Image</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <p class="text-sm text-gray-500">Huangpu, Shanghai</p>
+                                <h3 class="font-semibold text-gray-900">Riverside View Apartment</h3>
+                            </div>
+                            <div class="flex items-center gap-1 text-right">
+                                <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-sm font-medium">4.9</span>
+                                <span class="text-sm text-gray-500">(156)</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded-full">Western Toilet</span>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full">Elevator</span>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-50 text-purple-700 text-xs rounded-full">English Staff</span>
+                        </div>
+                        <div class="mb-3">
+                            <button class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                Non-refundable
+                            </button>
+                        </div>
+                        <div class="flex items-end justify-between pt-2 border-t border-gray-100">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-900">$98</span>
+                                <span class="text-sm text-gray-500">/night</span>
+                                <p class="text-sm font-medium text-gray-600 mt-0.5">$294 total</p>
+                                <p class="text-xs text-gray-400">includes taxes & fees</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Cancellation Policy Modal -->
+        <section class="mb-16">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 bg-gray-900 text-white rounded-lg flex items-center justify-center text-sm">2</span>
+                取消政策详情弹窗
+            </h2>
+            
+            <!-- Modal Preview -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 max-w-lg mx-auto overflow-hidden">
+                <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                    <h3 class="font-semibold text-gray-900">Cancellation Policy</h3>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                
+                <div class="p-6">
+                    <!-- Policy Badge -->
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-emerald-700">Free cancellation</h4>
+                            <p class="text-sm text-gray-500">Full refund before deadline</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Deadline Info -->
+                    <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                        <p class="text-sm text-gray-600 mb-2">Full refund if cancelled before:</p>
+                        <p class="text-lg font-semibold text-gray-900">January 14, 2026 at 11:59 PM</p>
+                    </div>
+                    
+                    <!-- Timeline Visualization -->
+                    <div class="mb-6">
+                        <p class="text-sm font-medium text-gray-700 mb-3">Refund timeline</p>
+                        <div class="relative">
+                            <!-- Timeline bar -->
+                            <div class="h-2 bg-gray-200 rounded-full overflow-hidden flex">
+                                <div class="w-1/2 bg-emerald-500"></div>
+                                <div class="w-1/4 bg-amber-400"></div>
+                                <div class="w-1/4 bg-rose-400"></div>
+                            </div>
+                            
+                            <!-- Labels -->
+                            <div class="flex justify-between mt-2 text-xs text-gray-500">
+                                <div class="text-center">
+                                    <div class="w-3 h-3 bg-emerald-500 rounded-full mx-auto mb-1"></div>
+                                    <span>Today</span>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-3 h-3 bg-emerald-500 rounded-full mx-auto mb-1 ring-2 ring-emerald-200"></div>
+                                    <span class="font-medium text-emerald-700">Jan 14</span>
+                                    <p class="text-emerald-600">Full refund</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-3 h-3 bg-amber-400 rounded-full mx-auto mb-1"></div>
+                                    <span>Jan 15</span>
+                                    <p class="text-amber-600">Partial</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-3 h-3 bg-rose-400 rounded-full mx-auto mb-1"></div>
+                                    <span>Jan 16</span>
+                                    <p class="text-rose-600">Check-in</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Policy Details -->
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <div>
+                                <p class="font-medium text-gray-900">Before Jan 14, 11:59 PM</p>
+                                <p class="text-gray-500">Full refund of accommodation fees</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <div>
+                                <p class="font-medium text-gray-900">After deadline</p>
+                                <p class="text-gray-500">First night charged, remaining nights refunded</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action -->
+                    <button class="w-full mt-6 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
+                        View full policy
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Hotel Detail Page Price Card -->
+        <section class="mb-16">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 bg-gray-900 text-white rounded-lg flex items-center justify-center text-sm">3</span>
+                酒店详情页价格卡片
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Price Summary Card -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Price Summary</h3>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between text-gray-600">
+                            <span>$128 × 3 nights</span>
+                            <span>$384</span>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-3 space-y-2">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Cleaning fee</span>
+                                <span>$48</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Service fee</span>
+                                <span>$32</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Occupancy taxes</span>
+                                <span>$56</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-3 space-y-2">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Total before taxes</span>
+                                <span>$464</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Taxes & fees</span>
+                                <span>$56</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t-2 border-gray-900 pt-3">
+                            <div class="flex justify-between font-bold text-lg text-gray-900">
+                                <span>Total</span>
+                                <span>$520</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1">Includes all taxes and fees</p>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full mt-6 py-3 bg-rose-500 text-white rounded-xl font-semibold hover:bg-rose-600 transition-colors">
+                        Reserve
+                    </button>
+                    <p class="text-center text-xs text-gray-400 mt-2">You won't be charged yet</p>
+                </div>
+                
+                <!-- Cancellation Policy Card -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Cancellation Policy</h3>
+                    
+                    <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl mb-4">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-emerald-700">Free cancellation</p>
+                            <p class="text-sm text-gray-600 mt-1">Cancel before January 14 for a full refund</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mini Timeline -->
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between text-xs mb-2">
+                            <span class="text-gray-500">Today</span>
+                            <span class="font-medium text-emerald-700">Jan 14</span>
+                            <span class="text-gray-500">Jan 16</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full overflow-hidden flex">
+                            <div class="w-[60%] bg-emerald-500 rounded-l-full"></div>
+                            <div class="w-[40%] bg-gray-200 rounded-r-full"></div>
+                        </div>
+                        <div class="flex justify-between mt-1">
+                            <span class="text-xs text-emerald-600">✓ Full refund</span>
+                            <span class="text-xs text-gray-400">Check-in</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Full refund before Jan 14, 11:59 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>After deadline: first night charged</span>
+                        </div>
+                    </div>
+                    
+                    <button class="mt-4 text-sm font-medium text-gray-900 underline hover:no-underline">
+                        View full policy details
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Policy Types Reference -->
+        <section class="mb-16">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 bg-gray-900 text-white rounded-lg flex items-center justify-center text-sm">4</span>
+                取消政策类型规范
+            </h2>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left font-medium text-gray-700">Policy Type</th>
+                            <th class="px-6 py-3 text-left font-medium text-gray-700">Badge Color</th>
+                            <th class="px-6 py-3 text-left font-medium text-gray-700">Icon</th>
+                            <th class="px-6 py-3 text-left font-medium text-gray-700">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Free cancellation
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-emerald-600 font-medium">Emerald 500</td>
+                            <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-xs">CheckCircle</code></td>
+                            <td class="px-6 py-4 text-gray-600">Full refund before check-in</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    Flexible
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-blue-600 font-medium">Blue 500</td>
+                            <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-xs">CalendarCheck</code></td>
+                            <td class="px-6 py-4 text-gray-600">Cancel 24h before for full refund</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-full">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Moderate
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-amber-600 font-medium">Amber 500</td>
+                            <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-xs">Clock</code></td>
+                            <td class="px-6 py-4 text-gray-600">Cancel 5 days before for full refund</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-rose-50 text-rose-700 text-xs font-medium rounded-full">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                    Strict
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-rose-600 font-medium">Rose 500</td>
+                            <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-xs">Lock</code></td>
+                            <td class="px-6 py-4 text-gray-600">Cancel 30 days before for 50% refund</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    Non-refundable
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500 font-medium">Gray 500</td>
+                            <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-xs">XCircle</code></td>
+                            <td class="px-6 py-4 text-gray-600">No refund after booking</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-sm text-gray-400 py-8 border-t border-gray-200">
+            <p>设计: Ivan (UI Designer) · 跳海Global · 2026-03-16</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleBreakdown(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

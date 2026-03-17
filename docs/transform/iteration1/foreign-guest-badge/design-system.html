@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外宾资质认证标识设计 - Foreign Guest License Badge Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .badge-shadow { box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1); }
+        .modal-shadow { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .hotel-card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+    
+    <!-- Header -->
+    <header class="max-w-6xl mx-auto mb-12">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">🛡️ 外宾资质认证标识设计</h1>
+        <p class="text-gray-600">Verified Foreign Guest License Badge System</p>
+        <p class="text-sm text-gray-500 mt-2">参考: Linear, Airbnb, Booking.com 认证徽章设计规范</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Section 1: Badge Component Variants -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5 text-blue-500"></i>
+                1. Badge 组件变体
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Official Badge -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Official License</h3>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span>Verified Foreign Guest</span>
+                    </div>
+                    <p class="text-xs text-gray-500">官方认证 - 已公安报备</p>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span>Verified Foreign Guest</span>
+                        <span class="text-blue-200 text-xs">(Police Reg.)</span>
+                    </div>
+                </div>
+
+                <!-- Verified Badge -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Verified Partner</h3>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="badge-check" class="w-4 h-4"></i>
+                        <span>Accepts Foreigners</span>
+                    </div>
+                    <p class="text-xs text-gray-500">平台验证 - 确认接待外宾</p>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="badge-check" class="w-4 h-4"></i>
+                        <span>Accepts Foreigners</span>
+                        <span class="text-emerald-200 text-xs">✓</span>
+                    </div>
+                </div>
+
+                <!-- Self Reported Badge -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Self Reported</h3>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-500 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span>Foreign Guest OK</span>
+                    </div>
+                    <p class="text-xs text-gray-500">商家自报 - 未验证</p>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-500/80 text-white text-sm font-medium rounded-full badge-shadow">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span>Foreign Guest OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Size Variants -->
+            <div class="mt-8 pt-8 border-t border-gray-100">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">尺寸变体</h3>
+                <div class="flex items-center gap-6">
+                    <!-- Small -->
+                    <div class="inline-flex items-center gap-1.5 px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>Verified</span>
+                    </div>
+                    <!-- Medium (Default) -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500 text-white text-sm font-medium rounded-full">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span>Verified Foreign Guest</span>
+                    </div>
+                    <!-- Large -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-full">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        <span>Official Foreign Guest License</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Hotel Card Integration -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="layout-grid" class="w-5 h-5 text-rose-500"></i>
+                2. 酒店卡片集成
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Hotel Card Mockup -->
+                <div class="bg-white rounded-xl overflow-hidden hotel-card-shadow border border-gray-100">
+                    <!-- Image Area -->
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300">
+                        <!-- Top Badges -->
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-2">
+                            <!-- Foreign Guest Badge - PRIMARY -->
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full badge-shadow cursor-pointer hover:bg-blue-600 transition-colors">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                                <span>Verified Foreign Guest</span>
+                            </div>
+                            <!-- Superhost Badge -->
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-rose-500 text-white text-xs font-semibold rounded-full badge-shadow">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                <span>Superhost</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Heart Button -->
+                        <button class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                            <i data-lucide="heart" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+
+                        <!-- Bottom Facility Badges -->
+                        <div class="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1.5">
+                            <div class="inline-flex items-center gap-1 px-2 py-1 bg-emerald-500/90 backdrop-blur-sm text-white text-xs rounded-full">
+                                <i data-lucide="bath" class="w-3 h-3"></i>
+                                <span>Western Toilet</span>
+                            </div>
+                            <div class="inline-flex items-center gap-1 px-2 py-1 bg-blue-500/90 backdrop-blur-sm text-white text-xs rounded-full">
+                                <i data-lucide="arrow-up-down" class="w-3 h-3"></i>
+                                <span>Elevator</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Area -->
+                    <div class="p-4">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-semibold text-gray-900">Gulou, Beijing</h3>
+                                <p class="text-sm text-gray-500">Entire serviced apartment</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                                <span class="text-sm font-medium">4.92</span>
+                                <span class="text-sm text-gray-500">(128)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Cancellation Policy -->
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded font-medium">Flexible</span>
+                            <span class="text-xs text-gray-500">Free cancellation</span>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-xl font-bold text-gray-900">$85</span>
+                                <span class="text-gray-500 text-sm">/night</span>
+                                <p class="text-xs text-gray-500 mt-0.5">$267 total · includes taxes</p>
+                            </div>
+                            <span class="text-xs text-rose-600 font-medium bg-rose-50 px-2 py-1 rounded">Only 2 left</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Annotation -->
+                <div class="space-y-4">
+                    <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
+                        <h4 class="font-semibold text-blue-900 mb-2">布局说明</h4>
+                        <ul class="text-sm text-blue-800 space-y-1.5">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span>Badge 位于图片左上角，最显眼位置</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span>与 Superhost badge 并列，优先级相同</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span>点击可打开资质说明弹窗</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span>Hover 状态加深颜色，提示可点击</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-900 mb-3">尺寸规范</h4>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <div class="flex justify-between">
+                                <span>徽章高度</span>
+                                <span class="font-mono text-gray-900">24px</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>水平内边距</span>
+                                <span class="font-mono text-gray-900">10px</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>图标尺寸</span>
+                                <span class="font-mono text-gray-900">14px</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>字号</span>
+                                <span class="font-mono text-gray-900">12px / semibold</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>圆角</span>
+                                <span class="font-mono text-gray-900">9999px (full)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Hotel Detail Page Integration -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="panel-top" class="w-5 h-5 text-purple-500"></i>
+                3. 酒店详情页集成
+            </h2>
+
+            <div class="bg-gray-50 rounded-xl p-6">
+                <!-- Detail Page Header Mock -->
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900 mb-3">Cozy Hutong Courtyard near Drum Tower</h1>
+                    
+                    <!-- Rating & Badges Row -->
+                    <div class="flex flex-wrap items-center gap-4">
+                        <!-- Rating -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+                                <span class="font-semibold text-gray-900">4.92</span>
+                            </div>
+                            <a href="#reviews" class="text-gray-600 underline hover:text-gray-900">128 reviews</a>
+                        </div>
+                        
+                        <span class="text-gray-300">·</span>
+                        
+                        <!-- Location -->
+                        <div class="flex items-center gap-1 text-gray-600">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span>Gulou, Beijing</span>
+                        </div>
+                        
+                        <span class="text-gray-300">·</span>
+
+                        <!-- Foreign Guest Badge - LARGE -->
+                        <button class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-colors">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span>Official Foreign Guest License</span>
+                            <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                        </button>
+
+                        <!-- Superhost Badge -->
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-rose-100 text-rose-700 text-xs font-semibold rounded-full">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span>Superhost</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Gallery Grid -->
+                <div class="grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden h-[400px]">
+                    <div class="col-span-2 row-span-2 bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                    <div class="bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Certification Info Modal -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-cyan-500"></i>
+                4. 资质说明弹窗
+            </h2>
+
+            <!-- Modal Mockup -->
+            <div class="relative bg-black/50 rounded-xl p-8 min-h-[500px] flex items-center justify-center">
+                
+                <!-- Modal Content -->
+                <div class="bg-white rounded-2xl max-w-lg w-full modal-shadow overflow-hidden">
+                    <!-- Modal Header -->
+                    <div class="relative bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8 text-center">
+                        <button class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-full transition-colors">
+                            <i data-lucide="x" class="w-5 h-5 text-white"></i>
+                        </button>
+                        
+                        <!-- Large Badge Icon -->
+                        <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full flex items-center justify-center shadow-lg">
+                            <i data-lucide="shield-check" class="w-8 h-8 text-blue-500"></i>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2">Official Foreign Guest License</h3>
+                        <p class="text-blue-100">官方外宾接待资质认证</p>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="p-6 space-y-6">
+                        <!-- Status -->
+                        <div class="flex items-center gap-3 p-4 bg-green-50 rounded-xl border border-green-100">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="check" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-green-900">Police Registration Verified</p>
+                                <p class="text-sm text-green-700">已向当地公安机关报备</p>
+                            </div>
+                        </div>
+
+                        <!-- Features List -->
+                        <div class="space-y-4">
+                            <h4 class="font-semibold text-gray-900">This hotel can:</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-900 font-medium">Accept foreign passport holders</p>
+                                        <p class="text-sm text-gray-500">接待外国护照持有者入住</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-900 font-medium">Handle police registration</p>
+                                        <p class="text-sm text-gray-500">协助办理境外人员住宿登记</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-900 font-medium">Provide English support</p>
+                                        <p class="text-sm text-gray-500">提供英语沟通支持</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Important Note -->
+                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <p class="font-semibold text-amber-900 text-sm">Important for your stay</p>
+                                    <p class="text-sm text-amber-800 mt-1">
+                                        Upon arrival, your passport will be registered with local police within 24 hours as required by Chinese law. The hotel staff will assist you with this process.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button class="w-full py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors">
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Hero Section Integration -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i>
+                5. Hero区信任标识
+            </h2>
+
+            <div class="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden h-[300px] flex items-center justify-center">
+                <!-- Hero Content -->
+                <div class="text-center text-white p-8">
+                    <!-- Trust Badges Row -->
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/90 backdrop-blur-sm rounded-full text-sm font-medium">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span>Verified Foreign Guest License</span>
+                        </div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/90 backdrop-blur-sm rounded-full text-sm font-medium">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <span>144-hour Visa-Free</span>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-4xl font-bold mb-2">Discover China</h2>
+                    <p class="text-white/80 text-lg">Authentic stays for international travelers</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Design System -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="palette" class="w-5 h-5 text-pink-500"></i>
+                6. 设计规范
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Color System -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Color System</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-500 rounded-lg shadow-sm"></div>
+                            <div>
+                                <p class="font-medium text-gray-900">Official Blue</p>
+                                <p class="text-sm text-gray-500">#3B82F6 · bg-blue-500</p>
+                                <p class="text-xs text-gray-400">官方认证标识</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-emerald-500 rounded-lg shadow-sm"></div>
+                            <div>
+                                <p class="font-medium text-gray-900">Verified Green</p>
+                                <p class="text-sm text-gray-500">#10B981 · bg-emerald-500</p>
+                                <p class="text-xs text-gray-400">平台验证标识</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-gray-500 rounded-lg shadow-sm"></div>
+                            <div>
+                                <p class="font-medium text-gray-900">Self-Reported Gray</p>
+                                <p class="text-sm text-gray-500">#6B7280 · bg-gray-500</p>
+                                <p class="text-xs text-gray-400">商家自报标识</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Typography</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span class="text-gray-500">徽章文字</span>
+                            <span class="font-mono text-sm">12px / semibold / 1</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span class="text-gray-500">弹窗标题</span>
+                            <span class="font-mono text-sm">24px / bold / 1.2</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span class="text-gray-500">弹窗正文</span>
+                            <span class="font-mono text-sm">14px / normal / 1.5</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-gray-500">图标尺寸</span>
+                            <span class="font-mono text-sm">14px (badge) / 24px (modal)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spacing -->
+            <div class="mt-8 pt-8 border-t border-gray-100">
+                <h3 class="font-semibold text-gray-900 mb-4">Spacing & Sizing</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                        <div class="w-full h-6 bg-blue-500 rounded-full mb-2"></div>
+                        <p class="text-sm font-medium">Badge Height</p>
+                        <p class="text-xs text-gray-500">24px</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                        <div class="w-full h-px bg-gray-300 mb-4 mt-3"></div>
+                        <p class="text-sm font-medium">Icon Gap</p>
+                        <p class="text-xs text-gray-500">6px</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                        <div class="px-4 py-1.5 bg-blue-500 rounded-full inline-block text-white text-xs">text</div>
+                        <p class="text-sm font-medium mt-2">Padding X</p>
+                        <p class="text-xs text-gray-500">10px</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                        <div class="w-16 h-16 bg-blue-500/20 rounded-full mx-auto flex items-center justify-center">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full"></div>
+                        </div>
+                        <p class="text-sm font-medium mt-2">Modal Icon</p>
+                        <p class="text-xs text-gray-500">64px container</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: React Component Code -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="code" class="w-5 h-5 text-indigo-500"></i>
+                7. React 组件代码
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Badge Component -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-3">ForeignGuestBadge.tsx</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl text-sm overflow-x-auto"><code>import { ShieldCheck, BadgeCheck, Globe } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+interface ForeignGuestBadgeProps {
+  certification: {
+    acceptsForeignGuests: boolean;
+    certificationType: 'official' | 'verified' | 'self_reported';
+    policeRegistration: boolean;
+  };
+  size?: 'sm' | 'md' | 'lg';
+  onClick?: () => void;
+  className?: string;
+}
+
+const badgeConfig = {
+  official: {
+    icon: ShieldCheck,
+    bg: 'bg-blue-500',
+    hoverBg: 'hover:bg-blue-600',
+    text: 'Verified Foreign Guest',
+  },
+  verified: {
+    icon: BadgeCheck,
+    bg: 'bg-emerald-500',
+    hoverBg: 'hover:bg-emerald-600',
+    text: 'Accepts Foreigners',
+  },
+  self_reported: {
+    icon: Globe,
+    bg: 'bg-gray-500',
+    hoverBg: 'hover:bg-gray-600',
+    text: 'Foreign Guest OK',
+  },
+};
+
+const sizeConfig = {
+  sm: { padding: 'px-2 py-1', text: 'text-xs', icon: 'w-3 h-3' },
+  md: { padding: 'px-2.5 py-1', text: 'text-xs', icon: 'w-3.5 h-3.5' },
+  lg: { padding: 'px-3 py-1.5', text: 'text-sm', icon: 'w-4 h-4' },
+};
+
+export function ForeignGuestBadge({ 
+  certification, 
+  size = 'md', 
+  onClick,
+  className 
+}: ForeignGuestBadgeProps) {
+  if (!certification.acceptsForeignGuests) return null;
+  
+  const config = badgeConfig[certification.certificationType];
+  const sizeStyles = sizeConfig[size];
+  const Icon = config.icon;
+  
+  return (
+    &lt;button
+      onClick={onClick}
+      className={cn(
+        'inline-flex items-center gap-1.5 font-semibold rounded-full',
+        'transition-colors cursor-pointer',
+        'shadow-[0_2px_8px_rgba(0,0,0,0.15),0_0_0_1px_rgba(255,255,255,0.1)]',
+        config.bg,
+        config.hoverBg,
+        sizeStyles.padding,
+        sizeStyles.text,
+        className
+      )}
+    &gt;
+      &lt;Icon className={sizeStyles.icon} /&gt;
+      &lt;span className="text-white"&gt;{config.text}&lt;/span&gt;
+      {certification.policeRegistration && size !== 'sm' && (
+        &lt;span className="text-white/70 text-[10px] ml-0.5"&gt;(Police Reg.)&lt;/span&gt;
+      )}
+    &lt;/button&gt;
+  );
+}</code></pre>
+                </div>
+
+                <!-- Modal Component -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-3">CertificationModal.tsx</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl text-sm overflow-x-auto"><code>import { ShieldCheck, X, Check, AlertCircle } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+
+interface CertificationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  hotelName: string;
+}
+
+export function CertificationModal({ 
+  isOpen, 
+  onClose, 
+  hotelName 
+}: CertificationModalProps) {
+  return (
+    &lt;Dialog open={isOpen} onOpenChange={onClose}&gt;
+      &lt;DialogContent className="max-w-lg p-0 overflow-hidden"&gt;
+        {/* Header */}
+        &lt;div className="relative bg-gradient-to-r from-blue-500 to-blue-600 
+                        px-6 py-8 text-center"&gt;
+          &lt;div className="w-16 h-16 mx-auto mb-4 bg-white rounded-full 
+                          flex items-center justify-center shadow-lg"&gt;
+            &lt;ShieldCheck className="w-8 h-8 text-blue-500" /&gt;
+          &lt;/div&gt;
+          &lt;DialogTitle className="text-2xl font-bold text-white mb-2"&gt;
+            Official Foreign Guest License
+          &lt;/DialogTitle&gt;
+          &lt;p className="text-blue-100"&gt;官方外宾接待资质认证&lt;/p&gt;
+        &lt;/div&gt;
+
+        {/* Content */}
+        &lt;div className="p-6 space-y-6"&gt;
+          {/* Verified Status */}
+          &lt;div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl 
+                          border border-green-100"&gt;
+            &lt;div className="w-10 h-10 bg-green-500 rounded-full flex 
+                            items-center justify-center flex-shrink-0"&gt;
+              &lt;Check className="w-5 h-5 text-white" /&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+              &lt;p className="font-semibold text-green-900"&gt;
+                Police Registration Verified
+              &lt;/p&gt;
+              &lt;p className="text-sm text-green-700"&gt;已向当地公安机关报备&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          {/* Features */}
+          &lt;div className="space-y-4"&gt;
+            &lt;h4 className="font-semibold text-gray-900"&gt;This hotel can:&lt;/h4&gt;
+            &lt;ul className="space-y-3"&gt;
+              {[
+                { en: 'Accept foreign passport holders', cn: '接待外国护照持有者入住' },
+                { en: 'Handle police registration', cn: '协助办理境外人员住宿登记' },
+                { en: 'Provide English support', cn: '提供英语沟通支持' },
+              ].map((item) => (
+                &lt;li key={item.en} className="flex items-start gap-3"&gt;
+                  &lt;div className="w-6 h-6 bg-blue-100 rounded-full flex 
+                                  items-center justify-center flex-shrink-0 mt-0.5"&gt;
+                    &lt;Check className="w-3.5 h-3.5 text-blue-600" /&gt;
+                  &lt;/div&gt;
+                  &lt;div&gt;
+                    &lt;p className="text-gray-900 font-medium"&gt;{item.en}&lt;/p&gt;
+                    &lt;p className="text-sm text-gray-500"&gt;{item.cn}&lt;/p&gt;
+                  &lt;/div&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/div&gt;
+
+          {/* Important Note */}
+          &lt;div className="p-4 bg-amber-50 rounded-xl border border-amber-100"&gt;
+            &lt;div className="flex items-start gap-3"&gt;
+              &lt;AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" /&gt;
+              &lt;div&gt;
+                &lt;p className="font-semibold text-amber-900 text-sm"&gt;
+                  Important for your stay
+                &lt;/p&gt;
+                &lt;p className="text-sm text-amber-800 mt-1"&gt;
+                  Upon arrival, your passport will be registered with local 
+                  police within 24 hours as required by Chinese law.
+                &lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/DialogContent&gt;
+    &lt;/Dialog&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Usage Examples -->
+        <section class="bg-white rounded-2xl p-8 hotel-card-shadow">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5 text-teal-500"></i>
+                8. 使用示例
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Hotel Card Example -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-3">酒店卡片使用</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl text-sm overflow-x-auto"><code>// HotelCard.tsx
+import { ForeignGuestBadge } from './ForeignGuestBadge';
+import { CertificationModal } from './CertificationModal';
+import { useState } from 'react';
+
+export function HotelCard({ hotel }) {
+  const [showCertModal, setShowCertModal] = useState(false);
+
+  return (
+    &lt;&gt;
+      &lt;div className="relative aspect-square rounded-xl overflow-hidden"&gt;
+        {/* Foreign Guest Badge - Top Left */}
+        &lt;div className="absolute top-3 left-3"&gt;
+          &lt;ForeignGuestBadge
+            certification={hotel.certification}
+            size="sm"
+            onClick={() => setShowCertModal(true)}
+          /&gt;
+        &lt;/div&gt;
+        
+        {/* ... rest of card */}
+      &lt;/div&gt;
+
+      &lt;CertificationModal
+        isOpen={showCertModal}
+        onClose={() => setShowCertModal(false)}
+        hotelName={hotel.name}
+      /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+                </div>
+
+                <!-- Hero Example -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-3">Hero区使用</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl text-sm overflow-x-auto"><code>// Hero Section - Trust Badges
+&lt;div className="flex items-center justify-center gap-4 mb-8"&gt;
+  &lt;div className="inline-flex items-center gap-2 px-3 py-1.5 
+                  bg-blue-500/90 backdrop-blur-sm rounded-full 
+                  text-white text-sm font-medium"&gt;
+    &lt;ShieldCheck className="w-4 h-4" /&gt;
+    &lt;span&gt;Verified Foreign Guest License&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div className="inline-flex items-center gap-2 px-3 py-1.5 
+                  bg-emerald-500/90 backdrop-blur-sm rounded-full 
+                  text-white text-sm font-medium"&gt;
+    &lt;Globe className="w-4 h-4" /&gt;
+    &lt;span&gt;144-hour Visa-Free&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto mt-12 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+        <p>Designed by Ivan (UI Designer) · 跳海Global · 2026-03-16</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

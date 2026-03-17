@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跳海Global - 首页线框图 | TIAOHAI-REDESIGN-002</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#FDF2F8',
+                            100: '#FCE7F3',
+                            200: '#FBCFE8',
+                            300: '#F9A8D4',
+                            400: '#F472B6',
+                            500: '#EC4899',
+                            600: '#DB2777',
+                            700: '#BE185D',
+                            800: '#9D174D',
+                            900: '#831843',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .wireframe-box { border: 2px dashed #CBD5E1; background: #F8FAFC; }
+        .wireframe-label { background: #1E293B; color: white; padding: 2px 8px; font-size: 10px; border-radius: 4px; }
+        .grid-overlay { background-image: linear-gradient(#E2E8F0 1px, transparent 1px), linear-gradient(90deg, #E2E8F0 1px, transparent 1px); background-size: 40px 40px; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- 页面信息 -->
+<div class="bg-slate-900 text-white px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <span class="text-sm font-mono text-slate-400">TIAOHAI-REDESIGN-002</span>
+        <span class="text-sm">首页 (Homepage) 线框图</span>
+    </div>
+    <div class="text-xs text-slate-400">设计: Diana | 日期: 2026-03-15</div>
+</div>
+
+<!-- 导航栏 -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">T</span>
+                </div>
+                <span class="text-primary-500 font-bold text-xl">tiaohai</span>
+            </div>
+
+            <!-- 主导航 (桌面) -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-gray-900 font-medium border-b-2 border-gray-900 pb-1">Stays</a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 font-medium">Experiences</a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 font-medium">Guides</a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 font-medium">Community</a>
+            </nav>
+
+            <!-- 右侧操作 -->
+            <div class="flex items-center gap-4">
+                <button class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 hover:border-gray-900 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="text-sm font-medium">EN</span>
+                </button>
+                <div class="flex items-center gap-2 pl-4 border-l border-gray-200">
+                    <button class="p-2 hover:bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="relative h-[600px] bg-gray-800 overflow-hidden">
+    <!-- 背景图片占位 -->
+    <div class="absolute inset-0">
+        <div class="w-full h-full bg-gradient-to-br from-slate-700 via-slate-600 to-slate-800"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+        
+        <!-- 线框标注 -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="wireframe-box w-full h-full flex items-center justify-center">
+                <div class="text-center">
+                    <span class="wireframe-label">Hero背景图</span>
+                    <p class="text-slate-400 mt-2 text-sm">高质量中国酒店/胡同图片</p>
+                    <p class="text-slate-500 text-xs mt-1">叠加渐变遮罩保证文字可读性</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero内容 -->
+    <div class="relative h-full flex flex-col items-center justify-center px-4 max-w-4xl mx-auto text-center">
+        <!-- 144小时免签标签 -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-full text-sm font-medium mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            144-hour Visa-Free Transit Available
+        </div>
+
+        <!-- 主标题 -->
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+            Find Your Perfect<br>Stay in China
+        </h1>
+
+        <!-- 副标题 -->
+        <p class="text-xl text-white/90 max-w-2xl mb-8" style="text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+            Honest info about hotels in China. We tell you what others won't: Western toilet? Elevator? English staff?
+        </p>
+    </div>
+
+    <!-- 搜索框 (悬浮在Hero底部) -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-full max-w-4xl px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-2">
+            <div class="flex flex-col md:flex-row items-stretch">
+                <!-- 目的地 -->
+                <div class="flex-1 px-5 py-3 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-gray-50 rounded-t-2xl md:rounded-none md:rounded-l-2xl cursor-pointer transition-colors">
+                    <label class="block text-xs font-bold text-gray-900 mb-1">Where</label>
+                    <input type="text" placeholder="Search destinations" class="w-full outline-none text-gray-700 placeholder:text-gray-400 bg-transparent">
+                </div>
+
+                <!-- 入住日期 -->
+                <div class="flex-1 px-5 py-3 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                    <label class="block text-xs font-bold text-gray-900 mb-1">Check In</label>
+                    <span class="text-gray-400 text-sm">Add date</span>
+                </div>
+
+                <!-- 退房日期 -->
+                <div class="flex-1 px-5 py-3 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors">
+                    <label class="block text-xs font-bold text-gray-900 mb-1">Check Out</label>
+                    <span class="text-gray-400 text-sm">Add date</span>
+                </div>
+
+                <!-- 客人 -->
+                <div class="flex-1 px-5 py-3 hover:bg-gray-50 cursor-pointer transition-colors flex items-center justify-between">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-900 mb-1">Who</label>
+                        <span class="text-gray-900 text-sm">2 guests</span>
+                    </div>
+                    <!-- 搜索按钮 -->
+                    <button class="bg-primary-500 hover:bg-primary-600 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Concierge 入口 -->
+<section class="pt-24 pb-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 rounded-2xl p-6 border border-violet-100">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900">Not sure what to look for?</h3>
+                        <p class="text-sm text-gray-600">Ask our AI Concierge - it knows Chinese hotels inside out</p>
+                    </div>
+                </div>
+                <button class="px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-full font-medium hover:shadow-lg transition-all whitespace-nowrap">
+                    Ask AI Concierge
+                </button>
+            </div>
+
+            <!-- 预设问题 -->
+            <div class="mt-4 flex flex-wrap gap-2">
+                <button class="text-xs px-3 py-1.5 bg-white rounded-full border border-violet-200 text-violet-700 hover:bg-violet-50 transition-colors">🚽 Does this hotel have a Western toilet?</button>
+                <button class="text-xs px-3 py-1.5 bg-white rounded-full border border-violet-200 text-violet-700 hover:bg-violet-50 transition-colors">🛗 Is there an elevator?</button>
+                <button class="text-xs px-3 py-1.5 bg-white rounded-full border border-violet-200 text-violet-700 hover:bg-violet-50 transition-colors">🚇 How far from the subway?</button>
+                <button class="text-xs px-3 py-1.5 bg-white rounded-full border border-violet-200 text-violet-700 hover:bg-violet-50 transition-colors">🎎 What should I know about hutongs?</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 体验分类 -->
+<section class="py-8 px-4 max-w-7xl mx-auto">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Browse by Experience</h2>
+    <div class="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-primary-500 bg-primary-50 text-primary-700">
+            <span class="text-2xl">🏠</span>
+            <span class="text-xs font-medium">All Stays</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🏮</span>
+            <span class="text-xs font-medium">Hutong Culture</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">⛩️</span>
+            <span class="text-xs font-medium">Historical Sites</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🥟</span>
+            <span class="text-xs font-medium">Food & Dining</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🌿</span>
+            <span class="text-xs font-medium">Nature & Parks</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🎨</span>
+            <span class="text-xs font-medium">Art & Design</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🌊</span>
+            <span class="text-xs font-medium">Riverside</span>
+        </button>
+        <button class="flex-shrink-0 flex flex-col items-center gap-2 min-w-[100px] p-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 text-gray-600 transition-colors">
+            <span class="text-2xl">🏙️</span>
+            <span class="text-xs font-medium">Modern City</span>
+        </button>
+    </div>
+</section>
+
+<!-- 信任指标 -->
+<section class="py-8 px-4 max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-900 text-sm">Verified Stays</h3>
+                <p class="text-xs text-gray-500">Every hotel personally checked</p>
+            </div>
+        </div>
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-900 text-sm">24/7 Support</h3>
+                <p class="text-xs text-gray-500">We're here when you need us</p>
+            </div>
+        </div>
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-900 text-sm">Honest Reviews</h3>
+                <p class="text-xs text-gray-500">From real foreign travelers</p>
+            </div>
+        </div>
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-900 text-sm">Instant Booking</h3>
+                <p class="text-xs text-gray-500">Confirm in seconds</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 精选房源 -->
+<section class="py-8 px-4 max-w-7xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Featured Stays</h2>
+        <a href="#" class="flex items-center gap-1 text-primary-600 font-medium hover:underline">
+            View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+    </div>
+
+    <!-- 酒店网格 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 酒店卡片 1 -->
+        <div class="group cursor-pointer">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">酒店图片</span>
+                
+                <!-- 收藏按钮 -->
+                <button class="absolute top-3 right-3 p-2 hover:bg-black/20 transition-colors rounded-full">
+                    <svg class="w-5 h-5 text-white stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </button>
+
+                <!-- 设施标签 -->
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium">🚽 Western Toilet</span>
+                    <span class="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">🛗 Elevator</span>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-gray-900 truncate">Dongcheng, Beijing</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <span class="text-sm">4.9</span>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-sm truncate">Hutong Heritage House</p>
+                <p class="text-gray-400 text-xs">Near Forbidden City</p>
+                
+                <!-- 诚实设施预览 -->
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Western Toilet</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Elevator</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ English</span>
+                </div>
+
+                <div class="flex items-baseline gap-1 pt-1">
+                    <span class="font-semibold text-gray-900">$89</span>
+                    <span class="text-gray-500 text-sm">/ night</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 酒店卡片 2 -->
+        <div class="group cursor-pointer">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <button class="absolute top-3 right-3 p-2 hover:bg-black/20 transition-colors rounded-full">
+                    <svg class="w-5 h-5 text-white stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </button>
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium">🚽 Western Toilet</span>
+                    <span class="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-medium">🇬🇧 English</span>
+                </div>
+            </div>
+            <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-gray-900 truncate">Huangpu, Shanghai</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <span class="text-sm">4.8</span>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-sm truncate">The Bund View Suite</p>
+                <p class="text-gray-400 text-xs">The Bund waterfront</p>
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Western Toilet</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600">✗ Elevator</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ English</span>
+                </div>
+                <div class="flex items-baseline gap-1 pt-1">
+                    <span class="font-semibold text-gray-900">$145</span>
+                    <span class="text-gray-500 text-sm">/ night</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 酒店卡片 3 -->
+        <div class="group cursor-pointer">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <button class="absolute top-3 right-3 p-2 hover:bg-black/20 transition-colors rounded-full">
+                    <svg class="w-5 h-5 text-white stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </button>
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">🛗 Elevator</span>
+                </div>
+            </div>
+            <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-gray-900 truncate">Jinjiang, Chengdu</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <span class="text-sm">4.7</span>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-sm truncate">Panda Base Hostel</p>
+                <p class="text-gray-400 text-xs">Near Giant Panda Base</p>
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600">✗ Western Toilet</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Elevator</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-600">⚠️ Limited English</span>
+                </div>
+                <div class="flex items-baseline gap-1 pt-1">
+                    <span class="font-semibold text-gray-900">$56</span>
+                    <span class="text-gray-500 text-sm">/ night</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 酒店卡片 4 -->
+        <div class="group cursor-pointer">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <button class="absolute top-3 right-3 p-2 hover:bg-black/20 transition-colors rounded-full">
+                    <svg class="w-5 h-5 text-white stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </button>
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium">🚽 Western Toilet</span>
+                    <span class="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">🛗 Elevator</span>
+                    <span class="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-medium">🇬🇧 English</span>
+                </div>
+            </div>
+            <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-gray-900 truncate">Lianhu, Xi'an</h3>
+                    <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <span class="text-sm">4.9</span>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-sm truncate">Terracotta Guesthouse</p>
+                <p class="text-gray-400 text-xs">City Center</p>
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Western Toilet</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ Elevator</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">✓ English</span>
+                </div>
+                <div class="flex items-baseline gap-1 pt-1">
+                    <span class="font-semibold text-gray-900">$72</span>
+                    <span class="text-gray-500 text-sm">/ night</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 为什么选择跳海 -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Foreign Travelers Choose Tiaohai</h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">Honest Facility Checklist</h3>
+                            <p class="text-gray-600">We verify and show you: Western toilet? Elevator? English staff? No surprises when you arrive.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">AI Concierge</h3>
+                            <p class="text-gray-600">Get instant answers in your language about hotels, customs, and travel tips.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">144-Hour Visa-Free</h3>
+                            <p class="text-gray-600">Optimized for visa-free transit travelers. We help you plan the perfect short trip.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="wireframe-label">特色图片</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 热门目的地 -->
+<section class="py-16 px-4 max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Popular Destinations</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="#" class="group relative aspect-square rounded-xl overflow-hidden">
+            <div class="w-full h-full bg-gradient-to-br from-slate-400 to-slate-600"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 text-white">
+                <h3 class="font-bold text-xl">Shanghai</h3>
+                <p class="text-sm opacity-90">12+ stays</p>
+            </div>
+        </a>
+        <a href="#" class="group relative aspect-square rounded-xl overflow-hidden">
+            <div class="w-full h-full bg-gradient-to-br from-slate-400 to-slate-600"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 text-white">
+                <h3 class="font-bold text-xl">Beijing</h3>
+                <p class="text-sm opacity-90">10+ stays</p>
+            </div>
+        </a>
+        <a href="#" class="group relative aspect-square rounded-xl overflow-hidden">
+            <div class="w-full h-full bg-gradient-to-br from-slate-400 to-slate-600"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 text-white">
+                <h3 class="font-bold text-xl">Chengdu</h3>
+                <p class="text-sm opacity-90">8+ stays</p>
+            </div>
+        </a>
+        <a href="#" class="group relative aspect-square rounded-xl overflow-hidden">
+            <div class="w-full h-full bg-gradient-to-br from-slate-400 to-slate-600"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 text-white">
+                <h3 class="font-bold text-xl">Xi'an</h3>
+                <p class="text-sm opacity-90">5+ stays</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-100 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-semibold mb-4">Support</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="#" class="hover:underline">Help Center</a></li>
+                    <li><a href="#" class="hover:underline">Safety</a></li>
+                    <li><a href="#" class="hover:underline">Cancellation</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Community</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="#" class="hover:underline">Travel Guides</a></li>
+                    <li><a href="#" class="hover:underline">Community</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Hosting</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="#" class="hover:underline">List Your Property</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Tiaohai</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><span class="text-gray-400">About Us (Coming Soon)</span></li>
+                    <li><span class="text-gray-400">Careers (Coming Soon)</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-gray-600">© 2026 Tiaohai. All rights reserved.</p>
+            <div class="flex items-center gap-6 text-sm text-gray-600">
+                <span class="text-gray-400">Privacy (Coming Soon)</span>
+                <span class="text-gray-400">Terms (Coming Soon)</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- 设计说明 -->
+<div class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-sm">
+    <h4 class="font-semibold mb-2">首页设计要点</h4>
+    <ul class="text-xs space-y-1 text-slate-300">
+        <li>• Hero区域使用高质量图片+渐变遮罩</li>
+        <li>• 搜索框悬浮设计，视觉焦点明确</li>
+        <li>• 144小时免签标签突出展示</li>
+        <li>• 酒店卡片展示诚实设施预览</li>
+        <li>• 响应式网格：1/2/4列自适应</li>
+    </ul>
+</div>
+
+</body>
+</html>

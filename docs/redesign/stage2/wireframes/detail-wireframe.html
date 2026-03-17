@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跳海Global - 酒店详情页线框图 | TIAOHAI-REDESIGN-002</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#FDF2F8',
+                            100: '#FCE7F3',
+                            500: '#EC4899',
+                            600: '#DB2777',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .wireframe-box { border: 2px dashed #CBD5E1; background: #F8FAFC; }
+        .wireframe-label { background: #1E293B; color: white; padding: 2px 8px; font-size: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-white">
+
+<!-- 页面信息 -->
+<div class="bg-slate-900 text-white px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <span class="text-sm font-mono text-slate-400">TIAOHAI-REDESIGN-002</span>
+        <span class="text-sm">酒店详情页 (Hotel Detail) 线框图</span>
+    </div>
+    <div class="text-xs text-slate-400">设计: Diana | 日期: 2026-03-15</div>
+</div>
+
+<!-- 简化导航栏 -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <button class="flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-full transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="hidden sm:inline">Back</span>
+            </button>
+            
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">T</span>
+                </div>
+                <span class="text-primary-500 font-bold text-xl">tiaohai</span>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button class="p-2 hover:bg-gray-100 rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    
+    <!-- 标题区 -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Hutong Heritage House</h1>
+        <div class="flex flex-wrap items-center gap-4 text-sm">
+            <div class="flex items-center gap-1">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <span class="font-semibold">4.9</span>
+                <span class="text-gray-500 underline">128 reviews</span>
+            </div>
+            <span class="text-primary-600 font-medium flex items-center gap-1">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                Superhost
+            </span>
+            <a href="#" class="text-gray-500 underline hover:text-gray-900">Dongcheng, Beijing, China</a>
+        </div>
+    </div>
+
+    <!-- 图片画廊 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 rounded-2xl overflow-hidden mb-8 h-[300px] md:h-[450px]">
+        <!-- 主图 (左/上) -->
+        <div class="relative bg-gray-200 md:row-span-1 group cursor-pointer">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400"></div>
+            <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">主图</span>
+            
+            <!-- Hover时显示查看全部 -->
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <button class="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium">View all photos</button>
+            </div>
+        </div>
+
+        <!-- 缩略图网格 (右/下) -->
+        <div class="hidden md:grid grid-cols-2 gap-2">
+            <div class="relative bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">图2</span>
+            </div>
+            <div class="relative bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">图3</span>
+            </div>
+            <div class="relative bg-gray-200">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">图4</span>
+            </div>
+            <div class="relative bg-gray-200 cursor-pointer group">
+                <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                <span class="wireframe-label absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">图5</span>
+                <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <span class="text-white font-medium">+12 more</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 两栏布局: 内容 + 预订卡片 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- 左侧内容 (2/3) -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- 房东信息 -->
+            <div class="flex items-start justify-between pb-8 border-b border-gray-200">
+                <div>
+                    <h2 class="text-xl font-semibold">Entire guesthouse hosted by Wang</h2>
+                    <p class="text-gray-500 mt-1">2 guests · 1 bedroom · 1 bed · 1 bath</p>
+                </div>
+                <div class="w-14 h-14 rounded-full bg-primary-100 flex items-center justify-center text-xl font-semibold text-primary-600">
+                    W
+                </div>
+            </div>
+
+            <!-- 亮点 -->
+            <div class="space-y-4 pb-8 border-b border-gray-200">
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Wang is a Superhost</h3>
+                        <p class="text-gray-500 text-sm">Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Great location</h3>
+                        <p class="text-gray-500 text-sm">95% of recent guests gave the location a 5-star rating.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 诚实设施清单 (核心差异化) -->
+            <div class="pb-8 border-b border-gray-200">
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900">Honest Facility Checklist</h2>
+                            <p class="text-gray-600 text-sm">We tell you what others won't. No surprises when you arrive.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Western Toilet - Available -->
+                        <div class="flex items-start gap-3 p-3 bg-white rounded-xl">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <p class="font-medium text-gray-900">Western Toilet</p>
+                                <p class="text-xs text-gray-500">Sit-down toilet available in all rooms</p>
+                            </div>
+                        </div>
+
+                        <!-- Elevator - Not Available -->
+                        <div class="flex items-start gap-3 p-3 bg-white rounded-xl">
+                            <span class="text-2xl">⚠️</span>
+                            <div>
+                                <p class="font-medium text-gray-900">No Elevator</p>
+                                <p class="text-xs text-gray-500">Stairs only - but free luggage help provided</p>
+                            </div>
+                        </div>
+
+                        <!-- English Staff - Available -->
+                        <div class="flex items-start gap-3 p-3 bg-white rounded-xl">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <p class="font-medium text-gray-900">English-Speaking Staff</p>
+                                <p class="text-xs text-gray-500">Front desk speaks fluent English</p>
+                            </div>
+                        </div>
+
+                        <!-- WiFi - Available -->
+                        <div class="flex items-start gap-3 p-3 bg-white rounded-xl">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <p class="font-medium text-gray-900">Free WiFi</p>
+                                <p class="text-xs text-gray-500">High-speed internet throughout</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 为什么这很重要 -->
+                    <div class="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-100">
+                        <p class="text-sm text-blue-700">
+                            <strong>Why this matters:</strong> Many Chinese hotels have squat toilets and no elevators. 
+                            We verify these details so you can pack accordingly and avoid surprises.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文化提示 -->
+            <div class="pb-8 border-b border-gray-200">
+                <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                        <span class="text-xl">🎎</span>
+                        Cultural Tips for Foreign Guests
+                    </h2>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2 text-gray-700 text-sm">
+                            <span class="text-amber-500 mt-0.5">•</span>
+                            <span>This is a traditional hutong courtyard house - stairs may be steep</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-gray-700 text-sm">
+                            <span class="text-amber-500 mt-0.5">•</span>
+                            <span>Hot water for tea is always available - no tipping required</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-gray-700 text-sm">
+                            <span class="text-amber-500 mt-0.5">•</span>
+                            <span>Quiet hours in hutongs start at 10 PM - please respect neighbors</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 描述 -->
+            <div class="pb-8 border-b border-gray-200">
+                <h2 class="text-xl font-semibold mb-4">About this place</h2>
+                <div class="text-gray-700 leading-relaxed space-y-4">
+                    <p>Experience authentic Beijing life in our carefully restored hutong courtyard house. Located in the heart of Dongcheng district, you'll be steps away from the Forbidden City yet tucked away in a quiet traditional neighborhood.</p>
+                    <p>The space has been modernized while preserving traditional architecture. You'll enjoy a private room with modern bathroom facilities - something not all hutong accommodations can offer.</p>
+                    
+                    <button class="text-gray-900 font-semibold underline">Show more</button>
+                </div>
+            </div>
+
+            <!-- 设施 -->
+            <div class="pb-8 border-b border-gray-200">
+                <h2 class="text-xl font-semibold mb-4">What this place offers</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path></svg>
+                        <span class="text-gray-700">Air conditioning</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
+                        <span class="text-gray-700">WiFi</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <span class="text-gray-700">Kitchen</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="text-gray-700">Washer</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        <span class="text-gray-700">Hair dryer</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <span class="text-gray-700">Safety box</span>
+                    </div>
+                </div>
+                
+                <button class="mt-6 px-6 py-3 border border-gray-900 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+                    Show all 15 amenities
+                </button>
+            </div>
+
+            <!-- 入住须知 -->
+            <div class="pb-8 border-b border-gray-200">
+                <h2 class="text-xl font-semibold mb-4">House rules</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <p class="font-medium">Check-in</p>
+                            <p class="text-gray-500 text-sm">After 2:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <p class="font-medium">Checkout</p>
+                            <p class="text-gray-500 text-sm">Before 11:00 AM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 评价 -->
+            <div class="pb-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <h2 class="text-2xl font-semibold">4.9 · 128 reviews</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- 评价卡片 1 -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gray-200"></div>
+                            <div>
+                                <p class="font-medium">Sarah</p>
+                                <p class="text-gray-500 text-sm">United States · January 2026</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        
+                        <p class="text-gray-700">Perfect location in a traditional hutong! The western toilet was a huge plus as mentioned. Wang was very helpful with recommendations. The stairs are steep but manageable if you pack light.</p>
+                    </div>
+
+                    <!-- 评价卡片 2 -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gray-200"></div>
+                            <div>
+                                <p class="font-medium">Michael</p>
+                                <p class="text-gray-500 text-sm">United Kingdom · December 2025</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        
+                        <p class="text-gray-700">The honesty about facilities was refreshing! Knowing about the stairs in advance helped us pack appropriately. The location is unbeatable - 10 minute walk to the Forbidden City.</p>
+                    </div>
+                </div>
+
+                <button class="mt-6 px-6 py-3 border border-gray-900 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+                    Show all 128 reviews
+                </button>
+            </div>
+        </div>
+
+        <!-- 右侧预订卡片 (1/3) -->
+        <div class="lg:col-span-1">
+            <div class="sticky top-24 bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
+                
+                <!-- 价格 -->
+                <div class="flex items-baseline justify-between mb-6">
+                    <div>
+                        <span class="text-3xl font-bold text-gray-900">$89</span>
+                        <span class="text-gray-500"> / night</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <span>4.9</span>
+                    </div>
+                </div>
+
+                <!-- 日期选择 -->
+                <div class="border border-gray-400 rounded-xl overflow-hidden mb-4">
+                    <div class="grid grid-cols-2 border-b border-gray-400">
+                        <button class="p-3 text-left border-r border-gray-400 hover:bg-gray-50">
+                            <p class="text-xs font-bold uppercase text-gray-700">Check In</p>
+                            <p class="text-gray-900">Mar 20</p>
+                        </button>
+                        <button class="p-3 text-left hover:bg-gray-50">
+                            <p class="text-xs font-bold uppercase text-gray-700">Check Out</p>
+                            <p class="text-gray-900">Mar 25</p>
+                        </button>
+                    </div>
+                    <button class="w-full p-3 text-left hover:bg-gray-50 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase text-gray-700">Guests</p>
+                            <p class="text-gray-900">2 guests</p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+
+                <!-- 快速验证 -->
+                <div class="mb-4 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl border border-emerald-100">
+                    <p class="text-xs font-semibold text-emerald-800 uppercase tracking-wide mb-3">✓ Verified for International Travelers</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="text-center p-2 bg-white rounded-lg">
+                            <div class="text-lg mb-1">✅</div>
+                            <p class="text-xs font-medium text-gray-700">Western Toilet</p>
+                        </div>
+                        <div class="text-center p-2 bg-red-50 rounded-lg">
+                            <div class="text-lg mb-1 text-red-500">⚠️</div>
+                            <p class="text-xs font-medium text-red-700">No Elevator</p>
+                        </div>
+                        <div class="text-center p-2 bg-white rounded-lg">
+                            <div class="text-lg mb-1">✅</div>
+                            <p class="text-xs font-medium text-gray-700">English</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <button class="w-full bg-primary-500 text-white font-semibold py-4 rounded-xl hover:bg-primary-600 transition-colors">
+                    Check Availability
+                </button>
+
+                <p class="text-center text-gray-500 text-sm mt-3">You won't be charged yet</p>
+
+                <!-- 价格明细 -->
+                <div class="mt-6 pt-6 border-t border-gray-200 space-y-3">
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">$89 × 5 nights</span>
+                        <span>$445</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">Cleaning fee</span>
+                        <span>$25</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">Service fee</span>
+                        <span>$47</span>
+                    </div>
+                    <div class="flex justify-between font-semibold text-lg pt-3 border-t border-gray-200">
+                        <span>Total</span>
+                        <span>$517</span>
+                    </div>
+                </div>
+
+                <!-- 取消政策 -->
+                <div class="mt-4 p-3 bg-amber-50 rounded-lg">
+                    <p class="text-sm text-amber-800">
+                        <span class="font-semibold">Free cancellation</span> before Mar 18.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- 设计说明 -->
+<div class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-sm">
+    <h4 class="font-semibold mb-2">详情页设计要点</h4>
+    <ul class="text-xs space-y-1 text-slate-300">
+        <li>• 图片画廊: 2列网格布局，hover显示查看全部</li>
+        <li>• 诚实设施清单: 核心差异化，绿色背景突出</li>
+        <li>• 预订卡片: sticky定位，始终可见</li>
+        <li>• 快速验证: 3列图标展示关键设施</li>
+        <li>• 响应式: 移动端单列布局</li>
+    </ul>
+</div>
+
+</body>
+</html>

@@ -9,7 +9,11 @@ import {
   X, 
   Send, 
   User,
-  ChevronLeft
+  ChevronLeft,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+  Headphones
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -221,15 +225,43 @@ Please select a quick question below or type your question directly.
 ---
 💬 Beta version. Contact support@tiaohai.global for urgent matters.`
 
+// Local storage key for chat history
+const CHAT_HISTORY_KEY = 'tiaohai_chat_history'
+
 export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isEscalated, setIsEscalated] = useState(false)
   const [showHumanPrompt, setShowHumanPrompt] = useState(false)
+  const [hasUnread, setHasUnread] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  // Load chat history from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(CHAT_HISTORY_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setMessages(parsed.map((m: any) => ({
+          ...m,
+          timestamp: new Date(m.timestamp)
+        })))
+      } catch (e) {
+        console.error('Failed to load chat history')
+      }
+    }
+  }, [])
+
+  // Save chat history when messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages.slice(-20))) // Keep last 20 messages
+    }
+  }, [messages])
 
   // Initialize welcome message
   useEffect(() => {
@@ -258,15 +290,20 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 
   // Focus input when opened
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && isExpanded) {
       setTimeout(() => inputRef.current?.focus(), 300)
     }
-  }, [isOpen])
+  }, [isOpen, isExpanded])
 
   // Auto scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isLoading])
+
+  // Get last message for preview
+  const lastMessage = messages[messages.length - 1]
+  const lastUserMessage = messages.filter(m => m.role === 'user').pop()
+  const lastAssistantMessage = messages.filter(m => m.role === 'assistant' && m.id !== 'welcome').pop()
 
   // Get response based on rule matching
   const getMockResponse = useCallback((message: string): { content: string; escalated?: boolean } => {
@@ -313,6 +350,10 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
       }
       setMessages(prev => [...prev, aiMessage])
       setIsLoading(false)
+      // Show unread indicator when chat is collapsed
+      if (!isExpanded) {
+        setHasUnread(true)
+      }
     }, 800 + Math.random() * 600)
   }
 
@@ -344,68 +385,158 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
     return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
   }
 
-  if (!isOpen) {
+  // Collapsed preview mode
+  if (isOpen && !isExpanded) {
     return (
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-[#E85A71] hover:bg-[#C94A5F] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 z-50"
-        size="icon"
-        title="AI客服(Beta)"
-        aria-label="AI客服(Beta)"
-      >
-        <MessageCircle className="w-6 h-6 text-white" />
-      </Button>
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        {/* Recent conversation preview */}
+        {lastMessage && (
+          <div 
+            onClick={() => {
+              setIsExpanded(true)
+              setHasUnread(false)
+            }}
+            className="bg-white rounded-2xl shadow-xl p-4 mb-2 max-w-[320px] cursor-pointer hover:shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-bottom-2"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#E85A71] to-[#C94A5F] flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-semibold text-sm text-gray-900">AI Concierge</span>
+                  <Badge variant="secondary" className="text-[10px] bg-[#FFF3CD] text-[#856404] px-1.5 py-0">
+                    Beta
+                  </Badge>
+                  {hasUnread && (
+                    <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  )}
+                </div>
+                <p className="text-sm text-gray-600 line-clamp-2">
+                  {lastAssistantMessage?.content.slice(0, 80) || lastMessage.content.slice(0, 80)}...
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  {lastMessage && formatTime(lastMessage.timestamp)}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Collapsed chat button */}
+        <div className="flex items-center gap-2">
+          <div className="bg-white rounded-full shadow-lg px-4 py-2 text-sm text-gray-600">
+            Continue chatting...
+          </div>
+          <Button
+            onClick={() => setIsExpanded(true)}
+            className="h-14 w-14 rounded-full bg-[#E85A71] hover:bg-[#C94A5F] shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-105"
+            size="icon"
+          >
+            <ChevronUp className="w-6 h-6 text-white" />
+          </Button>
+        </div>
+      </div>
     )
   }
 
+  // Floating button mode (closed)
+  if (!isOpen) {
+    return (
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        {/* Tooltip */}
+        <div className="bg-gray-900 text-white text-sm rounded-full px-4 py-2 shadow-lg animate-in fade-in slide-in-from-bottom-2 mb-2">
+          <span className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-yellow-400" />
+            AI全程陪伴您的旅程
+          </span>
+        </div>
+        
+        <Button
+          onClick={() => setIsOpen(true)}
+          className="h-16 w-16 rounded-full bg-gradient-to-br from-[#E85A71] to-[#C94A5F] hover:from-[#D54A61] hover:to-[#B93A4F] shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 group"
+          size="icon"
+          title="AI Concierge (Beta)"
+          aria-label="AI Concierge (Beta)"
+        >
+          <div className="relative">
+            <MessageCircle className="w-7 h-7 text-white group-hover:animate-pulse" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-[#E85A71]" />
+          </div>
+        </Button>
+      </div>
+    )
+  }
+
+  // Full expanded chat mode
   return (
-    <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[600px] bg-white sm:rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+    <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[400px] sm:h-[650px] bg-white sm:rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
       {/* Header */}
-      <div className="flex items-center justify-between h-14 px-4 border-b border-[#E9ECEF] bg-white shrink-0">
+      <div className="flex items-center justify-between h-16 px-4 border-b border-[#E9ECEF] bg-gradient-to-r from-[#E85A71] to-[#C94A5F] text-white shrink-0">
         <div className="flex items-center gap-3">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 -ml-2 sm:hidden"
+            className="h-8 w-8 -ml-2 sm:hidden text-white hover:bg-white/20"
             onClick={() => setIsOpen(false)}
           >
-            <ChevronLeft className="w-5 h-5 text-[#212529]" />
+            <ChevronLeft className="w-5 h-5" />
           </Button>
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-[#212529] text-base">
-              AI Helper
-            </span>
-            <Badge 
-              variant="secondary" 
-              className="bg-[#FFF3CD] text-[#856404] text-[11px] font-semibold px-2 py-0.5 border-0 hover:bg-[#FFF3CD]"
-            >
-              Beta
-            </Badge>
+            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <span className="font-semibold text-white text-base block leading-tight">
+                AI Concierge
+              </span>
+              <span className="text-xs text-white/70 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                Online • 24/7 Support
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="sm"
-            className="text-[#E85A71] hover:bg-[#FFF0F2] text-[13px] font-medium h-8 px-2"
+            className="text-white hover:bg-white/20 text-[13px] font-medium h-8 px-2"
             onClick={handleEscalateToHuman}
           >
-            <User className="w-4 h-4 mr-1" />
+            <Headphones className="w-4 h-4 mr-1" />
             Human
           </Button>
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 hidden sm:flex"
+            className="h-8 w-8 text-white hover:bg-white/20 hidden sm:flex"
+            onClick={() => setIsExpanded(false)}
+          >
+            <ChevronDown className="w-5 h-5" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-8 w-8 text-white hover:bg-white/20 hidden sm:flex"
             onClick={() => setIsOpen(false)}
           >
-            <X className="w-5 h-5 text-[#6C757D]" />
+            <X className="w-5 h-5" />
           </Button>
         </div>
       </div>
 
+      {/* Hotel Context Banner */}
+      {hotelName && (
+        <div className="bg-blue-50 px-4 py-2 border-b border-blue-100 flex items-center gap-2">
+          <span className="text-xs text-blue-600">
+            💬 Chatting about: <span className="font-medium">{hotelName}</span>
+          </span>
+        </div>
+      )}
+
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -414,13 +545,18 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
               message.role === 'user' ? 'justify-end' : 'justify-start'
             )}
           >
+            {message.role === 'assistant' && (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E85A71] to-[#C94A5F] flex items-center justify-center mr-2 shrink-0">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+            )}
             <div className={cn(
               "max-w-[85%] sm:max-w-[80%]",
               message.role === 'user' 
                 ? 'bg-[#E85A71] text-white rounded-2xl rounded-br-md' 
-                : 'bg-[#F8F9FA] text-[#212529] rounded-2xl rounded-bl-md'
+                : 'bg-white text-[#212529] rounded-2xl rounded-bl-md shadow-sm'
             )}>
-              <div className="px-4 py-3 text-sm leading-relaxed">
+              <div className="px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap">
                 {message.content}
               </div>
               <div className={cn(
@@ -437,7 +573,10 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
         
         {isLoading && (
           <div className="flex justify-start animate-in fade-in duration-200">
-            <div className="bg-[#F8F9FA] rounded-2xl rounded-bl-md px-4 py-3 flex items-center gap-1">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E85A71] to-[#C94A5F] flex items-center justify-center mr-2 shrink-0">
+              <Sparkles className="w-4 h-4 text-white" />
+            </div>
+            <div className="bg-white rounded-2xl rounded-bl-md px-4 py-3 flex items-center gap-1 shadow-sm">
               <span className="w-2 h-2 bg-[#ADB5BD] rounded-full animate-bounce" />
               <span className="w-2 h-2 bg-[#ADB5BD] rounded-full animate-bounce delay-100" />
               <span className="w-2 h-2 bg-[#ADB5BD] rounded-full animate-bounce delay-200" />
@@ -461,12 +600,13 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 
       {/* Quick Questions */}
       <div className="px-4 py-3 bg-white border-t border-[#E9ECEF]">
+        <p className="text-xs text-gray-400 mb-2">Quick questions / 快捷问题:</p>
         <div className="flex flex-wrap gap-2">
-          {QUICK_QUESTIONS.zh.map((q) => (
+          {QUICK_QUESTIONS.en.map((q) => (
             <button
               key={q}
               onClick={() => handleQuickQuestion(q)}
-              className="text-[13px] bg-white border border-[#E9ECEF] text-[#6C757D] px-3 py-1.5 rounded-full hover:bg-[#FFF0F2] hover:border-[#E85A71] hover:text-[#E85A71] transition-colors duration-150"
+              className="text-[12px] bg-gray-100 border-0 text-gray-600 px-3 py-1.5 rounded-full hover:bg-[#FFF0F2] hover:text-[#E85A71] transition-colors duration-150"
             >
               {q}
             </button>
@@ -479,11 +619,11 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
         <div className="flex gap-2">
           <Input
             ref={inputRef}
-            placeholder="Type your question..."
+            placeholder="Ask anything about your trip..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
-            className="flex-1 h-11 bg-[#F8F9FA] border-[#E9ECEF] rounded-full px-4 text-sm focus-visible:ring-[#E85A71] focus-visible:ring-2 focus-visible:border-[#E85A71]"
+            className="flex-1 h-11 bg-gray-100 border-0 rounded-full px-4 text-sm focus-visible:ring-[#E85A71] focus-visible:ring-2"
           />
           <Button 
             onClick={handleSend}

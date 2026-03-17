@@ -82,7 +82,11 @@
       "demoTitle": "Demo accounts (click to auto-fill)",
       "demoUser": "Demo User",
       "errors": {
-        "requiredFields": "Please enter email and password"
+        "requiredFields": "Please enter email and password",
+        "invalidCredentials": "Incorrect email or password. Please try again.",
+        "accountLocked": "Account temporarily locked. Please try again later.",
+        "tooManyAttempts": "Too many failed attempts. Please wait a moment.",
+        "generic": "Unable to sign in. Please try again."
       }
     },
     "register": {
@@ -770,6 +774,11 @@
   },
   "common": {
     "loading": "Loading...",
+    "loadingMore": "Loading more...",
+    "saving": "Saving...",
+    "submitting": "Submitting...",
+    "processing": "Processing...",
+    "pleaseWait": "Please wait...",
     "error": "Something went wrong",
     "retry": "Try again",
     "cancel": "Cancel",
@@ -813,7 +822,26 @@
       "sat": "Sat"
     },
     "validation": {
-      "required": "Required"
+      "required": "Required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordMatch": "Passwords do not match",
+      "phoneInvalid": "Please enter a valid phone number",
+      "cardInvalid": "Please enter a valid card number"
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "networkError": "Connection failed. Please check your internet and try again.",
+      "timeout": "Request timed out. Please try again.",
+      "unauthorized": "Please sign in to continue.",
+      "forbidden": "You don't have permission to do this.",
+      "notFound": "The requested content was not found.",
+      "serverError": "Something went wrong on our end. Please try again later.",
+      "validationError": "Please check your input and try again.",
+      "paymentFailed": "Payment could not be processed. Please try a different method.",
+      "rateLimit": "Too many requests. Please wait a moment.",
+      "tryAgain": "Try Again",
+      "contactSupport": "Contact Support"
     },
     "actions": {
       "selectFile": "Select File",

@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Button } from '@/components/ui/button'
+import { AnimatedButton } from '@/components/ui/AnimatedButton'
+import { ErrorMessage } from '@/components/ui/ErrorMessage'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAuth } from '@/contexts/auth-context'
 import { Link } from '@/navigation'
-import { Loader2 } from 'lucide-react'
+import { LogIn } from 'lucide-react'
 
 export function LoginForm() {
   const t = useTranslations('auth.login')
@@ -56,11 +56,11 @@ export function LoginForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+          <ErrorMessage 
+            error={error} 
+            onDismiss={() => setError('')}
+            variant="banner"
+          />
           
           <div className="space-y-2">
             <Label htmlFor="email">{t('email')}</Label>
@@ -71,6 +71,7 @@ export function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="form-field-focus"
             />
           </div>
 
@@ -82,29 +83,25 @@ export function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="form-field-focus"
             />
           </div>
 
-          <Button 
+          <AnimatedButton 
             type="submit" 
             className="w-full"
-            disabled={loading}
+            loading={loading}
+            loadingText={t('loading')}
+            icon={<LogIn className="w-4 h-4" />}
           >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('loading')}
-              </>
-            ) : (
-              t('button')
-            )}
-          </Button>
+            {t('button')}
+          </AnimatedButton>
 
           <p className="text-center text-sm text-gray-600">
             {t('noAccount')}{' '}
             <Link 
               href="/register" 
-              className="text-cyan-600 hover:underline"
+              className="text-cyan-600 hover:underline link-underline"
             >
               {t('signupLink')}
             </Link>
@@ -115,7 +112,7 @@ export function LoginForm() {
         <div className="mt-6 pt-6 border-t">
           <p className="text-sm font-medium text-gray-700 mb-3">{t('demoTitle')}</p>
           <div className="grid gap-2">
-            <Button 
+            <AnimatedButton 
               variant="outline" 
               size="sm"
               onClick={() => {
@@ -124,7 +121,7 @@ export function LoginForm() {
               }}
             >
               {t('demoUser')}
-            </Button>
+            </AnimatedButton>
           </div>
         </div>
       </CardContent>

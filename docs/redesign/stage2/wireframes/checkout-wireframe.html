@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跳海Global - 预订流程线框图 | TIAOHAI-REDESIGN-002</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#FDF2F8',
+                            100: '#FCE7F3',
+                            500: '#EC4899',
+                            600: '#DB2777',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .wireframe-box { border: 2px dashed #CBD5E1; background: #F8FAFC; }
+        .wireframe-label { background: #1E293B; color: white; padding: 2px 8px; font-size: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- 页面信息 -->
+<div class="bg-slate-900 text-white px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <span class="text-sm font-mono text-slate-400">TIAOHAI-REDESIGN-002</span>
+        <span class="text-sm">预订流程 (Checkout) 线框图</span>
+    </div>
+    <div class="text-xs text-slate-400">设计: Diana | 日期: 2026-03-15</div>
+</div>
+
+<!-- 简化导航 -->
+<header class="bg-white border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div></div>
+            
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">T</span>
+                </div>
+                <span class="text-primary-500 font-bold text-xl">tiaohai</span>
+            </div>
+            
+            <div class="w-20"></div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- 步骤指示器 -->
+    <div class="max-w-2xl mx-auto mb-8">
+        <div class="flex items-center">
+            <!-- Step 1: Guest Info (Active) -->
+            <div class="flex-1 flex items-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-semibold">1</div>
+                    <span class="text-xs mt-2 font-medium text-primary-600">Guest Info</span>
+                </div>
+                <div class="flex-1 h-px bg-primary-500 mx-4"></div>
+            </div>
+
+            <!-- Step 2: Payment -->
+            <div class="flex-1 flex items-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold">2</div>
+                    <span class="text-xs mt-2 font-medium text-gray-500">Payment</span>
+                </div>
+                <div class="flex-1 h-px bg-gray-200 mx-4"></div>
+            </div>
+
+            <!-- Step 3: Confirmation -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold">3</div>
+                <span class="text-xs mt-2 font-medium text-gray-500">Confirmation</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        
+        <!-- 左侧表单 (3/5) -->
+        <div class="lg:col-span-3">
+            
+            <!-- Guest Information -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-1">Guest Information</h2>
+                <p class="text-gray-500 text-sm mb-6">Required for hotel registration in China</p>
+
+                <!-- Name -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Legal Name <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" placeholder="First name on passport" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                        <input type="text" placeholder="Last name on passport" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contact Information <span class="text-red-500">*</span></label>
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Email (for confirmation)" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                        <input type="tel" placeholder="Phone (with country code)" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passport Information -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold">Passport Information</h2>
+                        <p class="text-gray-500 text-sm">Required by Chinese law for all foreign guests</p>
+                    </div>
+                    <button class="text-primary-600 text-sm font-medium">Optional ▼</button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <input type="text" placeholder="Passport Number" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                    </div>
+                    
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-white">
+                        <option>Nationality</option>
+                        <option>United States</option>
+                        <option>United Kingdom</option>
+                        <option>Canada</option>
+                        <option>Australia</option>
+                    </select>
+                    
+                    <input type="date" placeholder="Date of Birth" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                </div>
+            </div>
+
+            <!-- Emergency Contact -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-1">Emergency Contact</h2>
+                <p class="text-gray-500 text-sm mb-6">Just in case we need to reach someone during your stay</p>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Contact Name" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                    <input type="tel" placeholder="Phone Number" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                    
+                    <select class="col-span-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-white">
+                        <option>Relationship</option>
+                        <option>Spouse</option>
+                        <option>Parent</option>
+                        <option>Sibling</option>
+                        <option>Friend</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 按钮 -->
+            <div class="flex gap-4">
+                <button class="flex-1 py-4 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-colors">Back</button>
+                <button class="flex-1 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors">Continue to Payment</button>
+            </div>
+        </div>
+
+        <!-- 右侧订单摘要 (2/5) -->
+        <div class="lg:col-span-2">
+            <div class="sticky top-24 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                
+                <!-- 酒店信息 -->
+                <div class="flex gap-4 pb-6 border-b border-gray-200">
+                    <div class="w-20 h-20 rounded-xl bg-gray-200 flex-shrink-0"></div>
+                    <div>
+                        <h3 class="font-semibold">Hutong Heritage House</h3>
+                        <p class="text-sm text-gray-500">Dongcheng, Beijing</p>
+                        <div class="flex items-center gap-1 text-sm mt-1">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <span>4.9 (128 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 入住信息 -->
+                <div class="py-4 border-b border-gray-200">
+                    <div class="flex justify-between text-sm">
+                        <div>
+                            <p class="font-medium">Check-in</p>
+                            <p class="text-gray-500">Wed, Mar 20</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-medium">Checkout</p>
+                            <p class="text-gray-500">Mon, Mar 25</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">5 nights · 2 guests</p>
+                </div>
+
+                <!-- 价格明细 -->
+                <div class="py-4 space-y-3">
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">$89 × 5 nights</span>
+                        <span>$445</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">Cleaning fee</span>
+                        <span>$25</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="underline">Service fee</span>
+                        <span>$47</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-semibold pt-3 border-t border-gray-200">
+                        <span>Total (USD)</span>
+                        <span>$517</span>
+                    </div>
+                </div>
+
+                <!-- 取消政策 -->
+                <div class="mt-4 p-4 bg-amber-50 rounded-xl">
+                    <p class="text-sm text-amber-800">
+                        <span class="font-semibold">Free cancellation</span> before 3:00 PM on Mar 18. 
+                        After that, the reservation is non-refundable.
+                    </p>
+                </div>
+            </div>        
+        </div>
+    </div>
+
+</main>
+
+<!-- 设计说明 -->
+<div class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-sm">
+    <h4 class="font-semibold mb-2">预订流程设计要点</h4>
+    <ul class="text-xs space-y-1 text-slate-300">
+        <li>• 步骤指示器: 清晰显示当前进度</li>
+        <li>• 表单分组: 信息分类便于填写</li>
+        <li>• 实时验证: 输入时即时反馈</li>
+        <li>• 订单摘要: sticky定位始终可见</li>
+        <li>• 取消政策: 明确展示避免纠纷</li>
+    </ul>
+</div>
+
+</body>
+</html>

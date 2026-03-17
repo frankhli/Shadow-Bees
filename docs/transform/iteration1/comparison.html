@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跳海Global首页Hero重构 - 改造前后对比</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 40px; color: #1a1a1a; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 60px; }
+        @media (max-width: 900px) { .comparison { grid-template-columns: 1fr; } }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .card-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: white;
+        }
+        .card-header.after { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .card-header h2 { font-size: 20px; font-weight: 600; }
+        .card-header .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .card-body { padding: 30px; }
+        
+        .feature-list { list-style: none; }
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list .icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        .feature-list .icon.x { background: #fee2e2; color: #dc2626; }
+        .feature-list .icon.check { background: #d1fae5; color: #059669; }
+        .feature-list .label { font-weight: 500; color: #374151; }
+        .feature-list .desc { font-size: 13px; color: #6b7280; margin-top: 2px; }
+        
+        .visual-preview {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+        .visual-preview h3 { font-size: 14px; color: #6b7280; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* 模拟改造前的样式 */
+        .hero-before {
+            height: 200px;
+            background: linear-gradient(135deg, #ffe4e6 0%, #fff7ed 50%, #fef9c3 100%);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        .hero-before .badge {
+            padding: 6px 14px;
+            background: #10b981;
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 12px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .hero-before h2 { color: #1f2937; font-size: 24px; font-weight: 700; }
+        .hero-before p { color: #6b7280; font-size: 13px; margin-top: 6px; text-align: center; }
+        
+        .search-before {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 12px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-row {
+            display: flex;
+            gap: 8px;
+        }
+        .search-field {
+            flex: 1;
+            padding: 10px;
+            border-right: 1px solid #e5e7eb;
+        }
+        .search-field:last-of-type { border-right: none; }
+        .search-field label { display: block; font-size: 10px; font-weight: 700; color: #111; margin-bottom: 4px; }
+        .search-field input { width: 100%; border: none; font-size: 12px; color: #6b7280; background: transparent; }
+        .search-btn {
+            background: #f43f5e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 模拟改造后的样式 */
+        .hero-after {
+            height: 240px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%),
+                        url('https://images.unsplash.com/photo-1565689577443-2e1c49ed98b3?w=600&q=60') center/cover;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 24px;
+            position: relative;
+        }
+        .hero-after .badge {
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.9);
+            backdrop-filter: blur(4px);
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 16px;
+        }
+        .hero-after h2 { color: white; font-size: 28px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero-after p { color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 8px; text-align: center; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+        
+        .search-after {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            padding: 0;
+            overflow: hidden;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-row-after {
+            display: flex;
+        }
+        .search-field-after {
+            flex: 1;
+            padding: 16px 20px;
+            border-right: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        .search-field-after:last-of-type { border-right: none; }
+        .search-field-after label { display: block; font-size: 10px; font-weight: 700; color: #111; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .search-field-after .value { font-size: 14px; color: #374151; display: flex; align-items: center; gap: 8px; }
+        .search-field-after .value svg { width: 16px; height: 16px; color: #9ca3af; }
+        .search-btn-after {
+            background: #f43f5e;
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .summary {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .summary h2 { margin-bottom: 24px; color: #1a1a1a; }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .summary-item {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 4px solid #f43f5e;
+        }
+        .summary-item:nth-child(2) { border-left-color: #10b981; }
+        .summary-item:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-item:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-item h4 { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .summary-item p { font-size: 18px; font-weight: 600; color: #1f2937; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏨 跳海Global首页Hero重构 - 改造前后对比</h1>
+        
+        <div class="comparison">
+            <!-- 改造前 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>改造前 (Before)</h2>
+                    <span class="badge">Demo版本</span>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li>
+                            <span class="icon x">✕</span>
+                            <div>
+                                <div class="label">渐变背景</div>
+                                <div class="desc">使用rose/orange/yellow渐变，显得廉价、Demo感强</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon x">✕</span>
+                            <div>
+                                <div class="label">分散搜索框</div>
+                                <div class="desc">4个独立字段(Where/CheckIn/CheckOut/Guests)，位于Hero下方</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon x">✕</span>
+                            <div>
+                                <div class="label">Pulsing Badge</div>
+                                <div class="desc">144h标签使用animate-pulse动画，过于活泼不专业</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon x">✕</span>
+                            <div>
+                                <div class="label">字体不统一</div>
+                                <div class="desc">标题36-48px变化，副标题18px，缺乏规范</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon x">✕</span>
+                            <div>
+                                <div class="label">间距混乱</div>
+                                <div class="desc">mt-24、py-8等混用，不符合8px网格</div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="visual-preview">
+                        <h3>视觉预览</h3>
+                        <div class="hero-before">
+                            <div class="badge">● 144-hour Visa-Free</div>
+                            <h2>Discover China</h2>
+                            <p>Honest info about hotels in China</p>
+                        </div>
+                        <div class="search-before">
+                            <div class="search-row">
+                                <div class="search-field">
+                                    <label>Where</label>
+                                    <input value="Search..." readonly>
+                                </div>
+                                <div class="search-field">
+                                    <label>Check In</label>
+                                    <input value="Add date" readonly>
+                                </div>
+                                <div class="search-field">
+                                    <label>Check Out</label>
+                                    <input value="Add date" readonly>
+                                </div>
+                                <div class="search-field">
+                                    <label>Guests</label>
+                                    <input value="2 guests" readonly>
+                                </div>
+                                <button class="search-btn">🔍</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 改造后 -->
+            <div class="card">
+                <div class="card-header after">
+                    <h2>改造后 (After)</h2>
+                    <span class="badge">生产版本</span>
+                </div>
+                <div class="card-body">
+                    <ul class="feature-list">
+                        <li>
+                            <span class="icon check">✓</span>
+                            <div>
+                                <div class="label">实景背景图</div>
+                                <div class="desc">使用Unsplash高质量中国胡同图片，叠加渐变遮罩</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✓</span>
+                            <div>
+                                <div class="label">合并搜索框</div>
+                                <div class="desc">3字段布局(Where/Dates/Guests)，居中置于Hero内</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✓</span>
+                            <div>
+                                <div class="label">静态Badge</div>
+                                <div class="desc">144h标签使用backdrop-blur效果，专业稳重</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✓</span>
+                            <div>
+                                <div class="label">规范字体</div>
+                                <div class="desc">标题严格48px，副标题严格24px，字距行高一致</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✓</span>
+                            <div>
+                                <div class="label">8px网格</div>
+                                <div class="desc">32px/48px/64px统一间距，符合设计系统</div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="visual-preview">
+                        <h3>视觉预览</h3>
+                        <div class="hero-after">
+                            <div class="badge">🌐 144-hour Visa-Free</div>
+                            <h2>Discover China</h2>
+                            <p>Honest info about hotels in China</p>
+                        </div>
+                        <div class="search-after">
+                            <div class="search-row-after">
+                                <div class="search-field-after">
+                                    <label>Where</label>
+                                    <div class="value">📍 Search destinations...</div>
+                                </div>
+                                <div class="search-field-after">
+                                    <label>Dates</label>
+                                    <div class="value">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                        Add dates
+                                    </div>
+                                </div>
+                                <div class="search-field-after">
+                                    <label>Guests</label>
+                                    <div class="value">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                        2 guests
+                                    </div>
+                                </div>
+                                <button class="search-btn-after">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h2>📊 改造数据摘要</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h4>Hero背景</h4>
+                    <p>渐变 → 实景图</p>
+                </div>
+                <div class="summary-item">
+                    <h4>搜索字段</h4>
+                    <p>4个 → 3个合并</p>
+                </div>
+                <div class="summary-item">
+                    <h4>144h标签</h4>
+                    <p>Pulse动画 → 静态</p>
+                </div>
+                <div class="summary-item">
+                    <h4>字体规范</h4>
+                    <p>不一致 → 48px/24px</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

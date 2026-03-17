@@ -331,15 +331,33 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
           </div>
         </div>
 
-        {/* Images */}
+        {/* Images - Optimized for performance */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 rounded-xl overflow-hidden mb-8 h-[300px] md:h-[400px]">
+          {/* Main image - priority load for LCP */}
           <div className="relative bg-gray-200">
-            <Image src={hostel.images[0]} alt={hostel.name} fill className="object-cover" priority />
+            <Image 
+              src={hostel.images[0]} 
+              alt={hostel.name} 
+              fill 
+              className="object-cover" 
+              priority 
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={85}
+            />
           </div>
+          {/* Secondary images - lazy loaded */}
           <div className="hidden md:grid grid-cols-2 gap-2">
             {hostel.images.slice(1, 5).map((img, i) => (
               <div key={i} className="relative bg-gray-200">
-                <Image src={img} alt={`${hostel.name} ${i + 2}`} fill className="object-cover" />
+                <Image 
+                  src={img} 
+                  alt={`${hostel.name} ${i + 2}`} 
+                  fill 
+                  className="object-cover" 
+                  loading="lazy"
+                  sizes="25vw"
+                  quality={75}
+                />
               </div>
             ))}
           </div>
@@ -383,87 +401,128 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
               <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm">✓</span>
+                    <Check className="w-5 h-5 text-white" />
                   </div>
-                  <h2 className="text-xl font-bold text-gray-900">Honest Facility Checklist</h2>
+                  <h2 className="text-xl font-bold text-gray-900">Honest Facilities</h2>
+                  <span className="ml-auto text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-medium">
+                    Honestly Verified ✓
+                  </span>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">
                   We tell you what others won&apos;t. No surprises when you arrive.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {/* Western Toilet */}
-                  {hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('western toilet')) ? (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">✅</span>
+                  {/* 1. Western Toilet */}
+                  {hostel.hasWesternToilet || hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('western toilet')) ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
                       <div>
                         <p className="font-medium text-gray-900">Western Toilet</p>
-                        <p className="text-xs text-gray-500">Sit-down toilet available</p>
+                        <p className="text-xs text-emerald-600">Sit-down toilet available</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">❌</span>
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
                       <div>
-                        <p className="font-medium text-gray-900">No Western Toilet</p>
-                        <p className="text-xs text-gray-500">Squat toilet only</p>
+                        <p className="font-medium text-gray-900">Squat Toilet</p>
+                        <p className="text-xs text-amber-600">Traditional Chinese style. We&apos;ll provide instructions!</p>
                       </div>
                     </div>
                   )}
                   
-                  {/* Elevator */}
-                  {hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('elevator') || f.label?.toLowerCase().includes('lift')) ? (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">✅</span>
+                  {/* 2. Elevator */}
+                  {hostel.hasElevator || hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('elevator') || f.label?.toLowerCase().includes('lift')) ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
                       <div>
                         <p className="font-medium text-gray-900">Elevator</p>
-                        <p className="text-xs text-gray-500">Easy access to all floors</p>
+                        <p className="text-xs text-emerald-600">Easy access to all floors</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">❌</span>
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
                       <div>
-                        <p className="font-medium text-gray-900">No Elevator</p>
-                        <p className="text-xs text-gray-500">Stairs only - free luggage help provided</p>
+                        <p className="font-medium text-gray-900">Stairs Only</p>
+                        <p className="text-xs text-amber-600">No elevator, but free luggage help available</p>
                       </div>
                     </div>
                   )}
                   
-                  {/* English Speaking */}
-                  {hostel.host?.languages?.includes('English') ? (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">✅</span>
+                  {/* 3. English Speaking Staff */}
+                  {hostel.hasEnglishSpeakingStaff || hostel.host?.languages?.includes('English') ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
                       <div>
                         <p className="font-medium text-gray-900">English-Speaking Staff</p>
-                        <p className="text-xs text-gray-500">Front desk speaks English</p>
+                        <p className="text-xs text-emerald-600">Front desk speaks English</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">⚠️</span>
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
                       <div>
                         <p className="font-medium text-gray-900">Limited English</p>
-                        <p className="text-xs text-gray-500">Use AI Concierge for translation</p>
+                        <p className="text-xs text-amber-600">Use AI Concierge for 24/7 translation</p>
                       </div>
                     </div>
                   )}
                   
-                  {/* WiFi */}
-                  {hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('wifi')) ? (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">✅</span>
+                  {/* 4. International Payment */}
+                  {hostel.foreignFriendly?.internationalPayment || hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('credit card') || f.label?.toLowerCase().includes('visa')) ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
                       <div>
-                        <p className="font-medium text-gray-900">Free WiFi</p>
-                        <p className="text-xs text-gray-500">High-speed internet</p>
+                        <p className="font-medium text-gray-900">International Payment</p>
+                        <p className="text-xs text-emerald-600">Credit cards & PayPal accepted</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-start gap-3 p-3 bg-white rounded-xl">
-                      <span className="text-2xl">⚠️</span>
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
                       <div>
-                        <p className="font-medium text-gray-900">Limited WiFi</p>
-                        <p className="text-xs text-gray-500">Check with host</p>
+                        <p className="font-medium text-gray-900">Cash Preferred</p>
+                        <p className="text-xs text-amber-600">WeChat/Alipay or cash (RMB). ATM nearby.</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* 5. 24/7 Reception */}
+                  {hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('24h') || f.label?.toLowerCase().includes('24 hour')) ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
+                      <div>
+                        <p className="font-medium text-gray-900">24/7 Reception</p>
+                        <p className="text-xs text-emerald-600">Front desk always available</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
+                      <div>
+                        <p className="font-medium text-gray-900">Limited Reception Hours</p>
+                        <p className="text-xs text-amber-600">Check-in before 10 PM recommended</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* 6. Heating/AC */}
+                  {hostel.facilities?.some((f: any) => f.label?.toLowerCase().includes('ac') || f.label?.toLowerCase().includes('air conditioning') || f.label?.toLowerCase().includes('heating')) ? (
+                    <div className="flex items-start gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                      <span className="text-xl">✅</span>
+                      <div>
+                        <p className="font-medium text-gray-900">A/C & Heating</p>
+                        <p className="text-xs text-emerald-600">Climate controlled rooms</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                      <span className="text-xl">⚠️</span>
+                      <div>
+                        <p className="font-medium text-gray-900">Limited Climate Control</p>
+                        <p className="text-xs text-amber-600">Portable fan/heater provided</p>
                       </div>
                     </div>
                   )}
@@ -472,7 +531,7 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
                 {/* Why this matters */}
                 <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-100">
                   <p className="text-sm text-blue-700">
-                    <strong>Why this matters:</strong> Many Chinese hotels have squat toilets and no elevators. 
+                    <strong>Why this matters:</strong> Many Chinese hotels have squat toilets, no elevators, and limited English support. 
                     We verify these details so you can pack accordingly and avoid surprises.
                   </p>
                 </div>
@@ -480,24 +539,102 @@ function HotelContent({ params }: { params: { id: string; locale: string } }) {
             </div>
 
             {/* Cultural Tips for Foreign Travelers */}
-            {hostel.culturalTips && hostel.culturalTips.length > 0 && (
-              <div className="pb-6 border-b">
-                <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
-                  <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <span className="text-xl">🎎</span>
-                    Cultural Tips for Foreign Guests
-                  </h2>
-                  <ul className="space-y-2">
-                    {hostel.culturalTips.map((tip, index) => (
-                      <li key={index} className="flex items-start gap-2 text-gray-700 text-sm">
-                        <span className="text-amber-500 mt-0.5">•</span>
-                        <span>{tip}</span>
-                      </li>
-                    ))}
-                  </ul>
+            <div className="pb-6 border-b">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">🎎</span>
+                  <h2 className="text-xl font-bold text-gray-900">Cultural Tips</h2>
+                  <span className="ml-auto text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-medium">
+                    For International Guests
+                  </span>
+                </div>
+                
+                <div className="space-y-4">
+                  {/* Hutong/Siheyuan explanation */}
+                  {(hostel.name?.toLowerCase().includes('hutong') || hostel.name?.toLowerCase().includes('courtyard') || hostel.description?.toLowerCase().includes('hutong')) && (
+                    <div className="bg-white rounded-xl p-4 border border-amber-100">
+                      <div className="flex items-start gap-3">
+                        <span className="text-2xl">🏮</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 mb-1">What is a Hutong? <span className="text-gray-500 font-normal">(胡同)</span></p>
+                          <p className="text-sm text-gray-600 leading-relaxed">
+                            Hutongs are traditional narrow streets/alleyways in Beijing, typically lined with <strong>siheyuan</strong> (courtyard houses). 
+                            Staying in a hutong means experiencing authentic Beijing life—waking up to locals doing tai chi, 
+                            sharing walls with neighbors, and walking ancient stone paths. It&apos;s charming but can be noisy and maze-like!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Check-in culture */}
+                  <div className="bg-white rounded-xl p-4 border border-amber-100">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">🛂</span>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Foreign Guest Registration</p>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          By Chinese law, all hotels must register foreign guests with police within 24 hours. 
+                          The hotel will <strong>copy your passport</strong>—this is normal and required. 
+                          Keep your passport handy at check-in.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Payment culture */}
+                  <div className="bg-white rounded-xl p-4 border border-amber-100">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">💳</span>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Cash vs. Digital Payment</p>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          China is largely <strong>cashless</strong>. Locals use WeChat Pay and Alipay for everything. 
+                          As a foreigner, <strong>credit cards may not always work</strong> in small shops or restaurants. 
+                          Carry some cash (RMB) and download WeChat or Alipay with international card support.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Toilet culture */}
+                  {!hostel.hasWesternToilet && (
+                    <div className="bg-amber-100 rounded-xl p-4 border border-amber-200">
+                      <div className="flex items-start gap-3">
+                        <span className="text-2xl">🚽</span>
+                        <div>
+                          <p className="font-semibold text-amber-900 mb-1">Squat Toilet Tips</p>
+                          <p className="text-sm text-amber-800 leading-relaxed">
+                            Face the hood (the raised part), straddle the pan, and squat down. 
+                            <strong>Don&apos;t flush toilet paper</strong>—use the bin provided. 
+                            It takes practice, but most travelers adapt quickly!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Specific tips from API */}
+                  {hostel.culturalTips && hostel.culturalTips.length > 0 && (
+                    <div className="space-y-2">
+                      {hostel.culturalTips.map((tip, index) => (
+                        <div key={index} className="flex items-start gap-2 text-gray-700 text-sm bg-white/50 rounded-lg p-3">
+                          <span className="text-amber-500 mt-0.5">•</span>
+                          <span>{tip}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-4 p-3 bg-amber-100/50 rounded-xl border border-amber-200">
+                  <p className="text-sm text-amber-800">
+                    <span className="font-semibold">💡 Tip:</span> Download <strong>Pleco</strong> (dictionary app) and <strong>Amap</strong> (Chinese Google Maps) 
+                    for easier navigation and communication!
+                  </p>
                 </div>
               </div>
-            )}
+            </div>
 
             {/* Description */}
             <div className="pb-6 border-b">
