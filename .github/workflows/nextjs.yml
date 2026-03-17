@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: [feature/mvp-v1, main]
+    branches: [main, feature/mvp-v1]
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/web
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,20 +31,25 @@ jobs:
           cache: 'npm'
           cache-dependency-path: apps/web/package-lock.json
       
-      - name: Install dependencies
-        run: |
-          cd apps/web
-          npm ci
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            apps/web/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('apps/web/package-lock.json') }}-${{ hashFiles('apps/web/**/*.js', 'apps/web/**/*.jsx', 'apps/web/**/*.ts', 'apps/web/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('apps/web/package-lock.json') }}-
       
-      - name: Build
-        run: |
-          cd apps/web
-          npm run build
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build with Next.js
+        run: npm run build
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/web/out
+          path: ./apps/web/out
 
   deploy:
     environment:
