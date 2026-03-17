@@ -150,7 +150,7 @@ export default function OrdersPage() {
             </button>
             <div className="flex items-center gap-2">
               <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
-              <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Beta</Badge>
+              <Badge className="bg-[#FFF3CD] text-[#856404] hover:bg-[#FFF3CD]">Beta</Badge>
             </div>
             <LanguageSwitcher />
           </div>
@@ -305,7 +305,7 @@ export default function OrdersPage() {
           </Link>
           <div className="flex items-center gap-2">
             <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
-            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Beta</Badge>
+            <Badge className="bg-[#FFF3CD] text-[#856404] hover:bg-[#FFF3CD]">Beta</Badge>
           </div>
           <LanguageSwitcher />
         </div>
