@@ -8,6 +8,9 @@ const nextConfig = {
   trailingSlash: true,
   swcMinify: true,
   productionBrowserSourceMaps: false,
+  experimental: {
+    optimizeCss: false,
+  },
 }
 
 module.exports = nextConfig
