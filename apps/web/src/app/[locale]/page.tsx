@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/navigation'
@@ -9,6 +9,7 @@ import { LanguageSwitcher } from '@/components/language-switcher'
 import { UserNav } from '@/components/user-nav'
 import { useAuth } from '@/contexts/auth-context'
 import { format, addDays } from 'date-fns'
+import dynamic from 'next/dynamic'
 import { 
   Search, 
   MapPin, 
@@ -31,8 +32,31 @@ import {
   Train,
   FileCheck,
   CreditCard,
-  Wifi
+  Wifi,
+  Users
 } from 'lucide-react'
+
+// Dynamic import for ChinaMap (client-side only)
+const ChinaMap = dynamic(
+  () => import('@/components/map/ChinaMap').then(mod => mod.ChinaMap),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="h-[400px] bg-gray-100 rounded-xl flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    )
+  }
+)
+
+// Import POPULAR_CITIES for map integration
+import { POPULAR_CITIES } from '@/components/map/map-config'
+
+// Dynamic import for HotelMapThumbnail
+const HotelMapThumbnail = dynamic(
+  () => import('@/components/map/HotelMapThumbnail').then(mod => mod.HotelMapThumbnail),
+  { ssr: false }
+)
 
 // 增强的Hostel接口
 interface Hostel {
@@ -49,6 +73,7 @@ interface Hostel {
   honestFacilities?: HonestFacility[]
   foreignFriendly?: ForeignFriendly
   aiSummaryI18n?: Record<string, string>
+  coordinates?: [number, number]  // [longitude, latitude]
 }
 
 interface HonestFacility {
@@ -116,7 +141,7 @@ export default function HomePage() {
   const [featuredHostels, setFeaturedHostels] = useState<Hostel[]>([])
   const [loading, setLoading] = useState(true)
   
-  // 日期选择状态
+  // 日期选择状态 - 合并为一个字段显示
   const [checkIn, setCheckIn] = useState<Date | null>(null)
   const [checkOut, setCheckOut] = useState<Date | null>(null)
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -202,6 +227,17 @@ export default function HomePage() {
     setShowDatePicker(false)
   }
   
+  // 格式化日期显示
+  const formatDateRange = () => {
+    if (!checkIn && !checkOut) return 'Add dates'
+    if (checkIn && !checkOut) return format(checkIn, 'MMM d')
+    if (checkIn && checkOut) {
+      const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24))
+      return `${format(checkIn, 'MMM d')} - ${format(checkOut, 'MMM d')} · ${nights} nights`
+    }
+    return 'Add dates'
+  }
+  
   // 获取设施图标
   const getFacilityIcon = (iconName: string) => {
     const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -213,8 +249,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/80">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center">
@@ -223,17 +259,17 @@ export default function HomePage() {
               <span className="text-rose-500 font-bold text-xl hidden sm:block">tiaohai</span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/hotels" className="text-gray-700 hover:text-gray-900 font-medium">
+            <nav className="hidden md:flex items-center gap-8">
+              <Link href="/hotels" className="text-gray-700 hover:text-gray-900 font-medium text-sm">
                 {t('nav.stays')}
               </Link>
-              <Link href="/experiences" className="text-gray-500 hover:text-gray-900">
+              <Link href="/experiences" className="text-gray-500 hover:text-gray-900 text-sm">
                 {t('nav.experiences')}
               </Link>
-              <Link href="/guides" className="text-gray-500 hover:text-gray-900">
+              <Link href="/guides" className="text-gray-500 hover:text-gray-900 text-sm">
                 {t('nav.guides')}
               </Link>
-              <Link href="/social" className="text-gray-500 hover:text-gray-900">
+              <Link href="/social" className="text-gray-500 hover:text-gray-900 text-sm">
                 {t('footer.community')}
               </Link>
             </nav>
@@ -246,118 +282,129 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Search */}
-      <div className="relative">
-        <div className="h-[520px] bg-gradient-to-br from-rose-100 via-orange-50 to-yellow-50 flex items-center justify-center">
-          <div className="text-center px-4 max-w-4xl mx-auto">
-            {/* 144小时免签标识 */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-full text-sm font-medium mb-6 animate-pulse">
+      {/* Hero Section with Background Image */}
+      <div className="relative min-h-[640px] flex items-center justify-center">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1565689577443-2e1c49ed98b3?w=1920&q=80"
+            alt="Traditional Chinese Hutong"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+          <div className="text-center py-12 md:py-16">
+            {/* 144小时免签标识 - 静态Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/90 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-8">
               <Globe className="w-4 h-4" />
               144-hour Visa-Free Transit Available
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {t('hero.title')} {t('hero.titleHighlight')}
+            {/* 主标题 - 48px */}
+            <h1 className="text-[40px] md:text-[48px] font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
+              {t('hero.title')} <span className="text-rose-300">{t('hero.titleHighlight')}</span>
             </h1>
-            <p className="text-lg text-gray-600 mb-6">
-              Honest info about hotels in China. We tell you what others won&apos;t: Western toilet? Elevator? English staff?
+            
+            {/* 副标题 - 24px */}
+            <p className="text-lg md:text-[24px] text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+              Honest info about hotels in China. We tell you what others won&apos;t.
             </p>
           </div>
-        </div>
 
-        {/* 搜索框 - 放在Hero下方 */}
-        <div className="max-w-4xl mx-auto px-4 -mt-24 relative z-10">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            {/* 搜索栏 */}
-            <div className="flex flex-col md:flex-row items-stretch">
-              {/* 目的地 */}
-              <div className="flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-200">
-                <label className="block text-xs font-bold text-gray-900 mb-1">Where</label>
-                <input 
-                  type="text" 
-                  placeholder="Search destinations, hotels..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  className="w-full outline-none text-gray-700 placeholder:text-gray-400 text-sm"
-                />
+          {/* 搜索框 - 居中全宽 */}
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+              {/* 搜索栏 - 三字段布局 */}
+              <div className="flex flex-col md:flex-row items-stretch">
+                {/* Where */}
+                <div className="flex-1 px-6 py-4 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
+                  <label className="block text-xs font-bold text-gray-900 mb-1 uppercase tracking-wide">Where</label>
+                  <input 
+                    type="text" 
+                    placeholder="Search destinations..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    className="w-full outline-none text-gray-700 placeholder:text-gray-400 text-sm bg-transparent"
+                  />
+                </div>
+                
+                {/* Dates - 合并Check In/Out */}
+                <button 
+                  onClick={() => setShowDatePicker(true)}
+                  className="flex-1 px-6 py-4 border-b md:border-b-0 md:border-r border-gray-200 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <label className="block text-xs font-bold text-gray-900 mb-1 uppercase tracking-wide">Dates</label>
+                  <span className={`text-sm flex items-center gap-2 ${checkIn ? 'text-gray-900' : 'text-gray-400'}`}>
+                    <Calendar className="w-4 h-4 text-gray-400" />
+                    {formatDateRange()}
+                  </span>
+                </button>
+                
+                {/* Guests */}
+                <button 
+                  onClick={() => setShowGuestPicker(true)}
+                  className="flex-1 px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <label className="block text-xs font-bold text-gray-900 mb-1 uppercase tracking-wide">Guests</label>
+                  <span className="text-sm text-gray-900 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-gray-400" />
+                    {guests} guest{guests > 1 ? 's' : ''}
+                  </span>
+                </button>
+                
+                {/* 搜索按钮 */}
+                <button 
+                  onClick={handleSearch}
+                  className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 md:rounded-r-2xl transition-colors flex items-center justify-center gap-2 min-w-[120px]"
+                >
+                  <Search className="w-5 h-5" />
+                  <span className="font-medium">Search</span>
+                </button>
               </div>
               
-              {/* 入住日期 */}
-              <button 
-                onClick={() => setShowDatePicker(true)}
-                className="flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-200 text-left hover:bg-gray-50 transition-colors"
-              >
-                <label className="block text-xs font-bold text-gray-900 mb-1">Check In</label>
-                <span className={`text-sm ${checkIn ? 'text-gray-900' : 'text-gray-400'}`}>
-                  {checkIn ? format(checkIn, 'MMM d, yyyy') : 'Add date'}
-                </span>
-              </button>
-              
-              {/* 退房日期 */}
-              <button 
-                onClick={() => setShowDatePicker(true)}
-                className="flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-200 text-left hover:bg-gray-50 transition-colors"
-              >
-                <label className="block text-xs font-bold text-gray-900 mb-1">Check Out</label>
-                <span className={`text-sm ${checkOut ? 'text-gray-900' : 'text-gray-400'}`}>
-                  {checkOut ? format(checkOut, 'MMM d, yyyy') : 'Add date'}
-                </span>
-              </button>
-              
-              {/* 客人数量 */}
-              <button 
-                onClick={() => setShowGuestPicker(true)}
-                className="flex-1 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
-              >
-                <label className="block text-xs font-bold text-gray-900 mb-1">Guests</label>
-                <span className="text-sm text-gray-900">{guests} guest{guests > 1 ? 's' : ''}</span>
-              </button>
-              
-              {/* 搜索按钮 */}
-              <button 
-                onClick={handleSearch}
-                className="bg-rose-500 text-white px-8 py-3 md:rounded-r-2xl hover:bg-rose-600 transition-colors flex items-center justify-center gap-2"
-              >
-                <Search className="w-5 h-5" />
-                <span className="md:hidden">Search</span>
-              </button>
-            </div>
-            
-            {/* 设施快速筛选 */}
-            <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-medium text-gray-500 mr-1">Must-have for foreign guests:</span>
-                {facilityFilters.slice(0, 4).map((filter) => (
-                  <button
-                    key={filter.id}
-                    onClick={() => toggleFacility(filter.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                      selectedFacilities.includes(filter.id)
-                        ? `bg-${filter.color}-100 border-${filter.color}-300 text-${filter.color}-700`
-                        : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
-                    }`}
-                  >
-                    <span>{filter.label.split(' ')[0]}</span>
-                    <span className="hidden sm:inline">{filter.label.split(' ').slice(1).join(' ')}</span>
-                  </button>
-                ))}
+              {/* 设施快速筛选 */}
+              <div className="px-6 py-3 bg-gray-50 border-t border-gray-100">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-medium text-gray-500 mr-2">Must-have:</span>
+                  {facilityFilters.slice(0, 4).map((filter) => (
+                    <button
+                      key={filter.id}
+                      onClick={() => toggleFacility(filter.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                        selectedFacilities.includes(filter.id)
+                          ? `bg-${filter.color}-100 border-${filter.color}-300 text-${filter.color}-700`
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      <span>{filter.label.split(' ')[0]}</span>
+                      <span className="hidden sm:inline">{filter.label.split(' ').slice(1).join(' ')}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* AI Concierge 快速入口 */}
-      <section className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-gradient-to-r from-violet-50 to-purple-50 rounded-2xl p-6 border border-violet-100">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* AI Concierge 快速入口 - 48px间距 */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-gradient-to-r from-violet-50 to-purple-50 rounded-2xl p-6 md:p-8 border border-violet-100">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">Not sure what to look for?</h3>
+                <h3 className="font-bold text-gray-900 text-lg">Not sure what to look for?</h3>
                 <p className="text-sm text-gray-600">Ask our AI Concierge - it knows Chinese hotels inside out</p>
               </div>
             </div>
@@ -370,7 +417,7 @@ export default function HomePage() {
           </div>
           
           {/* 预设问题 */}
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-6 flex flex-wrap gap-2">
             {aiPresetQuestions.map((q, i) => (
               <button
                 key={i}
@@ -384,9 +431,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Experience Categories */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Browse by Experience</h2>
+      {/* Experience Categories - 64px间距 */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Browse by Experience</h2>
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
           {experienceCategories.map((cat) => (
             <button
@@ -405,28 +452,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Trust Indicators */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {/* China Map - Explore Destinations */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Explore Destinations</h2>
+            <p className="text-gray-500 text-sm mt-1">Click on a city to discover foreigner-friendly hotels</p>
+          </div>
+          <Link href="/hotels" className="text-rose-500 font-medium hover:underline text-sm">
+            View all hotels →
+          </Link>
+        </div>
+        <ChinaMap 
+          height="450px"
+          selectedCity={activeCategory !== 'all' ? activeCategory : null}
+          onCitySelect={(cityId) => {
+            const city = POPULAR_CITIES.find(c => c.id === cityId)
+            if (city) {
+              setSearchQuery(city.name)
+              handleSearch()
+            }
+          }}
+        />
+      </section>
+
+      {/* Trust Indicators - 64px间距 */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-100">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {trustIndicators.map((item) => (
-            <div key={item.labelKey} className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center flex-shrink-0">
-                <item.icon className="w-5 h-5 text-rose-500" />
+            <div key={item.labelKey} className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center flex-shrink-0">
+                <item.icon className="w-6 h-6 text-rose-500" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 text-sm">{t(`home.trust.${item.labelKey}`)}</h3>
-                <p className="text-xs text-gray-500">{t(`home.trust.${item.descKey}`)}</p>
+                <p className="text-xs text-gray-500 mt-1">{t(`home.trust.${item.descKey}`)}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Featured Listings */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
+      {/* Featured Listings - 64px间距 */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-gray-900">Featured Stays</h2>
-          <Link href="/hotels" className="flex items-center gap-1 text-rose-500 font-medium hover:underline">
+          <Link href="/hotels" className="flex items-center gap-1 text-rose-500 font-medium hover:underline text-sm">
             View all <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -464,17 +535,17 @@ export default function HomePage() {
                   {hostel.foreignFriendly && (
                     <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1">
                       {hostel.foreignFriendly.westernToilet && (
-                        <span className="bg-emerald-500 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
+                        <span className="bg-emerald-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                           <Bath className="w-3 h-3" /> Western Toilet
                         </span>
                       )}
                       {hostel.foreignFriendly.elevator && (
-                        <span className="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
+                        <span className="bg-blue-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                           <ArrowUpDown className="w-3 h-3" /> Elevator
                         </span>
                       )}
                       {hostel.foreignFriendly.englishSpeaking && (
-                        <span className="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
+                        <span className="bg-purple-500/90 backdrop-blur-sm text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                           <Languages className="w-3 h-3" /> English
                         </span>
                       )}
@@ -494,21 +565,39 @@ export default function HomePage() {
                   <p className="text-gray-500 text-sm truncate">{hostel.name}</p>
                   <p className="text-gray-400 text-xs">{hostel.distanceToDivingPirate}</p>
                   
-                  {/* 诚实设施预览 */}
+                  {/* 诚实设施预览 + 地图缩略图 */}
                   {hostel.honestFacilities && (
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {hostel.honestFacilities.slice(0, 3).map((facility) => (
-                        <span 
-                          key={facility.id}
-                          className={`text-xs px-2 py-0.5 rounded-full flex items-center gap-1 ${
-                            facility.available 
-                              ? 'bg-emerald-50 text-emerald-700' 
-                              : 'bg-red-50 text-red-600'
-                          }`}
-                        >
-                          {facility.available ? '✓' : '✗'} {facility.name}
-                        </span>
-                      ))}
+                    <div className="flex items-start gap-2 pt-1">
+                      <div className="flex-1">
+                        <div className="flex flex-wrap gap-1.5">
+                          {hostel.honestFacilities.slice(0, 3).map((facility) => (
+                            <span 
+                              key={facility.id}
+                              className={`text-xs px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                                facility.available 
+                                  ? 'bg-emerald-50 text-emerald-700' 
+                                  : 'bg-red-50 text-red-600'
+                              }`}
+                            >
+                              {facility.available ? '✓' : '✗'} {facility.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* 地图缩略图 */}
+                      {hostel.coordinates && (
+                        <div className="flex-shrink-0">
+                          <HotelMapThumbnail
+                            coordinates={hostel.coordinates}
+                            name={hostel.district}
+                            width={80}
+                            height={60}
+                            zoom={14}
+                            onClick={() => router.push(`/hotels/${hostel.id}#map`)}
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
                   
@@ -523,22 +612,22 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* Why Choose Tiaohai */}
+      {/* Why Choose Tiaohai - 64px间距 */}
       <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
                 Why Foreign Travelers Choose Tiaohai
               </h2>
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                     <Check className="w-6 h-6 text-emerald-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Honest Facility Checklist</h3>
-                    <p className="text-gray-600">We verify and show you: Western toilet? Elevator? English staff? No surprises when you arrive.</p>
+                    <h3 className="font-semibold text-lg text-gray-900">Honest Facility Checklist</h3>
+                    <p className="text-gray-600 mt-1">We verify and show you: Western toilet? Elevator? English staff? No surprises when you arrive.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -546,8 +635,8 @@ export default function HomePage() {
                     <Sparkles className="w-6 h-6 text-violet-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">AI Concierge</h3>
-                    <p className="text-gray-600">Get instant answers in your language about hotels, customs, and travel tips.</p>
+                    <h3 className="font-semibold text-lg text-gray-900">AI Concierge</h3>
+                    <p className="text-gray-600 mt-1">Get instant answers in your language about hotels, customs, and travel tips.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -555,15 +644,15 @@ export default function HomePage() {
                     <Globe className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">144-Hour Visa-Free</h3>
-                    <p className="text-gray-600">Optimized for visa-free transit travelers. We help you plan the perfect short trip.</p>
+                    <h3 className="font-semibold text-lg text-gray-900">144-Hour Visa-Free</h3>
+                    <p className="text-gray-600 mt-1">Optimized for visa-free transit travelers. We help you plan the perfect short trip.</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=600&fit=crop"
+                src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=600&fit=crop&q=80"
                 alt="Tiaohai Experience"
                 fill
                 className="object-cover"
@@ -574,15 +663,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular Destinations */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Destinations</h2>
+      {/* Popular Destinations - 64px间距 */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8">Popular Destinations</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { city: 'Shanghai', stays: 12, image: 'https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&h=400&fit=crop' },
-            { city: 'Beijing', stays: 10, image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&h=400&fit=crop' },
-            { city: 'Chengdu', stays: 8, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop' },
-            { city: "Xi'an", stays: 5, image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=400&fit=crop' },
+            { city: 'Shanghai', stays: 12, image: 'https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&h=400&fit=crop&q=80' },
+            { city: 'Beijing', stays: 10, image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&h=400&fit=crop&q=80' },
+            { city: 'Chengdu', stays: 8, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&q=80' },
+            { city: "Xi'an", stays: 5, image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=400&fit=crop&q=80' },
           ].map((dest) => (
             <Link 
               key={dest.city} 
@@ -593,10 +682,10 @@ export default function HomePage() {
                 src={dest.image}
                 alt={dest.city}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform"
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
                 <h3 className="font-bold text-xl">{dest.city}</h3>
                 <p className="text-sm opacity-90">{dest.stays}+ stays</p>
@@ -609,34 +698,34 @@ export default function HomePage() {
       {/* Date Picker Modal */}
       {showDatePicker && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Select Dates</h3>
-              <button onClick={() => setShowDatePicker(false)}>
-                <X className="w-5 h-5" />
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Select Dates</h3>
+              <button onClick={() => setShowDatePicker(false)} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Check In</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Check In</label>
                 <input
                   type="date"
                   value={checkIn ? format(checkIn, 'yyyy-MM-dd') : ''}
                   onChange={(e) => setCheckIn(e.target.value ? new Date(e.target.value) : null)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Check Out</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Check Out</label>
                 <input
                   type="date"
                   value={checkOut ? format(checkOut, 'yyyy-MM-dd') : ''}
                   min={checkIn ? format(addDays(checkIn, 1), 'yyyy-MM-dd') : undefined}
                   onChange={(e) => setCheckOut(e.target.value ? new Date(e.target.value) : null)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
                 />
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-3 pt-2">
                 <Button 
                   variant="outline"
                   onClick={() => { setCheckIn(null); setCheckOut(null); setShowDatePicker(false); }}
@@ -660,30 +749,30 @@ export default function HomePage() {
       {/* Guest Picker Modal */}
       {showGuestPicker && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Guests</h3>
-              <button onClick={() => setShowGuestPicker(false)}>
-                <X className="w-5 h-5" />
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Guests</h3>
+              <button onClick={() => setShowGuestPicker(false)} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-4 border-b border-gray-100">
               <div>
-                <p className="font-medium">Adults</p>
+                <p className="font-medium text-gray-900">Adults</p>
                 <p className="text-sm text-gray-500">Ages 13+</p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <button 
                   onClick={() => setGuests(Math.max(1, guests - 1))}
                   disabled={guests <= 1}
-                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50"
+                  className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="w-8 text-center font-medium">{guests}</span>
+                <span className="w-8 text-center font-semibold text-lg">{guests}</span>
                 <button 
                   onClick={() => setGuests(Math.min(8, guests + 1))}
-                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"
+                  className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -691,7 +780,7 @@ export default function HomePage() {
             </div>
             <Button 
               onClick={() => setShowGuestPicker(false)}
-              className="w-full bg-rose-500 hover:bg-rose-600"
+              className="w-full mt-6 bg-rose-500 hover:bg-rose-600 py-3"
             >
               Done
             </Button>
@@ -701,31 +790,31 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="bg-gray-100 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Support</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><Link href="/help" className="hover:underline">Help Center</Link></li>
-                <li><Link href="/safety" className="hover:underline">Safety</Link></li>
-                <li><Link href="/cancellation" className="hover:underline">Cancellation</Link></li>
+                <li><Link href="/help" className="hover:text-gray-900 transition-colors">Help Center</Link></li>
+                <li><Link href="/safety" className="hover:text-gray-900 transition-colors">Safety</Link></li>
+                <li><Link href="/cancellation" className="hover:text-gray-900 transition-colors">Cancellation</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Community</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Community</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><Link href="/guides" className="hover:underline">Travel Guides</Link></li>
-                <li><Link href="/social" className="hover:underline">Community</Link></li>
+                <li><Link href="/guides" className="hover:text-gray-900 transition-colors">Travel Guides</Link></li>
+                <li><Link href="/social" className="hover:text-gray-900 transition-colors">Community</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Hosting</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Hosting</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><Link href="/partner/register" className="hover:underline">List Your Property</Link></li>
+                <li><Link href="/partner/register" className="hover:text-gray-900 transition-colors">List Your Property</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Tiaohai</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Tiaohai</h4>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li><span className="text-gray-400">About Us (Coming Soon)</span></li>
                 <li><span className="text-gray-400">Careers (Coming Soon)</span></li>

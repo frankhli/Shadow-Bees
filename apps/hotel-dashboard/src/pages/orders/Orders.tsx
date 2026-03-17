@@ -11,6 +11,7 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import { SortableTable, Column } from '../../components/ui/SortableTable'
+import { Badge } from '../../components/ui/badge'
 
 interface Order {
   id: string
@@ -24,6 +25,7 @@ interface Order {
   amount: number
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
   createdAt: string
+  isDemo?: boolean
 }
 
 const mockOrders: Order[] = [
@@ -39,6 +41,7 @@ const mockOrders: Order[] = [
     amount: 900,
     status: 'confirmed',
     createdAt: '2024-03-10',
+    isDemo: true,
   },
   {
     id: '2',
@@ -52,6 +55,7 @@ const mockOrders: Order[] = [
     amount: 1740,
     status: 'pending',
     createdAt: '2024-03-11',
+    isDemo: true,
   },
   {
     id: '3',
@@ -65,6 +69,7 @@ const mockOrders: Order[] = [
     amount: 450,
     status: 'completed',
     createdAt: '2024-03-08',
+    isDemo: true,
   },
 ]
 
@@ -93,7 +98,14 @@ export function Orders() {
       title: '订单号',
       render: (row) => (
         <div>
-          <div className="font-medium text-white">{row.orderNo}</div>
+          <div className="font-medium text-white flex items-center gap-2">
+            {row.orderNo}
+            {row.isDemo && (
+              <span className="px-1.5 py-0.5 rounded text-[10px] bg-purple-500/20 text-purple-400 border border-purple-500/30">
+                演示
+              </span>
+            )}
+          </div>
           <div className="text-xs text-gray-500">{row.createdAt}</div>
         </div>
       ),
@@ -185,7 +197,10 @@ export function Orders() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white">订单管理</h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-bold text-white">订单管理</h2>
+            <Badge className="bg-[#FFF3CD] text-[#856404]">Beta</Badge>
+          </div>
           <p className="text-gray-400 text-sm mt-1">查看和处理所有预订订单</p>
         </div>
       </div>

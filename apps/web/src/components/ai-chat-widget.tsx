@@ -26,60 +26,23 @@ interface AIChatWidgetProps {
 }
 
 const QUICK_QUESTIONS = {
-  zh: ['144小时免签', '酒店设施', '预订流程', '取消政策', '外宾入住', '人工客服'],
-  en: ['144h Visa-Free', 'Facilities', 'How to Book', 'Cancellation', 'Foreign Guests', 'Human Agent']
+  zh: ['144h免签', '酒店设施', '取消政策', '入住须知'],
+  en: ['144h Visa-Free', 'Facilities', 'Cancellation', 'Check-in']
 }
 
-export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isEscalated, setIsEscalated] = useState(false)
-  const [showHumanPrompt, setShowHumanPrompt] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+// 规则类型定义
+interface ChatRule {
+  id: string
+  keywords: string[]
+  response: string
+}
 
-  // Initialize welcome message
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      const welcomeMessage = `👋 Welcome to Tiaohai Global!
-
-我是您的AI助手（Beta版本），可以帮您解答：
-• 🌍 144小时过境免签政策
-• 🏨 酒店设施与入住须知  
-• 📋 预订流程与修改
-• 💰 价格与支付方式
-• 📋 取消与退款政策
-• ✅ 外宾入住要求
-
-请选择下方快捷问题或直接输入您的问题。`,
-      setMessages([
-        {
-          id: 'welcome',
-          role: 'assistant',
-          content: welcomeMessage,
-          timestamp: new Date()
-        }
-      ])
-    }
-  }, [isOpen, messages.length])
-
-  // Focus input when opened
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300)
-    }
-  }, [isOpen])
-
-  // Auto scroll to bottom
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isLoading])
-
-  // Detailed rule-based responses
-  const RULE_RESPONSES = {
-    visa: `🌍 144-Hour Visa-Free Transit Policy / 144小时过境免签政策
+// 从规则库加载规则（生产环境应从API或文件加载）
+const RULES: ChatRule[] = [
+  {
+    id: 'visa',
+    keywords: ['visa', '签证', '144', '免签', 'visa-free', 'transit'],
+    response: `🌍 144-Hour Visa-Free Transit Policy / 144小时过境免签政策
 
 ✅ Eligibility / 适用条件:
 • Hold valid international travel documents
@@ -99,9 +62,12 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 💡 Tip: Perfect for short trips! Visit the Great Wall, Forbidden City, or enjoy Shanghai's skyline without visa hassle.
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    facilities: (hotelName?: string) => `🏨 Hotel Facilities / 酒店设施${hotelName ? ` - ${hotelName}` : ''}
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'facilities',
+    keywords: ['elevator', 'lift', '楼梯', 'toilet', 'bathroom', '厕所', 'shower', 'wifi', '设施', 'breakfast', '早餐', 'facility', 'amenities', 'internet', 'network', '网络'],
+    response: `🏨 Hotel Facilities / 酒店设施
 
 📶 Internet / 网络:
 ✅ Free WiFi throughout the hotel
@@ -126,9 +92,12 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 ✅ Laundry service (fee applies)
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    booking: `📋 Booking Information / 预订须知
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'booking',
+    keywords: ['book', '预订', '订房', 'check', '入住', 'reservation', 'availability', 'room', '房间'],
+    response: `📋 Booking Information / 预订须知
 
 📝 How to Book / 如何预订:
 1. Select your dates and room type
@@ -149,9 +118,12 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 • Early check-in subject to availability
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    pricing: `💰 Pricing & Payment / 价格与支付
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'pricing',
+    keywords: ['price', 'cost', '多少钱', '价格', 'payment', '支付', 'fee', '费用', 'money', 'charge', 'refund', '退款'],
+    response: `💰 Pricing & Payment / 价格与支付
 
 💳 Payment Methods / 支付方式:
 ✅ International credit cards (VISA/Mastercard)
@@ -169,9 +141,12 @@ export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
 Currently in demonstration mode. No actual payment will be processed. For real booking, you'll be redirected to Booking.com or Airbnb.
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    cancellation: `📋 Cancellation Policy / 取消政策
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'cancellation',
+    keywords: ['cancel', 'refund', '取消', '退款', 'policy', '政策', 'change', '改期', 'modify', '修改'],
+    response: `📋 Cancellation Policy / 取消政策
 
 🕐 Free Cancellation / 免费取消:
 • 24+ hours before check-in → Full refund
@@ -186,9 +161,12 @@ Currently in demonstration mode. No actual payment will be processed. For real b
 Some special rates may be non-refundable. This will be clearly marked during booking.
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    foreigner: `✅ Foreign Guest Information / 外宾接待
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'foreigner',
+    keywords: ['foreigner', '外宾', '外国人', 'passport', 'foreign', '护照', 'international', '国际'],
+    response: `✅ Foreign Guest Information / 外宾接待
 
 📋 Requirements / 入住要求:
 • Valid passport required
@@ -206,9 +184,12 @@ Some special rates may be non-refundable. This will be clearly marked during boo
 • Foreign currency exchange nearby
 
 ---
-💬 Beta version. Contact support@tiaohai.global for urgent matters.`,
-
-    human: `👤 Transferring to Human Agent / 转接人工客服
+💬 Beta version. Contact support@tiaohai.global for urgent matters.`
+  },
+  {
+    id: 'human',
+    keywords: ['human', 'agent', '人工', '客服', 'support', 'help', 'contact', '联系', 'phone', '电话'],
+    response: `👤 Transferring to Human Agent / 转接人工客服
 
 Your request has been forwarded to our support team.
 
@@ -220,9 +201,11 @@ Your request has been forwarded to our support team.
 • Email: support@tiaohai.global
 • WeChat: tiaohai_support
 
-⚠️ Note: This is a Beta version. Human agents are available during business hours (9:00-18:00 CST).`,
+⚠️ Note: This is a Beta version. Human agents are available during business hours (9:00-18:00 CST).`
+  }
+]
 
-    default: `👋 Thanks for your message!
+const DEFAULT_RESPONSE = `👋 Thanks for your message!
 
 I'm Tiaohai AI Assistant (Beta version). I can help you with:
 
@@ -237,59 +220,73 @@ Please select a quick question below or type your question directly.
 
 ---
 💬 Beta version. Contact support@tiaohai.global for urgent matters.`
-  }
 
-  // Get mock response based on message content
+export function AIChatWidget({ hotelId, hotelName }: AIChatWidgetProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [input, setInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isEscalated, setIsEscalated] = useState(false)
+  const [showHumanPrompt, setShowHumanPrompt] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Initialize welcome message
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      const welcomeMessage = `👋 Welcome to Tiaohai Global!
+
+我是您的AI助手（Beta版），可以帮您解答：
+• 🌍 144小时过境免签政策
+• 🏨 酒店设施与入住须知  
+• 📋 预订流程与修改
+• 💰 价格与支付方式
+• 📋 取消与退款政策
+• ✅ 外宾入住要求
+
+请选择下方快捷问题或直接输入您的问题。`
+      setMessages([
+        {
+          id: 'welcome',
+          role: 'assistant',
+          content: welcomeMessage,
+          timestamp: new Date()
+        }
+      ])
+    }
+  }, [isOpen, messages.length])
+
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 300)
+    }
+  }, [isOpen])
+
+  // Auto scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isLoading])
+
+  // Get response based on rule matching
   const getMockResponse = useCallback((message: string): { content: string; escalated?: boolean } => {
     const lowerMsg = message.toLowerCase()
     
-    // Visa related
-    if (lowerMsg.includes('visa') || lowerMsg.includes('签证') || lowerMsg.includes('144') || lowerMsg.includes('免签')) {
-      return { content: RULE_RESPONSES.visa }
+    // 遍历所有规则，查找匹配项
+    for (const rule of RULES) {
+      if (rule.keywords.some(keyword => lowerMsg.includes(keyword.toLowerCase()))) {
+        // 人工客服特殊处理
+        if (rule.id === 'human') {
+          setIsEscalated(true)
+          setShowHumanPrompt(true)
+          return { content: rule.response, escalated: true }
+        }
+        return { content: rule.response }
+      }
     }
     
-    // Foreigner related
-    if (lowerMsg.includes('foreigner') || lowerMsg.includes('外宾') || lowerMsg.includes('外国人') || lowerMsg.includes('passport')) {
-      return { content: RULE_RESPONSES.foreigner }
-    }
-    
-    // Facilities related
-    if (lowerMsg.includes('elevator') || lowerMsg.includes('lift') || lowerMsg.includes('楼梯') || 
-        lowerMsg.includes('toilet') || lowerMsg.includes('bathroom') || lowerMsg.includes('厕所') ||
-        lowerMsg.includes('shower') || lowerMsg.includes('wifi') || lowerMsg.includes('设施') ||
-        lowerMsg.includes('breakfast') || lowerMsg.includes('早餐') || lowerMsg.includes('facility')) {
-      return { content: RULE_RESPONSES.facilities(hotelName) }
-    }
-    
-    // Booking related
-    if (lowerMsg.includes('book') || lowerMsg.includes('预订') || lowerMsg.includes('订房') ||
-        lowerMsg.includes('check') || lowerMsg.includes('入住') || lowerMsg.includes('reservation')) {
-      return { content: RULE_RESPONSES.booking }
-    }
-    
-    // Pricing related
-    if (lowerMsg.includes('price') || lowerMsg.includes('cost') || lowerMsg.includes('多少钱') || 
-        lowerMsg.includes('价格') || lowerMsg.includes('payment') || lowerMsg.includes('支付') ||
-        lowerMsg.includes('fee') || lowerMsg.includes('费用')) {
-      return { content: RULE_RESPONSES.pricing }
-    }
-    
-    // Cancellation related
-    if (lowerMsg.includes('cancel') || lowerMsg.includes('refund') || lowerMsg.includes('取消') || 
-        lowerMsg.includes('退款')) {
-      return { content: RULE_RESPONSES.cancellation }
-    }
-    
-    // Human agent request
-    if (lowerMsg.includes('human') || lowerMsg.includes('agent') || lowerMsg.includes('人工') || 
-        lowerMsg.includes('客服') || lowerMsg.includes('support') || lowerMsg.includes('help')) {
-      setIsEscalated(true)
-      setShowHumanPrompt(true)
-      return { content: RULE_RESPONSES.human, escalated: true }
-    }
-    
-    return { content: RULE_RESPONSES.default }
-  }, [hotelName])
+    return { content: DEFAULT_RESPONSE }
+  }, [])
 
   const handleSend = async () => {
     if (!input.trim()) return
@@ -337,7 +334,7 @@ Please select a quick question below or type your question directly.
     const escalationMessage: Message = {
       id: Date.now().toString(),
       role: 'assistant',
-      content: t('aiChat.humanAgentConnecting'),
+      content: '人工客服功能即将推出',
       timestamp: new Date()
     }
     setMessages(prev => [...prev, escalationMessage])
@@ -353,7 +350,8 @@ Please select a quick question below or type your question directly.
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-[#E85A71] hover:bg-[#C94A5F] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 z-50"
         size="icon"
-        aria-label={t('aiChat.openChat')}
+        title="AI客服(Beta)"
+        aria-label="AI客服(Beta)"
       >
         <MessageCircle className="w-6 h-6 text-white" />
       </Button>
@@ -452,7 +450,7 @@ Please select a quick question below or type your question directly.
             <div className="bg-[#FFF0F2] border border-[#E85A71]/20 rounded-xl px-4 py-3 flex items-center gap-2 max-w-[90%]">
               <div className="w-2 h-2 bg-[#E85A71] rounded-full animate-pulse shrink-0" />
               <span className="text-[13px] text-[#E85A71]">
-                {t('aiChat.humanAgentConnecting')}
+                人工客服功能即将推出
               </span>
             </div>
           </div>
@@ -464,10 +462,10 @@ Please select a quick question below or type your question directly.
       {/* Quick Questions */}
       <div className="px-4 py-3 bg-white border-t border-[#E9ECEF]">
         <div className="flex flex-wrap gap-2">
-          {QUICK_QUESTIONS.en.map((q) => (
+          {QUICK_QUESTIONS.zh.map((q) => (
             <button
               key={q}
-              onClick={() => handleQuickQuestion(q.toLowerCase())}
+              onClick={() => handleQuickQuestion(q)}
               className="text-[13px] bg-white border border-[#E9ECEF] text-[#6C757D] px-3 py-1.5 rounded-full hover:bg-[#FFF0F2] hover:border-[#E85A71] hover:text-[#E85A71] transition-colors duration-150"
             >
               {q}

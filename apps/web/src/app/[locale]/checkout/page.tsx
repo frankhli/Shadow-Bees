@@ -13,6 +13,7 @@ import {
   CreditCard,
   Check,
   AlertCircle,
+  AlertTriangle,
   Loader2,
   Star
 } from 'lucide-react'
@@ -174,8 +175,11 @@ function CheckoutPageContent() {
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // Generate order ID
-    const newOrderId = 'TH' + Date.now().toString(36).toUpperCase()
+    // Generate order ID with format TIO-YYYYMMDD-XXXX
+    const now = new Date()
+    const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '') // YYYYMMDD
+    const randomNum = Math.floor(1000 + Math.random() * 9000) // 4-digit random number
+    const newOrderId = `TIO-${dateStr}-${randomNum}`
     setOrderId(newOrderId)
     setBookingComplete(true)
     setIsProcessing(false)
@@ -197,6 +201,17 @@ function CheckoutPageContent() {
             </div>
             <h1 className="text-2xl font-bold mb-2">{t('success.title')}</h1>
             <p className="text-gray-600 mb-6">{t('success.message', { hotelName: hotel.name })}.</p>
+            
+            {/* Demo Booking Warning */}
+            <div className="bg-[#FFF3CD] border border-[#FFE69C] rounded-lg p-4 mb-6">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-[#856404] flex-shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="font-bold text-[#856404]">此为演示预订，并未真实完成！</p>
+                  <p className="text-sm text-[#856404]/80">如需真实预订，请通过下方OTA链接完成</p>
+                </div>
+              </div>
+            </div>
             
             <div className="bg-gray-50 rounded-xl p-6 text-left mb-6">
               <div className="flex items-center gap-4 mb-4">
@@ -246,9 +261,11 @@ function CheckoutPageContent() {
               <Link href="/hotels" className="flex-1">
                 <Button variant="outline" className="w-full">{t('success.continueBrowsing')}</Button>
               </Link>
-              <Button className="flex-1 bg-rose-500 hover:bg-rose-600">
-                {t('success.downloadVoucher')}
-              </Button>
+              <Link href="/orders" className="flex-1">
+                <Button className="w-full bg-rose-500 hover:bg-rose-600">
+                  {t('success.viewOrder', { defaultValue: 'View Order' })}
+                </Button>
+              </Link>
             </div>
           </div>
         </main>

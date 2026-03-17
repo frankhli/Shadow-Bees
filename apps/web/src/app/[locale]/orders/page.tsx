@@ -22,8 +22,10 @@ import {
   Clock,
   AlertCircle,
   X,
-  Loader2
+  Loader2,
+  Sparkles
 } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import { format, differenceInDays } from 'date-fns'
 
 // Order status types
@@ -50,6 +52,7 @@ interface Order {
   hostWechat?: string
   canReview: boolean
   reviewed: boolean
+  isDemo?: boolean
 }
 
 const statusConfig: Record<OrderStatus, { labelKey: string; color: string; icon: any }> = {
@@ -145,7 +148,10 @@ export default function OrdersPage() {
               <ChevronLeft className="w-5 h-5" />
               {t('backToOrders')}
             </button>
-            <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
+            <div className="flex items-center gap-2">
+              <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
+              <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Beta</Badge>
+            </div>
             <LanguageSwitcher />
           </div>
         </header>
@@ -156,8 +162,15 @@ export default function OrdersPage() {
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm text-gray-500">{t('order')} {selectedOrder.orderNo}</p>
-                  <h1 className="text-2xl font-bold mt-1">{selectedOrder.hostelName}</h1>
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-sm text-gray-500">{t('order')} {selectedOrder.orderNo}</p>
+                    {selectedOrder.isDemo && (
+                      <Badge className="bg-[#FFF3CD] text-[#856404] hover:bg-[#FFF3CD]">
+                        演示订单
+                      </Badge>
+                    )}
+                  </div>
+                  <h1 className="text-2xl font-bold">{selectedOrder.hostelName}</h1>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 ${status.color}`}>
                   <status.icon className="w-4 h-4" />
@@ -290,7 +303,10 @@ export default function OrdersPage() {
             <ChevronLeft className="w-5 h-5" />
             {t('backToProfile', { defaultValue: 'Back to profile' })}
           </Link>
-          <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
+          <div className="flex items-center gap-2">
+            <Link href="/" className="text-2xl font-bold text-rose-500">tiaohai</Link>
+            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Beta</Badge>
+          </div>
           <LanguageSwitcher />
         </div>
       </header>
@@ -362,7 +378,14 @@ export default function OrdersPage() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between">
                             <div>
-                              <p className="text-sm text-gray-500">{order.orderNo}</p>
+                              <div className="flex items-center gap-2">
+                                <p className="text-sm text-gray-500">{order.orderNo}</p>
+                                {order.isDemo && (
+                                  <Badge className="bg-[#FFF3CD] text-[#856404] hover:bg-[#FFF3CD] text-xs">
+                                    演示订单
+                                  </Badge>
+                                )}
+                              </div>
                               <h3 className="font-semibold text-lg truncate">{order.hostelName}</h3>
                               <p className="text-sm text-gray-500 flex items-center gap-1">
                                 <MapPin className="w-3 h-3" />
