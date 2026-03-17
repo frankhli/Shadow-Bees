@@ -1,6 +1,4 @@
-# 简化版 GitHub Pages 部署
-
-name: Deploy Static Site
+name: Deploy Next.js site to Pages
 
 on:
   push:
@@ -19,6 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=6144"
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PRIVATE_SKIP_SOURCE_GENERATION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,28 +32,11 @@ jobs:
       
       - name: Install dependencies
         working-directory: ./apps/web
-        run: |
-          # 使用 npm install 而不是 npm ci，避免 lock 文件不同步问题
-          npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps
       
-      - name: Build
+      - name: Build with Next.js
         working-directory: ./apps/web
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
-          NEXT_TELEMETRY_DISABLED: "1"
-        run: |
-          # 先尝试正常构建
-          npm run build || echo "Build failed, trying alternative..."
-      
-      - name: Prepare output
-        working-directory: ./apps/web
-        run: |
-          # 确保 out 目录存在
-          mkdir -p out
-          # 如果构建失败，创建一个简单的占位页面
-          if [ ! -f "out/index.html" ]; then
-            echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Tiaohai Global</title></head><body><h1>Tiaohai Global - Week 3 Build</h1><p>Site under construction</p></body></html>' > out/index.html
-          fi
+        run: npm run build
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

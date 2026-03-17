@@ -6,19 +6,27 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  // 减少内存使用
   swcMinify: true,
   productionBrowserSourceMaps: false,
   experimental: {
-    // 禁用一些内存密集型功能
     optimizeCss: false,
   },
-  // 忽略构建错误（临时）
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  // 排除重型依赖
+  webpack: (config, { isServer }) => {
+    // 客户端排除mapbox（动态导入）
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'mapbox-gl': false,
+      };
+    }
+    return config;
   },
 }
 
